@@ -1,0 +1,163 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Usuarios
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/Usuarios/Crear.js"></script>
+<script src="ts/Usuarios/UsuariosManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Crear", "Usuarios", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="row" id="DetalleAgente" style="display: none">
+            <div class="col-md-12">
+                <div class="control-group">
+                    <span id="detalle"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Circunscripcion, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Circunscripcion", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.Circunscripcion, new { @class = "form-control col-md-12", @id = "Circunscripcion" + hash, @tabindex = "3" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Circunscripcion@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Circunscripcion)
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+
+
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ApellidoYNombre, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.ApellidoYNombre, new { @class = "form-control col-md-12", @id = "ApellidoYNombre" + hash, @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.ApellidoYNombre)
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Usuario, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Usuario, new { @class = "form-control col-md-12", @id = "Usuario" + hash, @tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Usuario)
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="control-group">
+                    &nbsp;
+                    <div class="controls">
+                        <input type="button" class="btn blue" id="BuscarPersona@(hash)" value="Buscar Persona" name="PersonaAgentes" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Clave, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Clave, new { @class = "form-control col-md-12", @id = "Clave" + hash, @tabindex = "3" })
+                        @Html.ValidationMessageFor(model => model.Clave)
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Correo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Correo, new { @class = "form-control col-md-12", @id = "Correo" + hash, @tabindex = "4" })
+                        @Html.ValidationMessageFor(model => model.Correo)
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Estado, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Estado", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.Estado, new { @class = "form-control col-md-12", @id = "Estado" + hash, @tabindex = "3" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Estado@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Circunscripcion)
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->        
+        <div class="row">
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Cargo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Cargo", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.Cargo, new { @class = "form-control col-md-12", @id = "Cargo" + hash, @tabindex = "3" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Cargo@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Circunscripcion)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.OrganismoUltimoIngreso, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("OrganismoUltimoIngreso", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.OrganismoUltimoIngreso, new { @class = "form-control col-md-12", @id = "OrganismoUltimoIngreso" + hash, @tabindex = "3" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#OrganismoUltimoIngreso@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Circunscripcion)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+            <input type="hidden" id="Persona@(hash)" name="Persona" />
+            <input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+            <input type="button" value="Guardar & Nuevo" id="GuardarYNuevo@(hash)" class="btn blue" />
+        </div><!--fin form-actions>-->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oUsuarios == null)
+        var oUsuarios = new Usuarios.ts.UsuariosManager();
+
+    var viewCrear = new Usuarios.ts.Crear("@(hash)");
+    oUsuarios.setCrear(viewCrear);
+
+
+</script>

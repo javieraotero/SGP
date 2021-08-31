@@ -1,0 +1,445 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Proveedores
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+<script src="@Url.Content("~/assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-switch/static/stylesheets/bootstrap-switch.min.css")" />
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/Proveedores/Crear.js"></script>
+<script src="Areas/Expedientes/ts/Proveedores/ProveedoresManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Crear", "Proveedores", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-2">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.CUIT, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.CUIT, new {@class = "form-control col-md-12", @id="CUIT"+hash, @tabindex="1"})
+			@Html.ValidationMessageFor(model => model.CUIT)
+		</div>
+	</div>	
+	</div><!--fin de div md-12-->
+		<div class="col-md-5">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Nombre, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Nombre, new {@class = "form-control col-md-12", @id="Nombre"+hash, @tabindex="2"})
+			@Html.ValidationMessageFor(model => model.Nombre)
+		</div>
+	</div>	
+	</div><!--fin de div md-12-->
+		<div class="col-md-5">
+	<div class="control-group">
+		@Html.LabelFor(model => model.RazonSocial, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.RazonSocial, new {@class = "form-control col-md-12", @id="RazonSocial"+hash, @tabindex="3"})
+			@Html.ValidationMessageFor(model => model.RazonSocial)
+		</div>
+	</div>	
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-4">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.NumeroAcreedor, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.NumeroAcreedor, new {@class = "form-control col-md-12", @id="NumeroAcreedor"+hash, @tabindex="4"})
+			@Html.ValidationMessageFor(model => model.NumeroAcreedor)
+		</div>
+	</div>	
+	</div><!--fin de div md-12-->
+		<div class="col-md-4">
+	<div class="control-group">
+		@Html.LabelFor(model => model.NombreFantasia, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.NombreFantasia, new {@class = "form-control col-md-12", @id="NombreFantasia"+hash, @tabindex="5"})
+			@Html.ValidationMessageFor(model => model.NombreFantasia)
+		</div>
+	</div>	
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-5">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.DomicilioReal, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.DomicilioReal, new {@class = "form-control col-md-12", @id="DomicilioReal"+hash, @tabindex="6"})
+			@Html.ValidationMessageFor(model => model.DomicilioReal)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-2">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.CodigoPostal, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.CodigoPostal, new {@class = "form-control col-md-12", @id="CodigoPostal"+hash, @tabindex="7"})
+			@Html.ValidationMessageFor(model => model.CodigoPostal)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-3">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.IngresosBrutos, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.IngresosBrutos, new {@class = "form-control col-md-12", @id="IngresosBrutos"+hash, @tabindex="8"})
+			@Html.ValidationMessageFor(model => model.IngresosBrutos)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-2">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.ExentoGanancias, new { @class= "control-label" })
+		<div class="controls">
+			@Html.CheckBoxFor(
+				m => m.ExentoGanancias.Value, 
+				new {@id="ExentoGanancias"+hash})
+			<script type="text/javascript">
+				$(function () {
+					$('#ExentoGanancias@(hash)').bootstrapSwitch();
+				});
+			</script>
+		@Html.ValidationMessageFor(model => model.ExentoGanancias)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-2">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.ExentoIngresosBrutos, new { @class= "control-label" })
+		<div class="controls">
+			@Html.CheckBoxFor(
+				m => m.ExentoIngresosBrutos.Value, 
+				new {@id="ExentoIngresosBrutos"+hash})
+			<script type="text/javascript">
+				$(function () {
+					$('#ExentoIngresosBrutos@(hash)').bootstrapSwitch();
+				});
+			</script>
+		@Html.ValidationMessageFor(model => model.ExentoIngresosBrutos)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-2">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.AjustePorInflacion, new { @class= "control-label" })
+		<div class="controls">
+			@Html.CheckBoxFor(
+				m => m.AjustePorInflacion.Value, 
+				new {@id="AjustePorInflacion"+hash})
+			<script type="text/javascript">
+				$(function () {
+					$('#AjustePorInflacion@(hash)').bootstrapSwitch();
+				});
+			</script>
+		@Html.ValidationMessageFor(model => model.AjustePorInflacion)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-2">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.ExentoSellos, new { @class= "control-label" })
+		<div class="controls">
+			@Html.CheckBoxFor(
+				m => m.ExentoSellos.Value, 
+				new {@id="ExentoSellos"+hash})
+			<script type="text/javascript">
+				$(function () {
+					$('#ExentoSellos@(hash)').bootstrapSwitch();
+				});
+			</script>
+		@Html.ValidationMessageFor(model => model.ExentoSellos)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-2">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.InscriptoEnGanancias, new { @class= "control-label" })
+		<div class="controls">
+			@Html.CheckBoxFor(
+				m => m.InscriptoEnGanancias.Value, 
+				new {@id="InscriptoEnGanancias"+hash})
+			<script type="text/javascript">
+				$(function () {
+					$('#InscriptoEnGanancias@(hash)').bootstrapSwitch();
+				});
+			</script>
+		@Html.ValidationMessageFor(model => model.InscriptoEnGanancias)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-3">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.FechaInscripcion, new { @class= "control-label" })
+		<div class="controls">
+		<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+			@Html.TextBoxFor(model => model.FechaInscripcion, "{0:dd/MM/yyyy}", new {@class="m-wrap form-control m-ctrl-medium date-picker", @id="FechaInscripcion"+hash, @tabindex="14" })
+			<span class="add-on"><i class="icon-calendar"></i></span> 
+		</div>
+		<script type="text/javascript">
+			$(function () {
+				$('#FechaInscripcion@(hash)').datepicker(pickerOpts);
+			});
+		</script>
+		@Html.ValidationMessageFor(model => model.FechaInscripcion)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-3">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.FechaReInscripcion, new { @class= "control-label" })
+		<div class="controls">
+		<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+			@Html.TextBoxFor(model => model.FechaReInscripcion, "{0:dd/MM/yyyy}", new {@class="m-wrap form-control m-ctrl-medium date-picker", @id="FechaReInscripcion"+hash, @tabindex="15" })
+			<span class="add-on"><i class="icon-calendar"></i></span> 
+		</div>
+		<script type="text/javascript">
+			$(function () {
+				$('#FechaReInscripcion@(hash)').datepicker(pickerOpts);
+			});
+		</script>
+		@Html.ValidationMessageFor(model => model.FechaReInscripcion)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-3">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.FechaFinExentoSellado, new { @class= "control-label" })
+		<div class="controls">
+		<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+			@Html.TextBoxFor(model => model.FechaFinExentoSellado, "{0:dd/MM/yyyy}", new {@class="m-wrap form-control m-ctrl-medium date-picker", @id="FechaFinExentoSellado"+hash, @tabindex="16" })
+			<span class="add-on"><i class="icon-calendar"></i></span> 
+		</div>
+		<script type="text/javascript">
+			$(function () {
+				$('#FechaFinExentoSellado@(hash)').datepicker(pickerOpts);
+			});
+		</script>
+		@Html.ValidationMessageFor(model => model.FechaFinExentoSellado)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-3">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.FechaFinSuspension, new { @class= "control-label" })
+		<div class="controls">
+		<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+			@Html.TextBoxFor(model => model.FechaFinSuspension, "{0:dd/MM/yyyy}", new {@class="m-wrap form-control m-ctrl-medium date-picker", @id="FechaFinSuspension"+hash, @tabindex="17" })
+			<span class="add-on"><i class="icon-calendar"></i></span> 
+		</div>
+		<script type="text/javascript">
+			$(function () {
+				$('#FechaFinSuspension@(hash)').datepicker(pickerOpts);
+			});
+		</script>
+		@Html.ValidationMessageFor(model => model.FechaFinSuspension)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-3">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.FechaFinExentoGanancias, new { @class= "control-label" })
+		<div class="controls">
+		<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+			@Html.TextBoxFor(model => model.FechaFinExentoGanancias, "{0:dd/MM/yyyy}", new {@class="m-wrap form-control m-ctrl-medium date-picker", @id="FechaFinExentoGanancias"+hash, @tabindex="18" })
+			<span class="add-on"><i class="icon-calendar"></i></span> 
+		</div>
+		<script type="text/javascript">
+			$(function () {
+				$('#FechaFinExentoGanancias@(hash)').datepicker(pickerOpts);
+			});
+		</script>
+		@Html.ValidationMessageFor(model => model.FechaFinExentoGanancias)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-3">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.FechaFinExentoIngresosBrutos, new { @class= "control-label" })
+		<div class="controls">
+		<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+			@Html.TextBoxFor(model => model.FechaFinExentoIngresosBrutos, "{0:dd/MM/yyyy}", new {@class="m-wrap form-control m-ctrl-medium date-picker", @id="FechaFinExentoIngresosBrutos"+hash, @tabindex="19" })
+			<span class="add-on"><i class="icon-calendar"></i></span> 
+		</div>
+		<script type="text/javascript">
+			$(function () {
+				$('#FechaFinExentoIngresosBrutos@(hash)').datepicker(pickerOpts);
+			});
+		</script>
+		@Html.ValidationMessageFor(model => model.FechaFinExentoIngresosBrutos)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-4">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.FormaDePago, new { @class= "control-label" })
+		<div class="controls">
+			@Html.DropDownList("FormaDePago", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.FormasDePagoRef, new { @class = "form-control col-md-12", @id="FormasDePagoRef"+hash, @tabindex="20" })
+			<script type="text/javascript">
+				$(function () {
+					$('#FormaDePago@(hash)').chosen();
+				});
+			</script>
+		@Html.ValidationMessageFor(model => model.FormaDePago)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-4">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.NumeroDeCuenta, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.NumeroDeCuenta, new {@class = "form-control col-md-12", @id="NumeroDeCuenta"+hash, @tabindex="21"})
+			@Html.ValidationMessageFor(model => model.NumeroDeCuenta)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-4">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.CBU, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.CBU, new {@class = "form-control col-md-12", @id="CBU"+hash, @tabindex="22"})
+			@Html.ValidationMessageFor(model => model.CBU)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-4">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.TipoDeCuenta, new { @class= "control-label" })
+		<div class="controls">
+			@Html.DropDownList("TipoDeCuenta", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.TiposCuentasBancariasRef, new { @class = "form-control col-md-12", @id="TiposCuentasBancariasRef"+hash, @tabindex="23" })
+			<script type="text/javascript">
+				$(function () {
+					$('#TipoDeCuenta@(hash)').chosen();
+				});
+			</script>
+		@Html.ValidationMessageFor(model => model.TipoDeCuenta)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+	<div class="form-actions">
+	
+		<input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+
+		<input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+
+		<input type="button" value="Guardar & Nuevo" id="GuardarYNuevo@(hash)" class="btn blue" />
+
+	</div><!--fin form-actions>-->
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oProveedores == null)
+			var oProveedores = new Proveedores.ts.ProveedoresManager();
+		
+		var viewCrear = new Proveedores.ts.Crear("@(hash)");
+		oProveedores.setCrear(viewCrear); 
+		
+		
+	</script>	

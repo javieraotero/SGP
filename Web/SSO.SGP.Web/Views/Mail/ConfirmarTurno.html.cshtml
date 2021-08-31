@@ -1,0 +1,43 @@
+﻿@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.TurnosWeb
+
+@{
+    Layout = null;
+}
+
+Estimado/a @Model.ApellidoYNombre
+<br />
+<br />
+<p>
+    El presente email es para confirmarle su turno:   
+</p>
+<p>
+    @if (Model.Urgente) { 
+    <strong>Tipo de turno: Dos Primeras Horas Art. 116 CPC</strong>
+    }
+    @if (!string.IsNullOrEmpty(Model.Expedientes)) { 
+    <strong>Tipo de turno: Retirar Expedientes de Juzgado</strong>
+    }
+</p>
+<p>
+    <strong>Organismo: </strong>@ViewBag.Organismo <br />
+    <strong>Fecha:</strong> @Model.Fecha.ToShortDateString() <br />
+    <strong>Hora:</strong> @Model.Hora.ToString() <br />
+    <strong>Motivo:</strong> @Model.Observaciones <br />
+
+    @if (!string.IsNullOrEmpty(Model.Expedientes))
+    {
+        <strong>Expedientes a retirar:</strong>@Model.Expedientes<br />
+    }
+    <strong>Su número de trámite:</strong> @Model.Id
+</p>
+<p>
+    <strong>
+        Al momento de asistir al organismo, por favor, vaya en el
+        horario asignado para evitar el aglomeramieto de personas, respete el distanciamiento
+        social y recuerde tomar los recaudos para evitar propagación de Covid-19. En los
+        organismos habrá personal indicando las pautas de ingreso, por favor respete las
+        normas que se les observe. DEBEMOS CUIDARNOS ENTRE TODOS
+    </strong>
+</p>
+

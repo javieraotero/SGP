@@ -1,0 +1,95 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.MedidasDisciplinarias
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/MedidasDisciplinarias/Editar.js"></script>
+<script src="Areas/RRHH/ts/MedidasDisciplinarias/MedidasDisciplinariasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Editar", "MedidasDisciplinarias", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="span12 m-wrap">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Fecha, new { @class= "control-label" })
+		<div class="controls">
+		<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+			@Html.TextBoxFor(model => model.Fecha, "{0:dd/MM/yyyy}", new {@class="m-wrap form-control m-ctrl-medium date-picker", @id="Fecha"+hash, @tabindex="3" })
+			<span class="add-on"><i class="icon-calendar"></i></span> 
+		</div>
+		<script type="text/javascript">
+			$(function () {
+				$('#Fecha@(hash)').datepicker(pickerOpts);
+			});
+		</script>
+		@Html.ValidationMessageFor(model => model.Fecha)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="span12 m-wrap">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Causa, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Causa, new {@class = "form-control col-md-12", @id="Causa"+hash, @tabindex="4"})
+			@Html.ValidationMessageFor(model => model.Causa)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+		
+			  @Html.HiddenFor(model => model.Id, new {@id="Id" + hash})
+		
+
+		
+			  @Html.HiddenFor(model => model.Agente, new {@id="Agente" + hash})
+		
+
+
+
+	<div class="form-actions">
+	
+		<input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+
+		<input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+
+	</div><!--fin form-actions>-->
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oMedidasDisciplinarias == null)
+			var oMedidasDisciplinarias = new MedidasDisciplinarias.ts.MedidasDisciplinariasManager();
+		
+		var viewEditar = new MedidasDisciplinarias.ts.Editar("@(hash)");
+		oMedidasDisciplinarias.setEditar(viewEditar); 
+		
+		
+	</script>	

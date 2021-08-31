@@ -1,0 +1,87 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model IEnumerable<SSO.SGP.EntidadesDeNegocio.webpages_Roles>
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/Usuarios/EditarRoles.js"></script>
+<script src="ts/Usuarios/UsuariosManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<script src="assets/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+<link href="assets/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css" type="text/css" />
+@using (Html.BeginForm("EditarRoles", "Usuarios", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    @ViewBag.NombrePersonaSel
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="control-group">
+                    <div class="controls">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Rol</th>
+                                </tr>
+                            </thead>
+                            @foreach (var item in Model)
+                            {
+                                var r = "";
+                                if (Roles.IsUserInRole(ViewBag.NombreUsuarioSel, item.RoleName))
+                                {
+                                    r = "checked";
+                                }
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" @r data-id="@item.RoleName" onclick="oUsuarios.marcarRol(this);"/>
+                                        &nbsp;
+                                        @item.RoleName
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+
+        <input type="hidden" name="IdUsuario" id="IdUsuario@(hash)" value="@ViewBag.IdUsuarioSel">
+
+
+        <div class="form-actions">
+
+            <input type="button" value="Cerrar" id="Cancelar@(hash)" class="btn" />
+
+        </div>
+        <!--fin form-actions>-->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oUsuarios == null)
+        var oUsuarios = new Usuarios.ts.UsuariosManager();
+
+    var viewEditarRoles = new Usuarios.ts.EditarRoles("@(hash)");
+    oUsuarios.setEditarRoles(viewEditarRoles);
+
+
+</script>

@@ -1,0 +1,95 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Personas
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/Personas/Index.js"></script>
+<script src="ts/Personas/PersonasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "Personas", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresPersonas = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    function = "editar(this)",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    function = "eliminar(this)",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmPersonas = Html.DataTableVm("dtPersonas", (PersonasController h) => h.getPersonasGrilla(null));
+                
+				vmPersonas.operators = operadoresPersonas;
+                //vmPersonas.fnDrawCallBack = "render_dtPersonas(this);";
+                vmPersonas.ColumnFilter = true;
+                //vmPersonas.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmPersonas.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("DataTable", vmPersonas)
+			
+			
+			<script type="text/javascript">
+					function editar(el) {
+					var id = getData(el, 1);
+					oPersonas.editar_dtPersonas(id);
+					}
+					
+					function eliminar(el) {
+					var id = getData(el, 1);
+					oPersonas.eliminar_dtPersonas(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedPersonas@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oPersonas == null)
+			var oPersonas = new Personas.ts.PersonasManager();
+		
+		var viewIndex = new Personas.ts.Index("@(hash)");
+		oPersonas.setIndex(viewIndex); 
+		
+		viewIndex.setPersonas(dtPersonas);
+		
+	</script>	

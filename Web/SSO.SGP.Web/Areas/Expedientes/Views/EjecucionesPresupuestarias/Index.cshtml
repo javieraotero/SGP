@@ -1,0 +1,105 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.EjecucionesPresupuestarias
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/EjecucionesPresupuestarias/Index.js"></script>
+<script src="Areas/Expedientes/ts/EjecucionesPresupuestarias/EjecucionesPresupuestariasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "EjecucionesPresupuestarias", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="form-actions">
+            <input type="text" id="txtAnio@(hash)" class="form-control col-md-2" tabindex="1" placeholder="Seleccione Anio" value="@DateTime.Now.Year" />
+            <input type="button" class="btn blue col-md-1" id="VerEjecucionesPresupuestarias@(hash)" value="Ver" name="VerEjecucionesPresupuestarias" />
+            &nbsp;
+            <input type="button" class="btn green col-md-2" id="CrearPresupuesto@(hash)" value="Crear Presupuesto Anual" />
+            <input type="button" class="btn yellow col-md-3" id="CrearEjecucion@(hash)" value="Agregar partida a presupuesto" />
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    ColumnCommand[] operadoresEjecucionesPresupuestarias = new ColumnCommand[2] {
+
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "EjecucionesPresupuestariasController_editar(this)",
+                    function = "oEjecucionesPresupuestarias.editar_dtEjecucionesPresupuestarias();",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "EjecucionesPresupuestariasController_eliminar(this)",
+                    function = "oEjecucionesPresupuestarias.eliminar_dtEjecucionesPresupuestarias();",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"
+                 },
+                };
+                    var anio = 2016;
+
+                    var vmEjecucionesPresupuestarias = Html.DataTableVm("dtEjecucionesPresupuestarias", (EjecucionesPresupuestariasController h) => h.getEjecucionesPresupuestariasGrilla(null,anio), "anio=" + anio);
+
+                    vmEjecucionesPresupuestarias.operators = operadoresEjecucionesPresupuestarias;
+                    //vmEjecucionesPresupuestarias.fnDrawCallBack = "render_dtEjecucionesPresupuestarias(this);";
+                    vmEjecucionesPresupuestarias.ColumnFilter = true;
+                    //vmEjecucionesPresupuestarias.FilterOn("activo").Select("Si", "No");
+                    //Cantidad de registros a mostrar
+                    vmEjecucionesPresupuestarias.CantidadRegistrosDefault = 25;
+
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmEjecucionesPresupuestarias)
+
+
+                <script type="text/javascript">
+                    function EjecucionesPresupuestariasController_editar(el) {
+                        var id = getData(el, 1);
+                        oEjecucionesPresupuestarias.editar_dtEjecucionesPresupuestarias(id);
+                    }
+
+                    function EjecucionesPresupuestariasController_eliminar(el) {
+                        var id = getData(el, 1);
+                        oEjecucionesPresupuestarias.eliminar_dtEjecucionesPresupuestarias(id);
+                    }
+
+                </script>
+
+
+                <input type="hidden" id="SelectedEjecucionesPresupuestarias@(hash)" value="" />
+
+
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin de row -->
+
+
+
+
+    </div> <!--fin de container-fluid-->
+                    }
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oEjecucionesPresupuestarias == null)
+        var oEjecucionesPresupuestarias = new EjecucionesPresupuestarias.ts.EjecucionesPresupuestariasManager();
+
+    var viewIndex = new EjecucionesPresupuestarias.ts.Index("@(hash)");
+    oEjecucionesPresupuestarias.setIndex(viewIndex);
+
+    viewIndex.setEjecucionesPresupuestarias(dtEjecucionesPresupuestarias);
+
+</script>

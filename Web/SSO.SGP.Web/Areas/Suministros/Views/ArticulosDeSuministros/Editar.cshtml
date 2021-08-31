@@ -1,0 +1,130 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@using SSO.SGP.Web.Areas.Suministros.Controllers;
+@model SSO.SGP.EntidadesDeNegocio.ArticulosDeSuministros
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Suministros/ts/ArticulosDeSuministros/Editar.js"></script>
+<script src="Areas/Suministros/ts/ArticulosDeSuministros/ArticulosDeSuministrosManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Editar", "ArticulosDeSuministros", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-8">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Nombre, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control col-md-12", @id = "Nombre" + hash, @tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Nombre)
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Codigo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Codigo, new { @class = "form-control col-md-12", @id = "Codigo" + hash, @tabindex = "3" })
+                        @Html.ValidationMessageFor(model => model.Codigo)
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.StockMinimo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.StockMinimo, new { @class = "form-control col-md-12", @id = "StockMinimo" + hash, @tabindex = "4" })
+                        @Html.ValidationMessageFor(model => model.StockMinimo)
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Stock, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Stock, new { @class = "form-control col-md-12", @id = "Stock" + hash, @tabindex = "5"  })
+                        @Html.ValidationMessageFor(model => model.Stock)
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.UltimoCosto, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.UltimoCosto, new { @class = "form-control col-md-12", @id = "UltimoCosto" + hash, @tabindex = "6" })
+                        @Html.ValidationMessageFor(model => model.UltimoCosto)
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+
+
+
+        @Html.HiddenFor(model => model.Id, new { @id = "Id" + hash })
+
+
+
+
+        <div class="form-actions">
+
+            <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+
+            <input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+
+        </div>
+        <!--fin form-actions>-->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oArticulosDeSuministros == null)
+        var oArticulosDeSuministros = new ArticulosDeSuministros.ts.ArticulosDeSuministrosManager();
+
+    var viewEditar = new ArticulosDeSuministros.ts.Editar("@(hash)");
+		oArticulosDeSuministros.setEditar(viewEditar);
+</script>

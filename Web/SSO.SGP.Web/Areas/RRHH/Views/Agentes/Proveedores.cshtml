@@ -1,0 +1,201 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.TurnosWeb
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+<style>
+    #razon_social {
+        border: none;
+        border-bottom: 1px solid black;
+    }
+
+        #razon_social:hover {
+            border: none;
+            border-bottom: 2px solid lightseagreen;
+        }
+
+    #select_estado {
+        border-left: 1px solid white;
+        border-top: 1px solid white;
+        border-right: 1px solid white;
+        border-bottom: 1px solid black;
+        font-size: 14px;
+    }
+
+        #select_estado:hover {
+            border-left: 1px solid white;
+            border-top: 1px solid white;
+            border-right: 1px solid white;
+            border-bottom: 2px solid lightseagreen;
+        }
+
+    #cuit_search {
+        border: none;
+        border-bottom: 1px solid black;
+    }
+
+        #cuit_search:hover {
+            border: none;
+            border-bottom: 2px solid lightseagreen;
+        }
+
+    #btn_buscar {
+        color: dimgrey;
+    }
+
+        #btn_buscar:hover {
+            color: lightseagreen;
+        }
+</style>
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <table>
+                    <tr>
+                        <td class="form-inline">
+                            <div class="form-group">
+                                <input type="text" placeholder="Razón Social" class="form-control input-sm" id="razon_social">
+                                <script>
+                                    $(function () {
+                                        $("#razon_social").on("change", function (e) {
+                                            filterProveedores();
+                                        });
+
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <select id="select_estado" class="form-control select">
+                                    <option value="-1" selected>Seleccionar estado</option>
+                                    <option value="0">Pendiente</option>
+                                    <option value="1">Confirmado</option>
+                                    <option value="2">Revisar</option>
+                                    <option value="3">Rechazado</option>
+                                </select>
+                                <script>
+
+                                    $(function () {
+                                        $("#select_estado").on("change", function (e) {
+                                            filterProveedores();
+                                        });
+                                    });
+                                </script>
+                            </div>
+
+                            <div class="form-group">
+                                <input type="text" placeholder="CUIT" class="form-control input-sm" id="cuit_search">
+                                <script>
+                                    $(function () {
+                                        $("#cuit_search").on("change", function (e) {
+                                            filterProveedores();
+                                        });
+
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <a href="javascript:;" class="btn btn-link btn-sm" id="btn_buscar"><i class="fa fa-search" aria-hidden="true" style="font-size:20px;" data-title="Buscar por filtro"></i></a>
+                                <script>
+                                    $(function () {
+                                        $("#btn_buscar").click(function (e) {
+                                            e.preventDefault();
+                                            filterProveedores();
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 50px;" >
+            <div class="col-md-12" style="overflow-x:auto;">
+                @{
+                    ColumnCommand[] operadoresAgentes = new ColumnCommand[2]
+                    {
+                         new ColumnCommand
+                         {
+                            display = "ver",
+                            function = "oAgentes.ver_proveedor()",
+                            icon = "../assets/img/icons/16x16/edit.png",
+                            tooltip = "Ver detalles de proveedor"
+                         },
+                         new ColumnCommand
+                         {
+                            display = "historial",
+                            function = "oAgentes.ver_proveedor()",
+                            icon = "../assets/img/icons/16x16/edit.png",
+                            tooltip = "Ver historial de adjuntos"
+                         },
+                };
+
+                    var vmAgentes = Html.DataTableVm("dtProveedores", (AgentesController h) => h.getProveedoresGrill(null));
+
+                    vmAgentes.operators = operadoresAgentes;
+                    vmAgentes.OpcionesEnGrilla = false;
+                    //vmAgentes.OrdenarPor = new Dictionary<int, string>();
+                    //vmAgentes.OrdenarPor.Add(0, "desc");
+                    vmAgentes.ColumnFilter = false;
+                    vmAgentes.CantidadRegistrosDefault = 25;
+
+                }
+
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmAgentes)
+
+                <input type="hidden" id="SelectedAgentes@(hash)" value="" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    if (oAgentes == null)
+        var oAgentes = new Agentes.ts.AgentesManager();
+
+    function ver(el) {
+        var index = $(el).closest("tr").index();
+        var id = dtProveedores.fnGetData(index)[0];
+
+        app.modal.cargar("Detalle del provedor", "RRHH/agentes/ProveedoresDetalle/" + id);
+    }
+
+    function historial(el) {
+        var index = $(el).closest("tr").index();
+        var id = dtProveedores.fnGetData(index)[0];
+
+        app.modal.cargar("Historial de adjuntos", "RRHH/agentes/HistorialAdjuntos/" + id);
+    }
+
+    function filterProveedores()
+    {
+        if ($("#razon_social").val().length > 0)
+            var razon_social = $("#razon_social").val();
+        else
+            var razon_social = "";
+
+        if ($("#select_estado").val().length >= 0)
+            var estado = $("#select_estado").val();
+        else
+            var estado = -1;
+
+        if ($("#cuit_search").val().length > 0)
+            var cuit = $("#cuit_search").val();
+        else
+            var cuit = "";
+
+        dtProveedores.fnNewAjax("RRHH/Agentes/getProveedoresGrillaFilter/?estado=" + (estado == -1 ? '' : estado) + "&razonSocial=" + razon_social + "&cuit=" + cuit);
+    }
+</script>
+

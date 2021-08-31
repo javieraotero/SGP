@@ -1,0 +1,98 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasAgente/Pendientes.js"></script>
+<script src="Areas/RRHH/ts/LicenciasAgente/LicenciasAgenteManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                @{
+                    ColumnCommand[] operadoresAgentes;
+
+ 
+                        operadoresAgentes = new ColumnCommand[3] {
+                            new ColumnCommand {
+                            display = "Apro",
+                            function = "oLicenciasAgente.editarLicencia_dtAgentes(this)",
+                            icon = "../assets/img/icons/16x16/confirmar.fw.png",
+                            tooltip = "Aprobar licencia"
+                         },
+                             new ColumnCommand {
+                            display = "Confirma y Pasa",
+                            function = "oLicenciasAgente.confirmalicencia_dtAgentes(this)",
+                            icon = "../assets/img/icons/16x16/pasar.fw.png",
+                            tooltip = "Confirma y Pasa"
+                         },
+                        new ColumnCommand {
+                            display = "Desaprobar",
+                            function = "oLicenciasAgente.desaprobarlicencia_dtAgentes(this)",
+                            icon = "../assets/img/icons/16x16/anular.png",
+                            tooltip = "Desaprobar licencia"
+                         }
+                        };
+                   
+
+                    var vmAgentes = Html.DataTableVm("dtPendientes", (SSO.SGP.Web.Areas.RRHH.Controllers.LicenciasAgenteController h) => h.getLicenciaPendientesReconocimiento(null));
+
+                    vmAgentes.operators = operadoresAgentes;
+                    vmAgentes.OpcionesEnGrilla = true;
+                    vmAgentes.OpcionesConextuales = true;
+                    //vmAgentes.fnDrawCallBack = "render_dtPendientes(this);";
+                    vmAgentes.ColumnFilter = true;
+                    //vmAgentes.FilterOn("activo").Select("Si", "No");
+                    //Cantidad de registros a mostrar
+                    vmAgentes.CantidadRegistrosDefault = 25;
+
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmAgentes)
+
+                <input type="hidden" id="SelectedAgentes@(hash)" value="" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+     @*function render_dtPendientes(el) {
+       
+        $("#dtPendientes tbody tr td:nth-child(6)").each(function () {
+
+            if(@SSO.SGP.Web.SessionHelper.habilita_aprobar_licencia.ToString().ToLower() == true)
+
+            $(this).closest("tr").find("td:nth-child(8)").find("img").eq(0).hide();
+            if (($(this).text() == "Borrador") || ($(this).text() == "Rechazado")) {
+                $(this).closest("tr").find("td:nth-child(8)").find("img").eq(0).show();
+            }
+            if ($(this).text() != "Borrador") {
+                $(this).closest("tr").find("td:nth-child(8)").find("img").eq(3).hide();
+            }
+        });
+    }*@
+
+    $(function () {
+	    app.Desbloquear();
+    });
+
+	if (oLicenciasAgente == null)
+	    var oLicenciasAgente = new LicenciasAgente.ts.LicenciasAgenteManager();
+
+    var viewIndex = new LicenciasAgente.ts.Pendientes("@(hash)");
+	oLicenciasAgente.setPendientes(viewIndex);
+
+	viewIndex.setPendientes(dtPendientes);
+
+</script>

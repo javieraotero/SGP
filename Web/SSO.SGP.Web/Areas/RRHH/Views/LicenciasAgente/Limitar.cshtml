@@ -1,0 +1,86 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.CustomLimitar
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasAgente/Limitar.js"></script>
+<script src="Areas/RRHH/ts/LicenciasAgente/LicenciasAgenteManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+
+
+@using (Html.BeginForm("Limitar", "LicenciasAgente", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.FechaInicio, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.FechaInicio, new { @class = "form-control col-md-6", @id = "FechaInicio" + hash, @tabindex = "1" })
+                       @* @Html.ValidationMessageFor(model => model.FechaInicio)*@
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#FechaInicio@(hash)").inputmask("99/99/9999");
+                    });
+                </script>
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.FechaBaja, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.FechaBaja, new { @class = "form-control col-md-6", @id = "FechaBaja" + hash, @tabindex = "1" })
+                       @* @Html.ValidationMessageFor(model => model.FechaBaja)*@
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $("#FechaBaja@(hash)").inputmask("99/99/9999");
+                    });
+                </script>
+            </div>
+
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    &nbsp;
+                    <div class="controls">
+                        <input type="button" class="btn green" id="Guardar@(hash)" value="Guardar" />
+                        <input type="button" class="btn" id="Cancelar@(hash)" value="Cancelar" />
+                        <input type="hidden" id="Licencia@(hash)" name="Licencia" value="@ViewBag.Licencia" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--fin de row -->
+    </div>
+
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oLicenciasAgente == null)
+        var oLicenciasAgente = new LicenciasAgente.ts.LicenciasAgenteManager();
+
+    var viewLimitar = new LicenciasAgente.ts.Limitar("@(hash)");
+    oLicenciasAgente.setLimitar(viewLimitar);
+
+
+</script>

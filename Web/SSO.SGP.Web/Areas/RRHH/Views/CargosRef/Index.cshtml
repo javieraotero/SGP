@@ -1,0 +1,116 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.CargosRef
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/CargosRef/Index.js"></script>
+<script src="Areas/RRHH/ts/CargosRef/CargosRefManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "CargosRef", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">  
+        <div class="form-actions">
+            <input type="button" value="Nuevo" id="Nuevo@(hash)" class="btn green" />
+        </div>
+        <br />
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresCargosRef = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    function = "editar(this)",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    function = "eliminar(this)",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmCargosRef = Html.DataTableVm("dtCargosRef", (CargosRefController h) => h.getCargosRefGrilla(null));
+                
+				vmCargosRef.operators = operadoresCargosRef;
+                //vmCargosRef.fnDrawCallBack = "render_dtCargosRef(this);";
+                vmCargosRef.ColumnFilter = true;
+                //vmCargosRef.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmCargosRef.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("~/Views/Shared/DataTable.cshtml", vmCargosRef)
+			
+			
+			<script type="text/javascript">
+					function editar(el) {
+					var id = getData(el, 1);
+					oCargosRef.editar_dtCargosRef(id);
+					}
+					
+					function eliminar(el) {
+					var id = getData(el, 1);
+					oCargosRef.eliminar_dtCargosRef(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedCargosRef@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+<!-- /.modal -->
+<div class="modal fade" id="ModalIndexCargosRef@(hash)" tabindex="-1" role="basic" aria-hidden="true">
+	<div class="modal-dialog modal-wide">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Título</h4>
+			</div>
+			<div class="modal-body">
+			</div>
+		</div>
+	<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oCargosRef == null)
+			var oCargosRef = new CargosRef.ts.CargosRefManager();
+		
+		var viewIndex = new CargosRef.ts.Index("@(hash)");
+		oCargosRef.setIndex(viewIndex); 
+		
+		viewIndex.setCargosRef(dtCargosRef);
+		
+	</script>	

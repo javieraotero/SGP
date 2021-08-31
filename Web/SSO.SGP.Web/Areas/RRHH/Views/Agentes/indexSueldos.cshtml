@@ -1,0 +1,88 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Agentes
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/Agentes/Index.js"></script>
+<script src="Areas/RRHH/ts/Agentes/AgentesManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                @{ 			
+                 ColumnCommand[] operadoresAgentes = new ColumnCommand[4] {                                
+                    new ColumnCommand {
+                    display = "Licencias",
+                    function = "oAgentes.licencias_dtAgentes()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"
+                 },
+                    new ColumnCommand {
+                    display = "Resumen",
+                    function = "oAgentes.resumen_dtAgentes()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Resumen de Legajo"
+                 },
+                    new ColumnCommand {
+                    display = "Docencia",
+                    function = "oAgentes.docencia_dtAgentes()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Datos de Docencia"
+                 },
+                 new ColumnCommand {
+                    display = "Movimientos Sueldos",
+                    function = "oAgentes.movimientoscesida_dtAgentes()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Movmientos CESIDA"
+                 }
+                };
+
+                    var vmAgentes = Html.DataTableVm("dtAgentes", (AgentesController h) => h.getAgentesGrilla(null));
+
+                    vmAgentes.operators = operadoresAgentes;
+                    vmAgentes.OpcionesEnGrilla = false;
+                    //vmAgentes.fnDrawCallBack = "render_dtAgentes(this);";
+                    vmAgentes.ColumnFilter = true;
+                    //vmAgentes.FilterOn("activo").Select("Si", "No");
+                    //Cantidad de registros a mostrar
+                    vmAgentes.CantidadRegistrosDefault = 25;
+
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmAgentes)
+
+                <input type="hidden" id="SelectedAgentes@(hash)" value="" />
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oAgentes == null)
+        var oAgentes = new Agentes.ts.AgentesManager();
+
+    var viewIndex = new Agentes.ts.Index("@(hash)");
+    oAgentes.setIndex(viewIndex);
+
+    viewIndex.setAgentes(dtAgentes);
+
+</script>

@@ -1,0 +1,109 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/Agentes/Index.js"></script>
+<script src="Areas/RRHH/ts/Agentes/AgentesManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<link href="~/assets/css/xeus_forms.css" rel="stylesheet" />
+<script src="~/Scripts/moment-with-locales.min.js"></script>
+<link href="~/assets/plugins/datetimerangepicker/build/css/calentim.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/datetimerangepicker/build/js/calentim.min.js"></script>
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="div_celeste">
+
+            @{
+                if (Model.SubroganteRRHH.HasValue)
+                {
+
+                    var subrogante = new SSO.SGP.AccesoADatos.AgentesAD().ObtenerPorId(Model.SubroganteRRHH.Value);
+                    <table width="100%">
+                        <thead>
+                            <tr>
+                                <th>Subrogante/Suplente</th>
+                                <th>Estado Solicitud</th>
+                                <th>Respuesta</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    @subrogante.Personas.Apellidos, @subrogante.Personas.Nombres
+                                </td>
+                                <td>
+                                    @(Model.SubroganteAprobadaFecha.HasValue ? "Procesada" : "Pendiente")
+                                </td>
+                                <td>
+                                    @(Model.SubroganteAprobadaFecha.HasValue ? (Model.SubroganteAprobada ? "Aprobada" : "Rechazada") : "")
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <br />
+                }
+            }
+            
+            @{
+                var aprobaciones = (List<SSO.SGP.EntidadesDeNegocio.Results.LicenciasAgentesAprobacionesDetalleResult>)ViewBag.Aprobaciones;
+                
+                if (aprobaciones.Count > 0)
+                {
+                    <table width="50%" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Fecha Confirmación
+                                </th>
+                                <th>
+                                    Agente
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var a in aprobaciones)
+                            {
+                                <tr>
+                                    <td>
+                                        @(a.Fecha.HasValue ? a.Fecha.Value.ToShortDateString()+ " " + a.Fecha.Value.ToShortTimeString(): "Pendiente")
+                                    </td>
+                                    <td>
+                                        @a.Agente
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+
+            }
+
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    if (oAgentes == null)
+        var oAgentes = new Agentes.ts.AgentesManager();
+
+    @*var viewIndex = new Agentes.ts.Index("@(hash)");
+    oAgentes.setIndex(viewIndex);
+
+    viewIndex.setAgentes(dtAgentes);*@
+
+</script>

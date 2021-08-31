@@ -1,0 +1,72 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasAgente/Pendientes.js"></script>
+<script src="Areas/RRHH/ts/LicenciasAgente/LicenciasAgenteManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                    @{
+                        ColumnCommand[] operadoresAgentes = new ColumnCommand[2] {
+                        new ColumnCommand {
+                        display = "Aprobar",
+                        function = "oLicenciasAgente.aprobarsubrogancia_dtAgentes(this)",
+                        icon = "../assets/img/icons/16x16/confirmar.fw.png",
+                        tooltip = "Aceptar Subrogancia"
+                     },
+                    new ColumnCommand {
+                        display = "Desaprobar",
+                        function = "oLicenciasAgente.desaprobarsubrogancia_dtAgentes(this)",
+                        icon = "../assets/img/icons/16x16/anular.png",
+                        tooltip = "Desestimar Subrogancia"
+                     }
+                    };
+
+                    var vmAgentes = Html.DataTableVm("dtPendientes", (SSO.SGP.Web.Areas.RRHH.Controllers.LicenciasAgenteController h) => h.getLicenciasPendientesSubrogancia(null));
+
+                    vmAgentes.operators = operadoresAgentes;
+                    vmAgentes.OpcionesEnGrilla = true;
+                    vmAgentes.OpcionesConextuales = true;
+                    //vmAgentes.fnDrawCallBack = "render_dtAgentes(this);";
+                    vmAgentes.ColumnFilter = true;
+                    //vmAgentes.FilterOn("activo").Select("Si", "No");
+                    //Cantidad de registros a mostrar
+                    vmAgentes.CantidadRegistrosDefault = 25;
+
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmAgentes)
+
+                <input type="hidden" id="SelectedAgentes@(hash)" value="" />
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+	    app.Desbloquear();
+    });
+
+	if (oLicenciasAgente == null)
+	    var oLicenciasAgente = new LicenciasAgente.ts.LicenciasAgenteManager();
+
+    var viewIndex = new LicenciasAgente.ts.Pendientes("@(hash)");
+	oLicenciasAgente.setPendientes(viewIndex);
+
+	viewIndex.setPendientes(dtPendientes);
+
+</script>

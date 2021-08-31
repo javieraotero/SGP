@@ -1,0 +1,69 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.Results.LicenciasResult
+
+@{
+    Layout = null;
+}
+
+Estimada/o @ViewBag.Nombre
+<br />
+<br />
+@Model.Agente (@Model.cargo - @Model.organismo) ha solicitado una licencia (@Model.Licencia) a trav&eacute;s del app/web de RRHH del Poder Judicial de La Pampa, @ViewBag.Dias día/s, a partir de d&iacute;a @Model.Desde.ToShortDateString() al @Model.Hasta.ToShortDateString().
+<br />
+@if (!string.IsNullOrEmpty(ViewBag.Subrogante))
+{
+    <span>
+        <strong>@ViewBag.Subrogante</strong> (@ViewBag.SubroganteCargo - @ViewBag.SubroganteOrganismo)  ha aprobado la solicitud de @(ViewBag.Subrogante == "1" ? "Subrogancia" : "Suplencia") el día de la fecha.
+    </span>
+}
+<br />
+Usted puede aprobar, desaprobar o bien confirmar la solicitud y enviarla a un superior:
+<br />
+<br />
+@if ((bool)ViewBag.aprueba) {
+    <a href="@(System.Configuration.ConfigurationManager.AppSettings["Url.Base"])/rrhh/restservices/pre_aprobar/?token=@ViewBag.Token">APROBAR Licencia (La licencia quedará firme)</a>
+    <br />
+    <br />
+}
+    <a href="@(System.Configuration.ConfigurationManager.AppSettings["Url.Base"])/home/confirmarlicencia/?token=@ViewBag.Token">CONFIRMAR y pasar a superior</a>
+    <br />
+    <br />
+<a href="@(System.Configuration.ConfigurationManager.AppSettings["Url.Base"])/rrhh/restservices/pre_desaprobar/?token=@ViewBag.Token">DESAPROBAR Licencia (la licencia quedará sin efecto)</a>
+<br />
+<br />
+
+@{
+    var aprobaciones = (List<SSO.SGP.EntidadesDeNegocio.Results.LicenciasAgentesAprobacionesResult>)ViewBag.Aprobaciones;
+
+    if (aprobaciones.Count > 0)
+    {
+        <table width="40%">
+            <thead>
+                <tr>
+                    <td>
+                        Fecha Confirmación
+                    </td>
+                    <td>
+                        Agente
+                    </td>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var a in aprobaciones)
+                {
+                    <tr>
+                        <td>
+                            @a.Fecha.ToShortDateString() @a.Fecha.ToShortTimeString()
+                        </td>
+                        <td>
+                            @a.Agente
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+}
+
+    Gracias!

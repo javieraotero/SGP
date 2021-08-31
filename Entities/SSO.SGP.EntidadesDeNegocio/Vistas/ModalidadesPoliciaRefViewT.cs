@@ -1,0 +1,26 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace SSO.SGP.EntidadesDeNegocio.Vistas
+{
+	/// <summary>
+	/// Vista generada por generador de codigo
+	/// </summary>
+	public class ModalidadesPoliciaRefViewT
+	{
+			#region Propiedades
+
+			[Display(Name = "Id")]
+			public int Id { get; set; }
+
+			[Display(Name = "IdModalidad")]
+			public int IdModalidad { get; set; }
+
+			[Display(Name = "Modalidad")]
+			public string Modalidad { get; set; }
+			#endregion
+
+
+	}
+}

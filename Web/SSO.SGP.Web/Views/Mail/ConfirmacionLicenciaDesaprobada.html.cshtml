@@ -1,0 +1,15 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+}
+
+Estimada/o @ViewBag.Nombre
+<br />
+El presente correo es para informar que su Solicitud de Licencia (@Model.Licencias.Descripcion con inicio @Model.FechaDesde.ToShortDateString()) ha sido <strong>RECHAZADA</strong>.
+<br />
+C&oacute;digo de verificaci&oacute;n: @ViewBag.Token
+<br />
+<br />
+<img src="http://sgp.justicialapampa.gob.ar/assets/img/sistemasfirma.png"/>

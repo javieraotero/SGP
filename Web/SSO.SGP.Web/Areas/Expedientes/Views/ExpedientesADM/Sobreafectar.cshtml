@@ -1,0 +1,157 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.FacturasImputadas
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/ts/Syncro/SyncroTabla.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/Expedientesadm/Sobreafectar.js"></script>
+<script src="Areas/Expedientes/ts/Expedientesadm/ExpedientesADMManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<style>
+    .importe {
+        font-size:x-large;
+        color:lightgreen;
+    }
+    .factura {
+        font-size:x-large;
+        color:black;
+    }
+</style>
+
+@using (Html.BeginForm("Sobfreafectar", "ImputacionesContables", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="control-group">
+                    <label class="control-label">Número</label>
+                    <div class="controls">
+                        <span class="factura"><span id="spFactura@(hash)">@ViewBag.Numero</span></span>
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+                <div class="control-group">
+                    <label class="control-label">Importe</label>
+                    <div class="controls">
+                        <span class="importe">$<span id="spImporte@(hash)" class="importe">@ViewBag.Importe</span></span>
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+                <div class="control-group">
+                    <label class="control-label">Resta</label>
+                    <div class="controls">
+                        <span class="importe">$<span id="spResta@(hash)" >@(ViewBag.Importe - ViewBag.Resta)</span></span>
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+                <div class="control-group">
+                    <input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />       
+                    <input type="hidden"  value="@ViewBag.Id" id="Id@(hash)" />           
+                </div>
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="control-group">
+                    <label class="control-label" for="UnidadOrganizacion">Unidad Organizacion</label>
+                    <div class="controls">
+                        @Html.DropDownList("UnidadDeOrganizacion", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.UnidadDeOrganizacion, new { @class = "form-control col-md-12", @id = "UnidadDeOrganizacionRef" + hash, @tabindex = "1" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#UnidadDeOrganizacionRef@(hash)').chosen();
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="control-group">
+                    @*<label class="control-label" for="UnidadOrganizacion"></label>*@
+                    <div class="controls">
+                        <input type="checkbox" id="modificarcompromiso@(hash)"/> Modificar Compromiso y Ordenado a Pagar
+                    </div>
+                </div>
+            </div><!--fin de div md-12-->
+        </div>
+    <br />
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="control-group">
+                    <label class="control-label">Partidas Presupuestarias</label>
+                    <div class="controls">
+                        <table class="table table-advance table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Partida
+                                    </th>
+                                    <th>
+                                        Division Extrapresupuestaria
+                                    </th>
+                                    <th>
+                                        Importe
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody id="body_partidas@(hash)">
+                                @if (Model != null) {
+                                    foreach (var i in Model.FacturasImputadasDetalle) {
+                                        <tr>
+                                            <td>
+                                                @i.Partidas.NumeroDePartida - @i.Partidas.Descripcion
+                                            </td>
+                                            <td>
+                                                @i.Divisions.CodigoCESIDA - @i.Divisions.Nombre
+                                            </td>
+                                            <td>
+                                                @i.Importe
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin de row -->
+
+
+
+
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oExpedientesADM == null)
+        var oExpedientesADM = new ExpedientesADM.ts.oExpedientesADMManager();
+
+    var viewSobreafectar = new ExpedientesADM.ts.Sobreafectar("@(hash)");
+    oExpedientesADM.setSobreafectar(viewSobreafectar);
+
+
+</script>

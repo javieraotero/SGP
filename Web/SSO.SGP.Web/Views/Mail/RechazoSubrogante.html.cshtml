@@ -1,0 +1,19 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+}
+
+Estimada/o @ViewBag.Nombre
+<br />
+El presente correo es para notificarle que @ViewBag.Subrogante ha rechazado ser @(ViewBag.Subrogante == "1" ? "subrogante" : "suplente") de su solicitud de licencia: @Model.Licencias.Descripcion con inicio @Model.FechaDesde.ToShortDateString().
+<br />
+<br />
+La solicitud de licencia fue cancelada. Deberá presentar una nueva solicitud con otro @(ViewBag.Subrogante == "1" ? "subrogante" : "suplente").
+<br />
+<br />
+C&oacute;digo de verificaci&oacute;n: @ViewBag.Token
+<br />
+<br />
+<img src="http://sgp.justicialapampa.gob.ar/assets/img/sistemasfirma.png" />

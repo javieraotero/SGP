@@ -1,0 +1,59 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.UnidadesDeOrganizacionRef
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/UnidadesDeOrganizacionRef/Detalle.js"></script>
+<script src="ts/UnidadesDeOrganizacionRef/UnidadesDeOrganizacionRefManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Detalle", "UnidadesDeOrganizacionRef", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Nombre, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Nombre, new {@class = "form-control col-md-12", @id="Nombre"+hash, @tabindex="2"})
+			@Html.ValidationMessageFor(model => model.Nombre)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+		
+			  @Html.HiddenFor(model => model.Id, new {@id="Id" + hash})
+		
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oUnidadesDeOrganizacionRef == null)
+			var oUnidadesDeOrganizacionRef = new UnidadesDeOrganizacionRef.ts.UnidadesDeOrganizacionRefManager();
+		
+		var viewDetalle = new UnidadesDeOrganizacionRef.ts.Detalle("@(hash)");
+		oUnidadesDeOrganizacionRef.setDetalle(viewDetalle); 
+		
+		
+	</script>	

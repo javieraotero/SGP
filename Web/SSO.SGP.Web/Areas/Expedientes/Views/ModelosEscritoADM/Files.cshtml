@@ -1,0 +1,32 @@
+﻿@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model List<string>
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <ul>
+                @foreach (var name in Model)
+                {
+                    <li><a href="#" onclick="getContent('@name');">@name</a></li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    function getContent(doc) {
+        $.get("/expedientes/ModelosEscritoADM/gethtml/?doc="+doc, function (data) {
+            tinyMCE.activeEditor.setContent('<body class="document" ><div class="page" contenteditable = "true" >' + data + '</div></body>');
+            app.modal.cerrar();
+        });
+    }
+</script>

@@ -1,0 +1,23 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.Results.LicenciasResult
+
+@{
+    Layout = null;
+}
+
+
+Estimada/o @ViewBag.Nombre
+<br />
+<br />
+<strong>@Model.Agente</strong> (@Model.cargo - @Model.organismo) ha solicitado a Ud. @(ViewBag.Subrogante == "1" ? "que lo subrogue" : "la suplencia") en el pedido de licencia @Model.Licencia a partir de d&iacute;a @Model.Desde.ToShortDateString() al @Model.Hasta.ToShortDateString().
+<br /><br />
+Para aceptar la @(ViewBag.Subrogante == "1" ? "subrogancia" : "suplencia")" por favor presione en el enlace "Aprobar @(ViewBag.Subrogante == "1" ? "Subrogancia" : "Suplencia")", caso contrario "Rechazar @(ViewBag.Subrogante == "1" ? "Subrogancia" : "Suplencia")":
+<br /><br />
+<a href="@(System.Configuration.ConfigurationManager.AppSettings["Url.Base"])/rrhh/restservices/pre_aprobar_subrogancia/?token=@ViewBag.Token">Aprobar @(ViewBag.Subrogante == "1" ? "Subrogancia" : "Suplencia")</a>
+<br /><br />
+<a href="@(System.Configuration.ConfigurationManager.AppSettings["Url.Base"])/rrhh/restservices/pre_desaprobar_subrogancia/?token=@ViewBag.Token">Rechazar @(ViewBag.Subrogante == "1" ? "Subrogancia" : "Suplencia")</a>
+<br />
+<br />
+El c&oacute;digo de esta solicitud es: @ViewBag.Token y fue generado el @DateTime.Now.ToShortDateString() @DateTime.Now.ToShortTimeString()
+<br />
+Gracias!

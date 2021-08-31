@@ -1,0 +1,81 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.DivisionesExtraPresupuestarias
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/DivisionesExtrapresupuestarias/Index.js"></script>
+<script src="ts/DivisionesExtrapresupuestarias/DivisionesExtraPresupuestariasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "Proveedores", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                @{ 			
+    ColumnCommand[] operadoresDivisiones = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "ProveedoresController_editar(this)",
+                    function = "oDivisionesExtraPresupuestarias.editar_dtDivisionesExtraPresupuestarias();",
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "ProveedoresController_eliminar(this)",
+                    function = "oDivisionesExtraPresupuestarias.eliminar_dtDivisionesExtraPresupuestarias();",
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+
+                var vmDivisiones = Html.DataTableVm("dtProveedores", (DivisionesExtraPresupuestariasController h) => h.getDivisionesExtraPresupuestariasGrilla(null));
+
+                vmDivisiones.operators = operadoresDivisiones;
+                //vmProveedores.fnDrawCallBack = "render_dtProveedores(this);";
+                vmDivisiones.ColumnFilter = true;
+                //vmProveedores.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmDivisiones.CantidadRegistrosDefault = 25;
+                  
+                }
+                @Html.Partial("DataTable", vmDivisiones)
+
+                <input type="hidden" id="SelectedProveedores@(hash)" value="" />
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+
+
+
+
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oProveedores == null)
+        var oDivisionesExtraPresupuestarias = new DivisionesExtraPresupuestarias.ts.DivisionesExtraPresupuestariasManager();
+
+    var viewIndex = new DivisionesExtraPresupuestarias.ts.Index("@(hash)");
+		oDivisionesExtraPresupuestarias.setIndex(viewIndex);
+
+		viewIndex.setDivisionesExtraPresupuestarias(dtDivisiones);
+
+</script>

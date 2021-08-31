@@ -1,0 +1,84 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasAgente/Pendientes.js"></script>
+<script src="Areas/RRHH/ts/LicenciasAgente/LicenciasAgenteManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                <strong>Este listado</strong> muestra las licencias que han sido solicitadas por Ud. pero que aún no han sido aprobadas/desaprobadas por el funcionario responsable de su Organismo.                
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @{
+                ColumnCommand[] operadoresAgentes = new ColumnCommand[1] {
+                    new ColumnCommand {
+                    display = "Cancelar solicitud",
+                    function = "oLicenciasAgente.cancelarSolicitud_dtAgentes(this)",
+                    icon = "../assets/img/icons/16x16/anular.png",
+                    tooltip = "Cancelar solicitud"
+                 }
+                //new ColumnCommand {
+                //    display = "Desaprobar",
+                //    function = "oLicenciasAgente.desaprobarlicencia_dtAgentes()",
+                //    icon = "../assets/img/icons/16x16/anular.png",
+                //    tooltip = "Desaprobar licencia"
+                // }
+                };
+
+                var vmAgentes = Html.DataTableVm("dtPendientes", (SSO.SGP.Web.Areas.RRHH.Controllers.LicenciasAgenteController h) => h.getLicenciasPendientesAprobarAgente(null));
+
+                vmAgentes.operators = operadoresAgentes;
+                vmAgentes.OpcionesEnGrilla = true;
+                vmAgentes.OpcionesConextuales = false;
+                //vmAgentes.fnDrawCallBack = "render_dtAgentes(this);";
+                vmAgentes.ColumnFilter = true;
+                //vmAgentes.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmAgentes.CantidadRegistrosDefault = 25;
+
+            }
+            @Html.Partial("~/Views/Shared/DataTable.cshtml", vmAgentes)
+
+            <input type="hidden" id="SelectedAgentes@(hash)" value="" />
+        </div>
+    </div>
+</div>
+}
+
+<script type="text/javascript">
+
+    $(function () {
+	    app.Desbloquear();
+    });
+
+    function render_dtPendientes(el) {
+    
+    }
+
+	if (oLicenciasAgente == null)
+	    var oLicenciasAgente = new LicenciasAgente.ts.LicenciasAgenteManager();
+
+    var viewIndex = new LicenciasAgente.ts.Pendientes("@(hash)");
+	oLicenciasAgente.setPendientes(viewIndex);
+
+	viewIndex.setPendientes(dtPendientes);
+
+</script>

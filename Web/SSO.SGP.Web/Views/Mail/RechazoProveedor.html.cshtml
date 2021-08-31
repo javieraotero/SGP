@@ -1,0 +1,22 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.ECO_Proveedores
+
+@{
+    Layout = null;
+}
+
+
+<p>
+    Estimado/a @Model.RazonSocial
+</p>
+<p>
+    Ha sido RECHAZADA su inscripción en el Sistema de Compras del Poder Judicial de La Pampa.
+    <br />
+    <br />
+    <strong>Observaciones:</strong>
+    <br />
+    @ViewBag.Observaciones
+</p>
+<p>
+    Poder Judicial de la Provincia de La Pampa - Secretaría de Economía y Finanzas
+</p>

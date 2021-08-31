@@ -1,0 +1,97 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.ImputacionesContables
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/ImputacionesContables/Index.js"></script>
+<script src="ts/ImputacionesContables/ImputacionesContablesManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "ImputacionesContables", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresImputacionesContables = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "ImputacionesContablesController_editar(this)",
+                    function = oImputacionesContables.editar_dtImputacionesContables();
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "ImputacionesContablesController_eliminar(this)",
+                    function = oImputacionesContables.eliminar_dtImputacionesContables();
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmImputacionesContables = Html.DataTableVm("dtImputacionesContables", (ImputacionesContablesController h) => h.getImputacionesContablesGrilla(null));
+                
+				vmImputacionesContables.operators = operadoresImputacionesContables;
+                //vmImputacionesContables.fnDrawCallBack = "render_dtImputacionesContables(this);";
+                vmImputacionesContables.ColumnFilter = true;
+                //vmImputacionesContables.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmImputacionesContables.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("DataTable", vmImputacionesContables)
+			
+			
+			<script type="text/javascript">
+					function ImputacionesContablesController_editar(el) {
+					var id = getData(el, 1);
+					oImputacionesContables.editar_dtImputacionesContables(id);
+					}
+					
+					function ImputacionesContablesController_eliminar(el) {
+					var id = getData(el, 1);
+					oImputacionesContables.eliminar_dtImputacionesContables(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedImputacionesContables@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oImputacionesContables == null)
+			var oImputacionesContables = new ImputacionesContables.ts.ImputacionesContablesManager();
+		
+		var viewIndex = new ImputacionesContables.ts.Index("@(hash)");
+		oImputacionesContables.setIndex(viewIndex); 
+		
+		viewIndex.setImputacionesContables(dtImputacionesContables);
+		
+	</script>	

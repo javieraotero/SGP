@@ -1,0 +1,19 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+}
+
+Estimada/o @ViewBag.Nombre
+<br />
+El presente correo es una confirmaci&oacute;n de que su Solicitud de Subrogante (@ViewBag.Subrogante) para la licencia @Model.Licencias.Descripcion con inicio @Model.FechaDesde.ToShortDateString() ha sido Aprobada.
+<br />
+<br />
+La solicitud de licencia para su aprobación o denegación será enviada ahora a la Dirección de Administración.
+<br />
+<br />
+C&oacute;digo de verificaci&oacute;n: @ViewBag.Token
+<br />
+<br />
+<img src="http://sgp.justicialapampa.gob.ar/assets/img/sistemasfirma.png" />

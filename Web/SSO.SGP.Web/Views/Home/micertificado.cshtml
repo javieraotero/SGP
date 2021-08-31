@@ -1,0 +1,93 @@
+﻿@model SSO.SGP.EntidadesDeNegocio.Vistas.AgentesCertificadoView
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <style>
+        body {
+            background: #EFF7FE;
+            padding-top: 15px;
+        }
+
+        .main-section {
+            border: 1px solid #138496;
+            background-color: #fff;
+        }
+
+        .profile-header {
+            background-color: #5b3434;
+            height: 150px;
+        }
+
+        .user-detail {
+            margin: -50px 0px 30px 0px;
+        }
+
+            .user-detail img {
+                height: 100px;
+                width: 100px;
+            }
+
+            .user-detail h5 {
+                margin: 15px 0px 5px 0px;
+            }
+
+        .user-social-detail {
+            padding: 15px 0px;
+            background-color: #5b3434;
+        }
+
+            .user-social-detail a i {
+                color: #fff;
+                font-size: 23px;
+                padding: 0px 5px;
+            }
+
+            .rotate {
+  transform: rotate(-90deg);
+  /*transform-origin:top left;*/
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="offset-lg-4 col-lg-4 col-sm-6 col-12 main-section text-center">
+                <div class="row">
+                    <div class="col-lg-12 col-sm-12 col-12 profile-header" style="overflow:hidden">
+                        <img src="http://turnos.justicialapampa.gob.ar/img/logo_2.png" style="overflow:hidden" />
+                    </div>
+                </div>
+                <div class="row user-detail">
+                    <div class="col-lg-12 col-sm-12 col-12">
+                        <img src="http://sgp.justicialapampa.gob.ar/files/perfiles/@Model.Foto" class="rounded-circle img-thumbnail rotate">
+                        <h5>@Model.Nombre</h5>
+                        <p><i class="fa fa-map-marker" aria-hidden="true"></i> DNI: @Model.DNI</p>
+
+                        <hr>
+                        <p>
+                            <strong>EL PODER JUDICIAL DE LA PROVINCIA DE LA PAMPA</strong> certifica que el portador de esta credencial se desempeña en el cargo de @Model.Cargo en la Primera Circunscripción Judicial.
+                            Se emite la presente a los fines del <strong>EXCLUSIVO DESPLAZAMIENTO y/o CIRCULACION</strong> de la/del nombrada/o, con objeto de prestar tareas en los días y horario habilitados
+                        </p>
+
+                        <hr>
+                        <img src="http://sgp.justicialapampa.gob.ar/assets/img/sappa.png" />
+                    </div>
+                </div>
+                <div class="row user-social-detail">
+                    <div class="col-lg-12 col-sm-12 col-12" style="color:white">
+                        CONSTATACION DE VALIDEZ: La vigencia del presente podrá constatarse llamando a los números telefónicos publicados en el sitio oficial del Poder Judicial de La Pampa https://justicia.lapampa.gob.ar/
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+<script>
+    window.localStorage.setItem("dni", "@Model.DNI");
+</script>

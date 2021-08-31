@@ -1,0 +1,96 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasAgente/Index.js"></script>
+<script src="Areas/RRHH/ts/LicenciasAgente/LicenciasAgenteManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "LicenciasAgente", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresLicenciasAgente = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    function = "editar(this)",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    function = "eliminar(this)",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmLicenciasAgente = Html.DataTableVm("dtLicenciasAgente", (LicenciasAgenteController h) => h.getLicenciasAgenteGrilla(null));
+                
+				vmLicenciasAgente.operators = operadoresLicenciasAgente;
+                //vmLicenciasAgente.fnDrawCallBack = "render_dtLicenciasAgente(this);";
+                vmLicenciasAgente.ColumnFilter = true;
+                //vmLicenciasAgente.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmLicenciasAgente.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("DataTable", vmLicenciasAgente)
+			
+			
+			<script type="text/javascript">
+					function editar(el) {
+					var id = getData(el, 1);
+					oLicenciasAgente.editar_dtLicenciasAgente(id);
+					}
+					
+					function eliminar(el) {
+					var id = getData(el, 1);
+					oLicenciasAgente.eliminar_dtLicenciasAgente(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedLicenciasAgente@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oLicenciasAgente == null)
+			var oLicenciasAgente = new LicenciasAgente.ts.LicenciasAgenteManager();
+		
+		var viewIndex = new LicenciasAgente.ts.Index("@(hash)");
+		oLicenciasAgente.setIndex(viewIndex); 
+		
+		viewIndex.setLicenciasAgente(dtLicenciasAgente);
+		
+	</script>	

@@ -1,0 +1,523 @@
+﻿<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="notranslate" translate="no">>
+<!--<![endif]-->
+<head>
+    <meta charset="utf-8" />
+    <title>Sistema de Gesti&oacute;n Presupuestaria 2014</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="" name="Sistema de Gestión Presupuestaria" />
+    <meta content="" name="Javier Otero" />
+    <meta name="google" content="notranslate">
+    <meta name="MobileOptimized" content="320">
+
+    <link href="/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+    <link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/select2/select2_metro.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-datepicker/css/datepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-timepicker/compiled/timepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-datetimepicker/css/datetimepicker.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-editable/bootstrap-editable/css/bootstrap-editable.css" />
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-editable/inputs-ext/address/address.css" />
+    <link href="/assets/css/style-metronic.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/style.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/style-responsive.css" rel="stylesheet" type="text/css" />
+    <link href="/assets/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="~/assets/css/themes/light.css" rel="stylesheet" type="text/css" id="style_color" />
+    <link href="/assets/css/custom.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="/assets/plugins/bootstrap-toastr/toastr.min.css" />
+    <link rel="stylesheet" href="/assets/plugins/jquery-ui/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="/assets/plugins/jquery-ui/smoothness/jquery.ui.theme.css">
+    @*    <link href="/Content/themes/base/jquery.ui.tabs.css" rel="stylesheet" />*@
+    <link href="/assets/css/themes/base/jquery.ui.tabs.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body class="page-header-fixed">
+    <div class="header navbar navbar-inverse navbar-fixed-top">
+        <div class="header-inner">
+            <a class="navbar-brand" href="index.html">
+                <img src="/assets/img/logo.png" alt="logo" class="img-responsive" />
+            </a>
+            <a href="javascript:;" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <img src="/assets/img/menu-toggler.png" alt="" />
+            </a>
+            <ul class="nav navbar-nav pull-right">
+                <li class="dropdown">
+                    <a id="organismo">@SSO.SGP.Web.SessionHelper.OficinaActualDescripcion</a>
+                </li>
+                <li class="dropdown">
+                    <a id="a">@SSO.SGP.Web.SessionHelper.NombrePersona</a>
+                </li>
+                <li class="divider-vertical">
+                    |
+                </li>
+                <li class="dropdown">
+                    <a id="version"></a>
+                </li>
+                <li id="header_task_bar" class="dropdown">
+                    <a data-close-others="true" data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" href="#">
+                        <i class="fa fa-tasks"></i>
+                        <span class="badge" id="badge_notificaciones"><span id="notificaciones_total">0</span></span>
+                    </a>
+                    <ul class="dropdown-menu extended tasks">
+                        <li>
+                            <p>
+                                Notificaciones
+                            </p>
+                        </li>
+                        <li>
+                            <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 250px;">
+                                <ul style="height: 250px; overflow: hidden; width: auto;" class="dropdown-menu-list scroller" id="notificaciones_lista">
+                                    @*<li>
+                                            <a href="#">
+                                                <span class="task">
+                                                    <span class="desc">New release v1.2
+                                                    </span>
+                                                </span>
+                                            </a>
+                                        </li>*@
+                                </ul><div class="slimScrollBar" style="background: none repeat scroll 0% 0% rgb(161, 178, 189); width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px;"></div><div class="slimScrollRail" style="width: 7px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: none repeat scroll 0% 0% rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+                            </div>
+                        </li>
+                        <li class="external">
+                            <a href="#" onclick="abrirExpedientesConCargo()">Ver todos<i class="m-icon-swapright"></i></a>
+                        </li>
+                    </ul>
+                </li>
+                @*                <li class="dropdown">
+                        <select class="form-control">
+                            <option>Opcion1</option>
+                        </select>
+                    </li>*@
+
+                <li class="dropdown user">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                        <img alt="" src="/assets/img/avatar1_small.jpg" />
+                        <span class="username" id="username"></span>
+                        <i class="fa fa-angle-down"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        @*<li class="divider"></li>*@
+                        <li>
+                            <a href="#" id="cambiarclave"><i class="icon-key"></i>Cambiar Clave</a>
+                        </li>
+                        <li>
+                        <li>
+                            <a href="#" id="informarincidencia"><i class="icon-key"></i>Informar incidencia</a>
+                        </li>
+                        <li>
+                            <a href="#" id="mis_incidencias"><i class="icon-key"></i>Mis incidencias</a>
+                        </li>
+                        <li>
+                            <a href="javascript:document.getElementById('logoutForm').submit()"><i class="icon-key"></i>Salir</a>
+                        </li>
+                        @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm" }))
+                        {
+                            @Html.AntiForgeryToken()
+                        }
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="clearfix">
+    </div>
+    <div class="page-container" id="page-container">
+        <div class="page-sidebar-wrapper">
+            <div class="page-sidebar navbar-collapse collapse">
+                @Html.Action("GenerarItemsMenus", "Menues")
+            </div>
+        </div>
+        <div class="page-content-wrapper">
+            <div class="page-content">
+                @*<div class="modal fade" id="portlet-config" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                    <h4 class="modal-title">Modal title</h4>
+                                </div>
+                                <div class="modal-body">
+                                    Widget settings form goes here
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn blue">Save changes</button>
+                                    <button type="button" class="btn default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                @*
+                    <div class="theme-panel hidden-xs hidden-sm">
+                        <div class="toggler">
+                        </div>
+                        <div class="toggler-close">
+                        </div>6 
+                        <div class="theme-options">
+                            <div class="theme-option theme-colors clearfix">
+                                <span>
+                                    THEME COLOR
+                                </span>
+                                <ul>
+                                    <li class="color-black current color-default" data-style="default">
+                                    </li>
+                                    <li class="color-blue" data-style="blue">
+                                    </li>
+                                    <li class="color-brown" data-style="brown">
+                                    </li>
+                                    <li class="color-purple" data-style="purple">
+                                    </li>
+                                    <li class="color-grey" data-style="grey">
+                                    </li>
+                                    <li class="color-white color-light" data-style="light">
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="theme-option">
+                                <span>
+                                    Layout
+                                </span>
+                                <select class="layout-option form-control input-small">
+                                    <option value="fluid" selected="selected">Fluid</option>
+                                    <option value="boxed">Boxed</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span>
+                                    Header
+                                </span>
+                                <select class="header-option form-control input-small">
+                                    <option value="fixed" selected="selected">Fixed</option>
+                                    <option value="default">Default</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span>
+                                    Sidebar
+                                </span>
+                                <select class="sidebar-option form-control input-small">
+                                    <option value="fixed">Fixed</option>
+                                    <option value="default" selected="selected">Default</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span>
+                                    Sidebar Position
+                                </span>
+                                <select class="sidebar-pos-option form-control input-small">
+                                    <option value="left" selected="selected">Left</option>
+                                    <option value="right">Right</option>
+                                </select>
+                            </div>
+                            <div class="theme-option">
+                                <span>
+                                    Footer
+                                </span>
+                                <select class="footer-option form-control input-small">
+                                    <option value="fixed">Fixed</option>
+                                    <option value="default" selected="selected">Default</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>*@
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3 class="page-title">
+                            <span id="titulopagina">Dashboard</span>
+                            <small id="descripcionpagina">statistics and more</small>
+                        </h3>
+                        @*                        <ul class="page-breadcrumb breadcrumb">
+                                <li class="btn-group">
+                                    <button type="button" class="btn blue dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-delay="1000" data-close-others="true">
+                                        <span>Actions
+                                        </span>
+                                        <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="#">Action</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Another action</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Something else here</a>
+                                        </li>
+                                        <li class="divider"></li>
+                                        <li>
+                                            <a href="#">Separated link</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <i class="fa fa-home"></i>
+                                    <a href="index.html">Home</a>
+                                    <i class="fa fa-angle-right"></i>
+                                </li>
+                                <li>
+                                    <a href="#">Form Stuff</a>
+                                    <i class="fa fa-angle-right"></i>
+                                </li>
+                                <li>
+                                    <a href="#">Form X-editable</a>
+                                </li>
+                            </ul>*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12" id="main_layout">
+                        @RenderSection("featured", required: false)
+                        @RenderBody()
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- /.modal -->
+    <div class="modal fade" id="MainModal" role="basic" aria-hidden="true">
+        <div class="modal-dialog modal-wide">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                    <h4 class="modal-title">Título</h4>
+                </div>
+                <div class="modal-body">
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <div class="footer">
+        <div class="footer">
+            2015 &copy;Syncrosoft SRL.
+            <div class="span pull-right">
+                <span class="go-top"><i class="icon-angle-up"></i></span>
+            </div>
+        </div>
+        @*    <div id="ProgressDialog" style="text-align: center; padding: 50px;">
+                <img src="@Url.Content("~/Images/ajax-loader.gif")" width="128" height="15" alt="Loading" />
+            </div>*@
+    </div>
+    <!--[if lt IE 9]>
+    <script src="/assets/plugins/respond.min.js"></script>
+    <script src="/assets/plugins/excanvas.min.js"></script>
+    <![endif]-->
+    <script src="/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+    <script src="/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+    <script type="text/javascript" src="/assets/plugins/select2/select2.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
+    <script type="text/javascript" src="/assets/plugins/moment.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/jquery.mockjax.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-editable/bootstrap-editable/js/bootstrap-editable.min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-editable/inputs-ext/address/address.js"></script>
+    <script type="text/javascript" src="/assets/plugins/bootstrap-editable/inputs-ext/wysihtml5/wysihtml5.js"></script>
+    <script type="text/javascript" src="/assets/plugins/jsPDF-1.3.2/dist/jspdf.debug.js"></script>
+    <script type="text/javascript" src="/assets/plugins/jsPDF-1.3.2/plugins/autoprint.js"></script>
+
+
+    <script src="/Scripts/utils.js"></script>
+    <script src="/Scripts/jquery-ui-1.8.24.js"></script>
+    <script src="/assets/plugins/bootstrap-toastr/toastr.min.js"></script>
+    <script src="/assets/plugins/bootbox/bootbox.min.js?v=1" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/DataTables-1.9.2/media/js/jquery.dataTables.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/DataTables-1.9.2/media/js/jquery.dataTables.columnFilter.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/Scripts/ContextMenu/jquery.ui.position.js")" type="text/javascript"></script>
+    <link type="text/css" href="@Url.Content("~/assets/css/DataTables-1.9.2/media/css/demo_table_jui.css")" rel="stylesheet" />
+    <link type="text/css" href="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.css")" rel="stylesheet" />
+    <link type="text/css" href="@Url.Content("~/assets/plugins/jquery-file-upload-master/css/jquery.fileupload.css")" rel="stylesheet" />
+    <script src="/Scripts/linq.js"></script>
+    <script src="/assets/scripts/app.js"></script>
+    <script src="/assets/scripts/form-editable.js"></script>
+    <script src="/ts/Syncro/SyncroModal.js"></script>
+    <script src="/ts/Syncro/SyncroUpload.js"></script>
+    <script src="/Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script src="/signalr/hubs"></script>
+    <script src="/ts/AppManager.js"></script>
+    <script src="/ts/Global.js"></script>
+    <script src="@Url.Content("~/assets/plugins/jquery-file-upload-master/js/vendor/jquery.ui.widget.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/assets/plugins/jquery-file-upload-master/js/jquery.fileupload.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/assets/plugins/jquery-file-upload-master/js/jquery.iframe-transport.js")" type="text/javascript"></script>
+    <script src="@Url.Content("~/assets/plugins/tinymce/js/tinymce/tinymce.min.js")" type="text/javascript"></script>
+    <script src="/assets/plugins/easyNotify/easyNotify.js"></script>
+
+    <script>
+        jQuery(document).ready(function () {
+            // inicializar plugins jquery
+            App.init();
+
+        });
+    </script>
+
+
+</body>
+</html>
+
+<script type="text/javascript">
+    var loadok = false;
+    var session_out = false;
+    $(document).ready(function () {
+
+        $("#cambiarclave").click(function (e) {
+            app.modal.loadAjax("Usuarios/CambiarClave");
+            app.modal.setearTitulo("Cambiar Clave");
+            app.modal.mostrar();
+        });
+
+        $("#informarincidencia").click(function (e) {
+            app.modal.loadAjax("Usuarios/InformarIncidencia");
+            app.modal.setearTitulo("Informar una nueva incidencia");
+            app.modal.mostrar();
+        });
+
+        $("#mis_incidencias").click(function (e) {
+            app.modal.loadAjax("Usuarios/MisIncidencias");
+            app.modal.setearTitulo("Ver estado de mis incidencias reportadas");
+            app.modal.mostrar();
+        });
+
+        $.cookie("loadok", "false");
+
+
+        //para redireccionar al default correspondiente al rol
+        if ($("a[data-default=true]").length) {
+
+            $("#titulopagina").html($("a[data-default=true]").attr("data-title"));
+            $("#descripcionpagina").html($("a[data-default=true]").attr("data-description"));
+
+            $.cookie("vista", $("a[data-default=true]").attr("data-url"));
+            $.cookie("tabs", $("a[data-default=true]").attr("data-tabs"));
+
+            $("#main_layout").empty().load($("a[data-default=true]").attr("href"));
+        }
+
+        $("a[data-toggle=menu]").click(function (e) {
+            e.preventDefault();
+            var el = $("#page-container");
+            App.blockUI(el);
+            $.cookie("vista", $(this).attr("data-url"));
+            $.cookie("tabs", $(this).attr("data-tabs"));
+
+            $("#titulopagina").html($(this).attr("data-title"));
+            $("#descripcionpagina").html($(this).attr("data-description"));
+
+            $("#ulmenu li").removeClass("active");
+            $("#ulmenu ul").removeClass("active");
+
+            $(this).parent("li").addClass("active");
+            $(this).parent("li").parent("ul").parent("li").addClass("active");
+
+            delete eliminar;
+            $("#main_layout").empty().load($(this).attr("href"));
+        });
+
+        $.ajaxSetup({
+            cache: false
+        });
+
+        $("#version").html("versión: 2.08.1");
+        global.organismo = @SSO.SGP.Web.SessionHelper.OficinaActual;
+        global.organismo_descripcion = "@SSO.SGP.Web.SessionHelper.OficinaActualDescripcion";
+        global.appexterna = @SSO.SGP.Web.SessionHelper.AppExterna.ToString().ToLower();
+        global.es_funcionario = @SSO.SGP.Web.SessionHelper.Es_Funcionario.ToString().ToLower();
+
+        global.email_agente = '@(string.IsNullOrEmpty(SSO.SGP.Web.SessionHelper.EmailAgente) ? "" : SSO.SGP.Web.SessionHelper.EmailAgente )';
+
+        if (!global.es_funcionario) {
+            $("a[data-title='Licencias pendientes']").parent().hide();
+            $("a[data-title='Subrog./Supl. Pendientes']").parent().hide();
+        }
+
+        @if (SSO.SGP.Web.SessionHelper.CambiarClave) {
+            @:$("#cambiarclave").click();
+        }
+
+        //CheckCargos();
+         @if (SSO.SGP.Web.SessionHelper.AppExterna) {
+            @: $("#cambiarclave").remove();
+            @: global.email_agente = '@(string.IsNullOrEmpty(SSO.SGP.Web.SessionHelper.EmailAgente) ? "" : SSO.SGP.Web.SessionHelper.EmailAgente )';
+             if (SSO.SGP.Web.SessionHelper.Operacion_Default == 0)
+             {
+                @:$("a[data-title='Solicitar Licencia']").click();
+            }
+            else {
+                @:$("a[data-title='Solicitar Viáticos']").click();
+            }
+
+        }
+    });
+
+    //capturar todas las llamadas AJAX
+    $(document).ajaxSend(function (event, jqxhr, settings) {
+        //console.log(settings);
+    });
+
+
+    $(function () {
+        setInterval(KeepSessionAlive, 300000);
+    });
+
+    $(function () {
+        //setInterval(CheckCargos, 10000);
+    });
+
+    function KeepSessionAlive() {
+        $.post("Menues/mantenerSesion", null, function (data) {
+            if (!data[0] && !session_out) {
+                bootbox.confirm("<strong>ATENCION! Su sesión dentro del sistema ha caducado.</strong><br /><br /> Si está generando un comprobante al volver ingresar podrá abrirlo nuevamente. <br /><br />Presiona OK para volver a ingresar.", function (result) {
+                    if (result) {
+                        window.location = "/account/login";
+                    } else {
+                        bootbox.alert("<strong>Usted ha decidido permanecer en el sistema con sesión caducada. </strong><br /><br />Esto podrá generará inconvenientes hasta que no ingrese nuevamente.");
+                    }
+                });
+                session_out = true;
+            }
+        });
+    }
+
+    function CheckCargos() {
+        //console.log("funcion checkcargos");
+        $.post("Expedientes/Actuacionesadm/ActuacionesConCargo", {organismo:global.organismo}, function (data) {
+            var tot = 0;
+            $("#notificaciones_lista").empty();
+            $.each(data, function(i, v) {
+                tot++;
+                $("#notificaciones_lista").append("<li><a href='#' data-id='"+v.Expediente+"' onclick='abrir(this)'><span class='task'>Cargo en Expediente " + v.Numero + "</span></a></li>");
+            });
+            $("#notificaciones_total").html(tot);
+            if (tot == 0) {
+                $("#badge_notificaciones").hide('slow');
+            } else {
+                $("#badge_notificaciones").show('slow');
+            }
+        });
+    }
+
+    function setCicloLectivo() {
+
+    }
+
+    function abrirExpedientesConCargo() {
+        $("a[data-title='Expedientes con Cargo']").click();
+    }
+
+</script>

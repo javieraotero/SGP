@@ -1,0 +1,80 @@
+@{
+    Layout = null;
+}
+@model List<SSO.SGP.EntidadesDeNegocio.PlantaDePersonalResult>
+<link href="~/assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" />
+              
+<table>
+    <tr>
+        <td>
+            <img src="~/assets/img/juslapampa.png" height="150px" style="margin-left:10px;margin-right:10px;margin-bottom:10px;margin-top:15px">
+        </td>
+        <td>
+            <h2>Secretaría de Recursos Humanos del Poder Judicial de La Pampa<br />
+            Información de Cargos</h2>
+        </td>
+    </tr>
+</table>
+
+<br />
+<table class="table table-bordered table-hover table-advance table-striped">
+    <thead>
+        <tr>
+            <th width="50%">
+                Cargo
+            </th>
+            <th width="8%">
+                Presupuesto
+            </th>
+            <th width="8%">
+                P.Permanente
+            </th>
+            <th width="8%">
+                Vacantes
+            </th>
+            <th width="8%">
+                Contratados
+            </th>
+            <th width="8%">
+                Saldo
+            </th>
+            <th width="8%">
+                Sustitutos
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @                <tr>
+                <td>
+                    @DateTime.Non
+                </td>
+                <td>
+                    @p.Presupuesto
+                </td>
+                <td>
+                    @p.PlantaPermanente
+                </td>
+                <td>
+                    @p.Vacantes
+                </td>
+                <td>
+                    @p.Contratados
+                </td>
+                <td>
+                    @Model.Sum(x => x.Presupuesto
+                </td>
+                <td>
+                    @Model.Sum(x => x.PlantaPermanente)
+                </td>
+            </tr>Copia.cshtml"
+           __o = Model.Sum(x => x.Sustitutos);
+    }
+    </tbody>
+   
+</table>
+
+               <p class="page-footer-copyright" style="text-align:center">
+                   <img src="~/assets/img/sistemasfirma.png">
+               </p>
+
+

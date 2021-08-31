@@ -1,0 +1,97 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.ModelosEscritoadm
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/ModelosEscritoADM/Index.js"></script>
+<script src="Areas/Expedientes/ts/ModelosEscritoADM/ModelosEscritoADMManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "ModelosEscritoADM", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresModelosEscritoADM = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "ModelosEscritoADMController_editar(this)",
+                    function = "oModelosEscritoADM.editar_dtModelosEscritoADM();",
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "ModelosEscritoADMController_eliminar(this)",
+                    function = "oModelosEscritoADM.eliminar_dtModelosEscritoADM();",
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmModelosEscritoADM = Html.DataTableVm("dtModelosEscritoADM", (ModelosEscritoADMController h) => h.getModelosEscritoADMGrilla(null));
+                
+				vmModelosEscritoADM.operators = operadoresModelosEscritoADM;
+                //vmModelosEscritoADM.fnDrawCallBack = "render_dtModelosEscritoADM(this);";
+                vmModelosEscritoADM.ColumnFilter = true;
+                //vmModelosEscritoADM.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmModelosEscritoADM.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("~/Views/Shared/DataTable.cshtml", vmModelosEscritoADM)
+			
+			
+			<script type="text/javascript">
+					function ModelosEscritoADMController_editar(el) {
+					var id = getData(el, 1);
+					oModelosEscritoADM.editar_dtModelosEscritoADM(id);
+					}
+					
+					function ModelosEscritoADMController_eliminar(el) {
+					var id = getData(el, 1);
+					oModelosEscritoADM.eliminar_dtModelosEscritoADM(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedModelosEscritoADM@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oModelosEscritoADM == null)
+			var oModelosEscritoADM = new ModelosEscritoADM.ts.ModelosEscritoADMManager();
+		
+		var viewIndex = new ModelosEscritoADM.ts.Index("@(hash)");
+		oModelosEscritoADM.setIndex(viewIndex); 
+		
+		viewIndex.setModelosEscritoADM(dtModelosEscritoADM);
+		
+	</script>	

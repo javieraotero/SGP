@@ -1,0 +1,218 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.TurnosWeb
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/Agentes/Index.js"></script>
+<script src="Areas/RRHH/ts/Agentes/AgentesManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<link href="~/assets/css/xeus_forms.css" rel="stylesheet" />
+<script src="~/Scripts/moment-with-locales.min.js"></script>
+<link href="~/assets/plugins/datetimerangepicker/build/css/calentim.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/datetimerangepicker/build/js/calentim.min.js"></script>
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="div_celeste">
+            <table width="98%">
+                <tr>
+                    <td class="etiqueta_negrita" width="60%">
+                        Apellido y Nombre
+                    </td>
+                    <td class="etiqueta_normal">
+                        @Model.ApellidoYNombre
+                    </td>
+                </tr>
+                <tr>
+                    <td class="etiqueta_negrita" width="60%">
+                        Tipo de Turno
+                    </td>
+                    <td class="etiqueta_normal">
+                        @if (Model.Urgente)
+                        {
+                            <span>Dos Primeras Horas Art. 116 CPC</span>
+                        }
+                        else
+                       if (!string.IsNullOrEmpty(Model.Expedientes))
+                        {
+                            <span>Retirar Expedientes</span>
+                        }
+                        else
+                        {
+                            <span>Turno</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="etiqueta_negrita" width="60%">
+                        Tipo de persona
+                    </td>
+                    <td class="etiqueta_normal">
+                        @if (Model.EsAbogado)
+                        {
+                            <span>Abogado</span>
+                        }
+                        else
+                   if (Model.EsPerito)
+                        {
+                            <span>Auxiliar de Justicia</span>
+                        }
+                        else
+                        {
+                            <span>Particular</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td class="etiqueta_negrita" width="60%">
+                        Fecha y Hora
+                    </td>
+                    <td class="etiqueta_normal">
+                        @if (!Model.Contactar)
+                        {
+                            <span class="campo_azul" id="origen">@Model.Fecha.ToShortDateString() -- @Model.Hora.ToString(@"hh\:mm")</span>
+                        }
+                        else
+                        {
+                            <span class="campo_azul" id="origen">--- CONTACTAR --- </span>
+                        }
+                    </td>
+                </tr>
+                @if (Model.Contactar)
+                {
+                    <tr>
+                        <td class="etiqueta_negrita" width="60%">
+                            Asignar turno
+                        </td>
+                        <td class="etiqueta_normal">
+                            <input type="text" class="campo_editable" id="contactar_fecha_hora" />
+                            <input type="text" class="campo_editable" id="contactar_hora" placeholder="Hora (ej: 10:30)" />
+                            <button id="AsignarTurno" class="btn success">Asignar</button>
+                            <script>
+                                var desde;
+                                moment.locale('es');
+                                var fecha = $("#contactar_fecha_hora").calentim({
+                                    singleDate: true,
+                                    locale: "es", startEmpty: true, onafterselect:
+                                        function (calentim, startDate, endDate) {
+                                            //console.log("callback calentim creacion");
+                                            desde = startDate.toDate().toISOString();;
+                                            //hasta = endDate.toDate().toISOString();
+                                            //filterEvents();
+                                            //dtTickets.fnDraw();
+                                        }
+                                });
+                            </script>
+                        </td>
+                    </tr>
+                }
+                @if (!string.IsNullOrEmpty(Model.Expedientes))
+                {
+                    <tr>
+                        <td class="etiqueta_negrita" width="60%">
+                            Expedientes
+                        </td>
+                        <td class="etiqueta_normal">
+                            @Model.Expedientes
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td class="etiqueta_negrita" width="60%">
+                        Teléfono
+                    </td>
+                    <td class="etiqueta_normal">
+                        @Model.Telefono
+                    </td>
+                </tr>
+                <tr>
+                    <td class="etiqueta_negrita" width="60%">
+                        Email
+                    </td>
+                    <td class="etiqueta_normal">
+                        @Model.Email
+                    </td>
+                </tr>
+
+                <tr>
+                    <td class="etiqueta_negrita" width="60%">
+                        Observaciones
+                    </td>
+                    <td class="etiqueta_normal">
+                        @Model.Observaciones
+                    </td>
+                </tr>
+
+
+                <tr>
+                    <td class="etiqueta_negrita" width="60%">
+                        Estado
+                    </td>
+                    <td class="etiqueta_normal">
+                        <select id="estado">
+                            <option value="1">Pendiente</option>
+                            <option value="2">No Asistió</option>
+                            <option value="3">Atendido</option>
+                        </select>
+                        <script>
+                            $(function () {
+                                $("#estado").find("option[value=@Model.Estado]").prop("selected", "selected");
+
+                                $("#AsignarTurno").click(function (e) {
+                                    e.preventDefault();
+
+                                    $.post("rrhh/agentes/asignarturno", { turno: @Model.Id, fecha: desde, hora: $("#contactar_hora").val() }, function (data) {
+                                        if (data[0]) {
+                                            app.crearNotificacionSuccess("Resultado", "Se ha actualizado el turno");
+                                            dtTurnos.fnDraw();
+                                        }
+                                    });
+
+                                });
+
+                                $("#estado").change(function () {
+
+                                    $.post("rrhh/agentes/actualizarestadoturno", { turno: @Model.Id, estado: $(this).val() }, function (data) {
+                                        if (data[0]) {
+                                            app.crearNotificacionSuccess("Resultado", "Se ha actualizado el estado del turno");
+                                            dtTurnos.fnDraw();
+                                        }
+                                    });
+
+                                });
+
+                            });
+                        </script>
+                    </td>
+                </tr>
+
+
+
+            </table>
+
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+
+    if (oAgentes == null)
+        var oAgentes = new Agentes.ts.AgentesManager();
+
+    @*var viewIndex = new Agentes.ts.Index("@(hash)");
+    oAgentes.setIndex(viewIndex);
+
+    viewIndex.setAgentes(dtAgentes);*@
+
+</script>

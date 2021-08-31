@@ -1,0 +1,146 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@model SSO.SGP.Web.Models.RegisterModel
+@{
+    ViewBag.Title = "Create";
+    Layout = null;
+}
+@using (Html.BeginForm("CreateUsuario", "Account", FormMethod.Post, new { id = "myform" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <div class="container-fluid">
+        @*<div class="header">
+            <h3>
+                Nuevo Usuario</h3>
+            <span></span>
+        </div>*@
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.Label("Nombre Persona", new { @class = "control-label", @value="Hola world!" })
+                    <div class="controls controls-row">
+                    @Html.TextBoxFor(model => model.NombrePersona, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.NombrePersona)
+                    </div>
+                    </div>
+                </div>
+          
+                        <div class="col-md-6">
+                <div class="control-group">
+                    @Html.Label("Domicilio", new { @class = "control-label" })
+                    <div class="controls controls-row">
+                        @Html.TextBox("Domicilio", "", new { @class = "span12 m-wrap" })
+                    </div>
+                </div>
+                            </div>
+            
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.Label("Teléfono", new { @class = "control-label" })
+                    <div class="controls controls-row">
+                        @Html.Editor("Telefono")
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.Label("Celular", new { @class = "control-label" })
+                    <div class="controls controls-row">
+                        @Html.Editor("Celular")
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.Label("Email", new { @class = "control-label" })
+                    <div class="controls controls-row">
+                        @Html.Editor("Email")
+                    </div>
+                </div>
+            </div>
+ 
+
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.Label("Nombre de Usuario", new { @class = "control-label" })
+                    <div class="controls controls-row">
+                        @Html.TextBoxFor(model => model.UserName, new {  data_jo="si" })
+                        @Html.ValidationMessageFor(model => model.UserName)
+                    </div>
+                </div>
+            </div>
+       </div>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Password, new { @class = "control-label" })
+                    <div class="controls controls-row">
+                        @Html.PasswordFor(model => model.Password)
+                        @Html.ValidationMessageFor(model => model.Password)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ConfirmPassword, new { @class = "control-label" })
+                    <div class="controls controls-row">
+                        @Html.PasswordFor(model => model.ConfirmPassword)
+                        @Html.ValidationMessageFor(model => model.ConfirmPassword)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="form-actions">
+            <input type="button" value="Cancelar" id="cancelarCreate" class="btn" />
+            <input type="button" value="Cancelar" id="json" class="btn" />
+            <input type="submit" value="Guardar" class="btn blue" />
+        </div>
+    </div>
+}
+@Scripts.Render("~/bundles/jqueryval")
+@JQuery.ajaxPost("myform", "dtUsuarios", "onComplete(success);")
+<script src="~/ts/Usuarios.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        //$("#ProgressDialog").dialog("close");
+
+        var el = $("#page-container");
+        App.unblockUI(el);
+
+        usu = new Usuarios(document.getElementById("myform"));
+        //usu.initHandler();
+        usu.agregarHijo("Pedro");
+        usu.agregarHijo("Ricardo");
+
+        //usu.valor = function() {
+        //    alert("tipo na!");
+        //}
+
+        //usu.valor();
+
+        setValidadorDecimal();
+
+        //focus en el primer elemento del formulario
+        $("form:not(.filter) :input:visible:enabled:first").focus();
+
+        $("#cancelarCreate").click(function (e) {
+            listTab();
+        })
+
+        $("input[type='text'], textarea, input[type='password']").change(function () {
+            this.value = this.value.replace(/<(.|\n)*?>/g, "");
+        });
+    });
+
+    function onComplete(success) {
+        if (success)
+            listTab();
+    }
+
+</script>

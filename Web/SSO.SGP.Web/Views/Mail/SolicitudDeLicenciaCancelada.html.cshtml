@@ -1,0 +1,14 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.Results.LicenciasResult
+
+@{
+    Layout = null;
+}
+
+Estimada/o @ViewBag.Nombre
+<br />
+<br />
+@Model.Agente (@Model.cargo - @Model.organismo) ha cancelado la solicitud de licencia (@Model.Licencia desde el @Model.Desde.ToShortDateString() al @Model.Hasta.ToShortDateString()).
+<br />
+
+Gracias!

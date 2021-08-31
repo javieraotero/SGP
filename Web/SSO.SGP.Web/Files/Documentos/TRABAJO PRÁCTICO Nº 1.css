@@ -1,0 +1,241 @@
+﻿<style xmlns="http://www.w3.org/1999/xhtml">span { white-space: pre-wrap; }
+p.pt-Normal {
+    margin-bottom: 10pt;
+    font-family: Calibri;
+    font-size: 11pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+span.pt-000000 {
+    font-size: 11pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000001 {
+    margin-bottom: 10pt;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+span.pt-Fuentedeprrafopredeter {
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+span.pt-000002 {
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+p.pt-000003 {
+    margin-bottom: 10pt;
+    margin-left: 0.50in;
+    text-indent: -0.25in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+}
+span.pt-000004 {
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    text-indent: 0;
+    width: 0.250in;
+}
+span.pt-Fuentedeprrafopredeter-000005 {
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Prrafodelista {
+    margin-bottom: 10pt;
+    margin-left: 0.50in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+}
+span.pt-000006 {
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+p.pt-000007 {
+    margin-bottom: 0;
+    margin-left: 1.00in;
+    text-indent: -0.25in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+}
+span.pt-000008 {
+    font-family: Symbol;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    text-indent: 0;
+    width: 0.250in;
+}
+p.pt-000009 {
+    margin-bottom: 10pt;
+    margin-left: 1.00in;
+    text-indent: -0.25in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+}
+span.pt-000010 {
+    font-family: Symbol;
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    text-indent: 0;
+    width: 0.250in;
+}
+span.pt-Hipervnculo {
+    color: #0000FF;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    text-decoration: underline;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000011 {
+    margin-bottom: 0;
+    text-indent: 0.25in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+p.pt-Normal-000012 {
+    margin-bottom: 0;
+    margin-left: 0.75in;
+    text-indent: 0.25in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+}
+p.pt-Prrafodelista-000013 {
+    margin-bottom: 0;
+    margin-left: 1.00in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+}
+p.pt-Normal-000014 {
+    margin-bottom: 0;
+    text-indent: 0.21in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+p.pt-000015 {
+    margin-bottom: 0;
+    margin-left: 0;
+    text-indent: -0.25in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+}
+p.pt-Normal-000016 {
+    margin-bottom: 0;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+p.pt-Normal-000017 {
+    margin-bottom: 0;
+    text-indent: 0.50in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+}
+p.pt-000018 {
+    margin-bottom: 10pt;
+    margin-left: 0;
+    text-indent: -0.25in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+}
+p.pt-Prrafodelista-000019 {
+    margin-bottom: 0;
+    margin-left: 0;
+    text-indent: 0.50in;
+    text-align: justify;
+    font-family: 'Verdana', 'sans-serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+}
+</style>

@@ -1,0 +1,177 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Expedientesadm
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<script src="Areas/Expedientes/ts/ExpedientesADM/Index.js"></script>
+<script src="Areas/Expedientes/ts/ExpedientesADM/ExpedientesADMManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@using (Html.BeginForm("Index", "ExpedientesADM", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                Expedientes:
+                <span id="ListadoExpedientes@(hash)"></span>
+            </div>
+            <div class="col-md-4">
+                <input type="button" value="Generar Actuación" id="Generar@(hash)" class="btn green" />
+            </div>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+
+                @{
+                    ColumnCommand[] operadoresExpedientesADM = new ColumnCommand[1] {
+
+                 new ColumnCommand {
+                    display = "Detalle",
+                    //function = "ExpedientesADMController_editar(this)",
+                    function = "oExpedientesADM.detalle_dtExpedientesADM()",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Ver Detalle"
+                 }
+                };
+
+                    var vmExpedientesADM = Html.DataTableVm("dtExpedientesADMMulti", (ExpedientesADMController h) => h.getExpedientesADMGrilla(null));
+
+                    vmExpedientesADM.operators = operadoresExpedientesADM;
+                    vmExpedientesADM.fnDrawCallBack = "render_dtExpedientesADMMulti(this);";
+                    vmExpedientesADM.ColumnFilter = true;
+                    //vmExpedientesADM.FilterOn("activo").Select("Si", "No");
+                    //Cantidad de registros a mostrar
+                    vmExpedientesADM.CantidadRegistrosDefault = 25;
+
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmExpedientesADM)
+
+
+                <script type="text/javascript">
+                    function ExpedientesADMController_editar(el) {
+                        var id = getData(el, 1);
+                        oExpedientesADM.editar_dtExpedientesADM(id);
+                    }
+
+                    function ExpedientesADMController_eliminar(el) {
+                        var id = getData(el, 1);
+                        oExpedientesADM.eliminar_dtExpedientesADM(id);
+                    }
+                </script>
+
+
+                <input type="hidden" id="SelectedExpedientesADM@(hash)" value="" />
+
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+    </div> <!--fin de container-fluid-->
+
+                    <div class="modal fade" id="ModalExpedientes" role="basic" aria-hidden="true">
+                        <div class="modal-dialog modal-wide">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                    <h4 class="modal-title">Actuación masiva a los siguientes expedientes:</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row">
+                                        <table id="table_expedientes@(hash)" class="table table-bordered table-advance">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        Numero
+                                                    </th>
+                                                    <th>
+                                                        Caratula
+                                                    </th>
+                                                    <th>
+                                                        <input type="checkbox" id="todas@(hash)" checked />
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="body_expedientes@(hash)"></tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="control-group">
+                                                <label class="control-label">Observaciones</label>
+                                                <div class="controls">
+                                                    <input type="text" class="col-md-12 form-control" id="Observaciones" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="control-group">
+                                                <label class="control-label">Organismo</label>
+                                                <div class="controls">
+                                                    @Html.DropDownList("OrganismoCargo", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.OrganismosRef, new { @class = "form-control col-md-12", @id = "OrganismoCargo" + hash, @tabindex = "28" })
+                                                    <script type="text/javascript">
+                                                        $(function () {
+                                                            $('#OrganismoCargo@(hash)').append("<option value='0'>Ninguna</option>");
+                                                            $('#OrganismoCargo@(hash)').find("option[value=0]").prop("selected", "selected");
+                                                            $('#OrganismoCargo@(hash)').chosen();
+                                                            $('#OrganismoCargo@(hash)_chzn').css("width", "100%");
+                                                            $("#chzn-drop").css("width", "100%");
+                                                        });
+                                                    </script>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+
+                                    </div>
+                                    <div class="form-actions">
+                                        <input type="button" value="Confirmar" id="Confirmar@(hash)" class="btn" />
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+                        <!-- /.modal-dialog -->
+                    </div>
+                    <div id="parsered" style="display:none"></div>
+                    }
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oExpedientesADM == null)
+        var oExpedientesADM = new ExpedientesADM.ts.ExpedientesADMManager();
+
+    var viewIndex = new ExpedientesADM.ts.Index("@(hash)");
+    oExpedientesADM.setIndex(viewIndex);
+
+    viewIndex.setExpedientesADMMulti(dtExpedientesADMMulti, 'dtExpedientesADMMulti');
+
+    function render_dtExpedientesADMMulti(el) {
+        //alert("llamada a render" + $("#dtExpedientesADMMulti tbody tr").length);
+        //console.log("llamada a render" + $("#dtExpedientesADM tbody tr").length);
+        if ($("#dtExpedientesADMMulti tbody tr").length > 1) {
+            $("#dtExpedientesADMMulti tbody tr").each(function () {
+                var id = dtExpedientesADMMulti.fnGetData($(this).index())[0];
+                var $tr = $(this);
+
+                if (Enumerable.From(oExpedientesADM.ViewIndex.ExpedientesADM_Id_multi).Where(function (x) { return x == id }).Count() > 0) {
+                    $tr.addClass("row_selected");
+                }
+            });
+        }
+    }
+
+</script>

@@ -1,0 +1,243 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@using SSO.SGP.EntidadesDeNegocio;
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/ts/Syncro/SyncroTabla.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasAgente/Crear.js"></script>
+<script src="Areas/RRHH/ts/LicenciasAgente/LicenciasAgenteManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<script src="ts/Syncro/SyncroAutocomplete.js"></script>
+<script src="ts/Syncro/SyncroSelect.js"></script>
+<script src="~/assets/plugins/jquery-inputmask/jquery.inputmask.js"></script>
+<script src="~/assets/plugins/jquery.pulsate.min.js"></script>
+@using (Html.BeginForm("Crear", "LicenciasAgente", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control-group">
+                    <label class="control-label">Seleccione Agente</label>
+                    <div class="controls">
+                        <input type="text" id="txtAgenteRRHH" class="form-control col-md-12" tabindex="1" placeholder="Seleccione Agente" /><br />
+                        <p class="help-block"></p>
+                        <input type="hidden" id="AgenteRRHH" name="AgenteRRHH" />
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="control-group">
+                    <label class="control-label">Seleccione Organismo</label>
+                    <div class="controls">
+                        <select id="organismos">
+                            <option value="-1">Seleccione organismo</option>
+                            @foreach (var o in new SSO.SGP.AccesoADatos.OrganismosRefAD().ObtenerSoloRRHH().ToList())
+                            {
+                                <option value="@o.Id">@o.Descripcion</option>
+                            }
+                        </select>
+                        <script type="text/javascript">
+			                $(function () {
+                                //$('#organismo').chosen();
+
+                                $('#organismos').change(function () {
+                                    if ($(this).val() > 0) {
+                                        $.get("/rrhh/agentes/JsonPorOrganismo/" + $(this).val(), null, function (data) {
+                                            $(data).each(function (i, o) {
+                                                var tr = `<tr data-id="${o.Id}"><td>${o.Nombre}</td><td></td><td>${o.Organismo}</td><td>${o.Cargo}</td><td><a href="#" data-tipo="quitar_agente" data-id="${o.Id}">quitar</a></td></tr>`;
+                                                $("#body_agentes").append(tr);
+                                            });
+                                        });
+                                    }
+                                });
+
+				            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-advance table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Agente
+                            </th>
+                            <th>
+                                DNI
+                            </th>
+                            <th>
+                                Organismo
+                            </th>
+                            <th>
+                                Cargo
+                            </th>
+                            <th>
+
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="body_agentes">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control-group">
+                    <label class="control-label">Tipo de Certificado</label>
+                    <div class="controls">
+                        <select class="form-control" id="tipo">
+                            <option value="1">Hasta final de la Feria Extraordina</option>
+                            <option value="2">Para otro período en particular</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label class="control-label">Lugar de Asistencia</label>
+                <div class="controls">
+                    <select class="form-control" id="pre_lugar">
+                        <option>Edificio Judicial</option>
+                        <option>Superior Tribunal de Justicia</option>
+                    </select>
+                    <input type="text" id="lugar" class="form-control col-md-12" value="Centro Judicial" />
+                    <script>
+                        $(function () {
+                            $("#pre_lugar").change(function (e) {
+                                $("#lugar").val($(this).find("option:selected").text());
+                            });
+                        });
+                    </script>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control-group">
+                    <label class="control-label">Horario</label>
+                    <div class="controls">
+                        <input type="text" id="horario" class="form-control" value="7:30 a 12:30hs" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="control-group">
+                    <label class="control-label">Desde</label>
+                    <div class="controls">
+                        <input type="text" id="Desde" class="form-control col-md-12" value="@DateTime.Now.Date.ToShortDateString()" />
+                        @*<script>
+                            $('#Desde').inputmask("99/99/9999");
+                        </script>*@
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="control-group">
+                    <label class="control-label">Hasta</label>
+                    <div class="controls">
+                        <input type="text" id="Hasta" class="form-control col-md-12" value="@DateTime.Now.Date.ToShortDateString()" />
+                        @*<script>
+                            $('#Hasta').inputmask("99/99/9999");
+                        </script>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--fin del row-->
+        <div class="form-actions">
+
+            <input type="button" value="Cancelar" id="Cancelar" class="btn" />
+
+            <input type="button" value="Generar Certificados" id="Generar" class="btn green" />
+
+        </div>
+        <!--fin form-actions>-->
+
+        <br />
+        <br />
+
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    var Agente;
+
+    $(function () {
+        app.Desbloquear();
+
+        $("a[data-tipo=quitar_agente]").die("click");
+        $("a[data-tipo=quitar_agente]").live("click", function (e) {
+            e.preventDefault();
+            $("tr[data-id=" + $(this).data("id") + "]").remove();
+        });
+
+        Agente = new SyncroAutocomplete("AgenteRRHH", "Agentes/GetJson2");
+
+        Agente.setCallback(function (ui) {
+
+            var tr = `<tr data-id="${ui.item.id}"><td>${ui.item.label}</td><td>${ui.item.documento}</td><td>${ui.item.organismo}</td><td>${ui.item.cargo.Descripcion}</td><td><a href="#" data-tipo="quitar_agente" data-id="${ui.item.id}">quitar</a></td></tr>`;
+            $("#body_agentes").append(tr);
+            //v.Legajo.html("&nbsp;Legajo: " + ui.item.legajo + " | DNI: " + ui.item.documento);
+            //v.Expediente.html(ui.item.legajo);
+            //if (ui.item.cargo.Grupo == 1) {
+            //    v.divSubrogante.css("display", "block");
+            //} else {
+            //    v.divSubrogante.css("display", "none");
+            //}
+            //v.AnioExpediente.val(ui.item.expediente);
+            //v.Licencias.refrescar("RRHH/LicenciasAgente/JsonT/?agente=" + ui.item.id + "&licencia=0&fechadesde=" + v.FiltroDesde.val() + "&fechahasta=" + v.FiltroHasta.val());
+            //v.ResumenDias.refrescar("RRHH/LicenciasAgente/JsonTotales/?agente=" + ui.item.id + "&licencia=0&fechadesde=" + v.FiltroDesde.val() + "&fechahasta=" + v.FiltroHasta.val());
+            //v.FechaDesde.focus();
+        });
+
+        $("#Generar").click(function (e) {
+            e.preventDefault();
+            var agentes = [];
+
+            $("#body_agentes").find("tr").each(function (i, o) {
+                agentes.push($(o).attr("data-id"));
+            });
+
+            app.Bloquear();
+            $.ajax({
+                type: "POST",
+                url: "rrhh/agentes/GenerarCertificado",
+                dataType: "json",
+                contentType: "application/json",
+                data: JSON.stringify({ agentes: agentes, tipo: $("#tipo").val(), desde: $("#Desde").val(), hasta: $("#Hasta").val(), lugar: $("#lugar").val(), horario: $("#horario").val() }),
+                success: function (data) {                   
+                    if (data[0]) {                     
+                        app.crearNotificacionSuccess("Resultado", data[1]);
+                    } else {
+                        app.crearNotificacionError("Error", data[1]);
+                    }
+                },
+                error: function (jqXhr, textStatus, errorThrown) {
+                    alert("Error al procesar formulario ajax");                    
+                },
+                complete: function () {
+                    app.Desbloquear();
+                }
+            })
+
+        });
+
+    });
+
+
+
+</script>

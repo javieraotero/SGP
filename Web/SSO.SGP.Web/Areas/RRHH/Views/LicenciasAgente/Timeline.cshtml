@@ -1,0 +1,151 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasAgente/Index.js"></script>
+<script src="Areas/RRHH/ts/LicenciasAgente/LicenciasAgenteManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<script src="~/Scripts/moment.min.js"></script>
+<script src="~/assets/plugins/visjs/vis.min.js"></script>
+<link href="~/assets/plugins/visjs/vis.min.css" rel="stylesheet" />
+<style>
+    .vis-item: {
+        z-index: 1000000000000 !important;
+    }
+
+    .vis-item.active {
+        background-color: #76A797 !important;
+        border-color: #5E8579 !important;
+    }
+
+    .pending {
+        background-color: #EDC87E !important;
+        border-color: #BDA064;
+    }
+
+    .aprobada {
+        background-color: aquamarine !important;
+        border-color: #BDA064;
+    }
+
+    .desaprobada {
+        background-color: coral !important;
+        border-color: #BDA064;
+    }
+</style>
+
+@using (Html.BeginForm("Index", "LicenciasAgente", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissable">
+                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                    <strong>En este listado</strong> usted puede ver de forma gráfica las solicitudes y sus estados dentro de su Organismo.
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="timetable" id="visualization"></div>
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin de row -->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+        updateState();
+    });
+
+    Date.prototype.addDays = function(days) {
+        var date = new Date(this.valueOf());
+        date.setDate(date.getDate() + days);
+        return date;
+    }
+
+    var fstart = new Date();
+    fstart.setHours(fstart.getHours() - 1);
+    var fend = new Date().addDays(15);
+
+
+    var options = { zoomable: false, orientation: "both", locale: "es", start: fstart, end: fend };
+    var container = document.getElementById('visualization');
+    @{
+        var agente = "";
+    }
+
+    @foreach (var d in new SSO.SGP.AccesoADatos.OrganismosRefAD().AgentesDelOrganismo(SSO.SGP.Web.SessionHelper.OficinaActual.Value)) {
+        agente += "'" + d.Nombre + "',";
+    }
+
+    @{agente = "[" + agente.Substring(0, agente.Length - 1) + "];"; }
+
+    names = @Html.Raw(agente);
+
+    debugger;
+
+    groups = new vis.DataSet();
+    for (var g = 1; g <= names.length; g++) {
+        groups.add({ id: names[g - 1], content: names[g - 1] });
+    }
+
+    // Create a Timeline
+    var items = new vis.DataSet();
+
+    //timeline = new vis.Timeline(container, items, options);
+
+    function getDateFromAspNetFormat(date) {
+        const re = /-?\d+/;
+        const m = re.exec(date);
+        return parseInt(m[0], 10);
+    }
+
+    function updateState() {
+        $.get("rrhh/licenciasagente/GetPorOrganismo/", null, function (data) {
+            data.forEach(function (o, i) {
+
+                var clase = "pending";
+                if (o.Estado == "APROBADA")
+                    clase = "aprobada";
+                if (o.Estado == "PENDIENTE")
+                    clase = "pending";
+                if (o.Estado == "DESAPROBADA")
+                    clase = "desaprobada";
+                //var start = new Date(pfecha.getFullYear(), pfecha.getMonth(), pfecha.getDate(), o.serviceTime.Hours, o.serviceTime.Minutes - o.Routess.Rangess.minutes_before);
+                //    var end = new Date(pfecha.getFullYear(), pfecha.getMonth(), pfecha.getDate(), o.serviceTime.Hours, o.serviceTime.Minutes + o.Routess.Rangess.minutes_after);
+                items.add({
+                    id: o.Id,
+                    group: o.Nombre,
+                    className: clase,
+                    //platform: (o.new_platform > 0 ? o.new_platform : o.platform),
+                    content:'<span style="color:#222222;">Licencia</span>',
+                    //content: content2.replace("{0}","item_"+o.Id),
+                    start: moment.utc(o.FechaDesde).toDate(),
+                    end: moment.utc(o.FechaHasta).toDate(),
+                    //start: Date(parseInt(o.FechaDesde.substr(6))),
+                    //end:  Date(parseInt(o.FechaHasta.substr(6))),
+                    type: 'range'
+                });
+            });
+            timeline = new vis.Timeline(container, items, options);
+            timeline.setGroups(groups);
+            timeline.setItems(items);
+        });
+    }
+
+
+</script>

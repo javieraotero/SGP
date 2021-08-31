@@ -1,0 +1,22 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+    var suplente = (SSO.SGP.EntidadesDeNegocio.Agentes)ViewBag.Suplente;
+    var titular = (SSO.SGP.EntidadesDeNegocio.Agentes)ViewBag.Titular;
+}
+
+<p>
+    A la <strong>@ViewBag.Organismo</strong> @(ViewBag.Organismo.Contains("Finanzas") ? "-Sector Remuneraciones-" : ""):
+</p>
+
+<br />
+<p>Por la presente informo  que al @titular.Nombramientos.Where(x => !x.FechaDeBaja.HasValue).FirstOrDefault().Cargos.Descripcion de @titular.Nombramientos.Where(x => !x.FechaDeBaja.HasValue).FirstOrDefault().Organismos.Descripcion - <strong>@titular.Personas.Apellidos, @titular.Personas.Nombres</strong>, se le <strong>APROBO</strong> la  Solicitud de Licencia ( @ViewBag.Dias día/s @Model.Licencias.Descripcion con inicio @Model.FechaDesde.ToShortDateString() hasta @Model.FechaHasta.Value.ToShortDateString()).
+<p>El @suplente.Nombramientos.Where(x=>!x.FechaDeBaja.HasValue).FirstOrDefault().Cargos.Descripcion del @suplente.Nombramientos.Where(x => !x.FechaDeBaja.HasValue).FirstOrDefault().Organismos.Descripcion - @suplente.Personas.Apellidos, @suplente.Personas.Nombres,  D.N.I. N°  @suplente.Personas.NroDocumento , aceptó realizar la suplencia en el período indicado.</p>
+<br />
+
+<br />
+Secretar&iacute;a de Recursos Humanos<br />
+C&oacute;digo de verificaci&oacute;n: @ViewBag.Token
+<br />

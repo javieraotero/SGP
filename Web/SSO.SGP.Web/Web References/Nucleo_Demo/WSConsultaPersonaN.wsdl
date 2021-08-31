@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="Nucleo" xmlns:wsdlns="Nucleo" name="WSConsultaPersonaN" targetNamespace="Nucleo" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" elementFormDefault="qualified" targetNamespace="Nucleo">
+      <xsd:complexType name="SdtConsultaPersona">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" maxOccurs="unbounded" name="SdtConsultaPersona.SdtConsultaPersonaItem" type="wsdlns:SdtConsultaPersona.SdtConsultaPersonaItem" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="SdtConsultaPersona.SdtConsultaPersonaItem">
+        <xsd:sequence>
+          <xsd:element name="PersonasNId" type="xsd:long" />
+          <xsd:element name="DocumentoNId" type="xsd:short" />
+          <xsd:element name="DocumentoNDCorta" type="xsd:string" />
+          <xsd:element name="PersonasNNroDoc" type="xsd:string" />
+          <xsd:element name="PersonasNDocumentoDefault" type="xsd:string" />
+          <xsd:element name="PersonasNSexo" type="xsd:string" />
+          <xsd:element name="PersonasNCuil" type="xsd:string" />
+          <xsd:element name="PersonasNApellido" type="xsd:string" />
+          <xsd:element name="PersonasNApellido2" type="xsd:string" />
+          <xsd:element name="PersonasNNombre" type="xsd:string" />
+          <xsd:element name="PersonasNNombre2" type="xsd:string" />
+          <xsd:element name="PersonasNNombre3" type="xsd:string" />
+          <xsd:element name="PersonasNNombreCompleto" type="xsd:string" />
+          <xsd:element name="PersonasNFechaNac" type="xsd:string" />
+          <xsd:element name="LocalidadNId" type="xsd:int" />
+          <xsd:element name="LocalidadND" type="xsd:string" />
+          <xsd:element name="PersonasNFallecido" type="xsd:byte" />
+          <xsd:element name="PersonasNFechaFall" type="xsd:string" />
+          <xsd:element name="PersonasNSintysConfiabilidad" type="xsd:double" />
+          <xsd:element name="PersonasNSintysFecha" type="xsd:string" />
+          <xsd:element name="PersonasNSintysId" type="xsd:long" />
+          <xsd:element name="STDocumentoNDCorta" type="xsd:string" />
+          <xsd:element name="STDocumentoNDLarga" type="xsd:string" />
+          <xsd:element name="STDocumentoNId" type="xsd:short" />
+          <xsd:element name="STInstitucionD" type="xsd:string" />
+          <xsd:element name="STInstitucionId" type="xsd:int" />
+          <xsd:element name="STInsVerificadoraD" type="xsd:string" />
+          <xsd:element name="STInsVerificadoraId" type="xsd:int" />
+          <xsd:element name="STLocDefuncionND" type="xsd:string" />
+          <xsd:element name="STLocDefuncionNId" type="xsd:int" />
+          <xsd:element name="PersonasNenRCCP" type="xsd:string" />
+          <xsd:element name="PersonasNBaja" type="xsd:string" />
+          <xsd:element name="PersonasNFechaBaja" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:element name="WSConsultaPersonaN.Execute">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Personasnnrodoc" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Usuario" type="xsd:string" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Clave" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="WSConsultaPersonaN.ExecuteResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="Sdtpersonas" type="wsdlns:SdtConsultaPersona" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Errornid" type="xsd:short" />
+            <xsd:element minOccurs="1" maxOccurs="1" name="Errornd" type="xsd:string" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+    </xsd:schema>
+  </types>
+  <message name="WSConsultaPersonaN.ExecuteSoapIn">
+    <part name="parameters" element="wsdlns:WSConsultaPersonaN.Execute" />
+  </message>
+  <message name="WSConsultaPersonaN.ExecuteSoapOut">
+    <part name="parameters" element="wsdlns:WSConsultaPersonaN.ExecuteResponse" />
+  </message>
+  <portType name="WSConsultaPersonaNSoapPort">
+    <operation name="Execute">
+      <input message="wsdlns:WSConsultaPersonaN.ExecuteSoapIn" />
+      <output message="wsdlns:WSConsultaPersonaN.ExecuteSoapOut" />
+    </operation>
+  </portType>
+  <binding name="WSConsultaPersonaNSoapBinding" type="wsdlns:WSConsultaPersonaNSoapPort">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="Execute">
+      <soap:operation soapAction="Nucleoaction/AWSCONSULTAPERSONAN.Execute" />
+      <input>
+        <soap:body use="literal" />
+      </input>
+      <output>
+        <soap:body use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="WSConsultaPersonaN">
+    <port name="WSConsultaPersonaNSoapPort" binding="wsdlns:WSConsultaPersonaNSoapBinding">
+      <soap:address location="https://demo3.lapampa.gov.ar/NucleoDemoNSL/servlet/awsconsultapersonan" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,101 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Proveedores
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/Proveedores/Index.js"></script>
+<script src="Areas/Expedientes/ts/Proveedores/ProveedoresManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "Proveedores", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+    <div class="form-actions">
+
+        <input type="button" value="Nuevo Proveedor" id="Nuevo@(hash)" class="btn green" />
+
+    </div>
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresProveedores = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "ProveedoresController_editar(this)",
+                    function = "oProveedores.editar_dtProveedores();",
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "ProveedoresController_eliminar(this)",
+                    function = "oProveedores.eliminar_dtProveedores();",
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmProveedores = Html.DataTableVm("dtProveedores", (ProveedoresController h) => h.getProveedoresGrilla(null));
+                
+				vmProveedores.operators = operadoresProveedores;
+                //vmProveedores.fnDrawCallBack = "render_dtProveedores(this);";
+                vmProveedores.ColumnFilter = true;
+                //vmProveedores.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmProveedores.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("~/Views/Shared/DataTable.cshtml", vmProveedores)
+			
+			
+			<script type="text/javascript">
+					function ProveedoresController_editar(el) {
+					var id = getData(el, 1);
+					oProveedores.editar_dtProveedores(id);
+					}
+					
+					function ProveedoresController_eliminar(el) {
+					var id = getData(el, 1);
+					oProveedores.eliminar_dtProveedores(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedProveedores@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oProveedores == null)
+			var oProveedores = new Proveedores.ts.ProveedoresManager();
+		
+		var viewIndex = new Proveedores.ts.Index("@(hash)");
+		oProveedores.setIndex(viewIndex); 
+		
+		viewIndex.setProveedores(dtProveedores);
+		
+	</script>	

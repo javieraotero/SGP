@@ -1,0 +1,274 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.EjecucionesPresupuestarias
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<script src="@Url.Content("~/assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-switch/static/stylesheets/bootstrap-switch.min.css")" />
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/EjecucionesPresupuestarias/Crear.js"></script>
+<script src="Areas/Expedientes/ts/EjecucionesPresupuestarias/EjecucionesPresupuestariasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Crear", "EjecucionesPresupuestarias", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Anio, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Anio, new { @class = "form-control col-md-12", @id = "Anio" + hash, @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.Anio)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PartidaPresupuestaria, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("PartidaPresupuestaria", (SelectList)ViewBag.PartidasPresupuestarias, new { @class = "form-control col-md-12", @id = "PartidasPresupuestarias" + hash, @tabindex = "2" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#PartidasPresupuestarias@(hash)').chosen();
+				        });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.PartidaPresupuestaria)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-2">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.EstaBloqueada, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.CheckBoxFor(
+                m => m.EstaBloqueada,
+                new { @id = "EstaBloqueada" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#EstaBloqueada@(hash)').bootstrapSwitch();
+				            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.EstaBloqueada)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.CreditoActual, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.CreditoActual, new { @class = "form-control col-md-12", @id = "CreditoActual" + hash, @tabindex = "4" })
+                        @Html.ValidationMessageFor(model => model.CreditoActual)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.CreditoDisponible, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.CreditoDisponible, new { @class = "form-control col-md-12", @id = "CreditoDisponible" + hash, @tabindex = "5" })
+                        @Html.ValidationMessageFor(model => model.CreditoDisponible)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.CreditoHabilitado, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.CreditoHabilitado, new { @class = "form-control col-md-12", @id = "CreditoHabilitado" + hash, @tabindex = "6" })
+                        @Html.ValidationMessageFor(model => model.CreditoHabilitado)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.MontoPreventiva, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.MontoPreventiva, new { @class = "form-control col-md-12", @id = "MontoPreventiva" + hash, @tabindex = "7" })
+                        @Html.ValidationMessageFor(model => model.MontoPreventiva)
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.MontoCompromiso, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.MontoCompromiso, new { @class = "form-control col-md-12", @id = "MontoCompromiso" + hash, @tabindex = "8" })
+                        @Html.ValidationMessageFor(model => model.MontoCompromiso)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.MontoOrdenadoAPagar, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.MontoOrdenadoAPagar, new { @class = "form-control col-md-12", @id = "MontoOrdenadoAPagar" + hash, @tabindex = "9" })
+                        @Html.ValidationMessageFor(model => model.MontoOrdenadoAPagar)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PresupuestoSolicitado, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.PresupuestoSolicitado, new { @class = "form-control col-md-12", @id = "PresupuestoSolicitado" + hash, @tabindex = "10" })
+                        @Html.ValidationMessageFor(model => model.PresupuestoSolicitado)
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Presupuestado, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Presupuestado, new { @class = "form-control col-md-12", @id = "Presupuestado" + hash, @tabindex = "11" })
+                        @Html.ValidationMessageFor(model => model.Presupuestado)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ReestructuraMas, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.ReestructuraMas, new { @class = "form-control col-md-12", @id = "ReestructuraMas" + hash, @tabindex = "12" })
+                        @Html.ValidationMessageFor(model => model.ReestructuraMas)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ReestructuraMenos, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.ReestructuraMenos, new { @class = "form-control col-md-12", @id = "ReestructuraMenos" + hash, @tabindex = "13" })
+                        @Html.ValidationMessageFor(model => model.ReestructuraMenos)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Factibilidad, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Factibilidad, new { @class = "form-control col-md-12", @id = "Factibilidad" + hash, @tabindex = "14" })
+                        @Html.ValidationMessageFor(model => model.Factibilidad)
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.FactibilidadHabilitada, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.FactibilidadHabilitada, new { @class = "form-control col-md-12", @id = "FactibilidadHabilitada" + hash, @tabindex = "15" })
+                        @Html.ValidationMessageFor(model => model.FactibilidadHabilitada)
+                    </div>
+                </div>
+
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ReservaMas, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.ReservaMas, new { @class = "form-control col-md-12", @id = "ReservaMas" + hash, @tabindex = "16" })
+                        @Html.ValidationMessageFor(model => model.ReservaMas)
+                    </div>
+                </div>
+
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ReservaMenos, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.ReservaMenos, new { @class = "form-control col-md-12", @id = "ReservaMenos" + hash, @tabindex = "17" })
+                        @Html.ValidationMessageFor(model => model.ReservaMenos)
+                    </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+
+
+
+
+        <div class="form-actions">
+
+            <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+
+            <input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+
+            <input type="button" value="Guardar & Nuevo" id="GuardarYNuevo@(hash)" class="btn blue" />
+
+        </div>
+        <!--fin form-actions>-->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oEjecucionesPresupuestarias == null)
+        var oEjecucionesPresupuestarias = new EjecucionesPresupuestarias.ts.EjecucionesPresupuestariasManager();
+
+    var viewCrear = new EjecucionesPresupuestarias.ts.Crear("@(hash)");
+		oEjecucionesPresupuestarias.setCrear(viewCrear);
+
+
+</script>

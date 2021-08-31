@@ -1,0 +1,14 @@
+@using ActionMailer.Net
+
+@{
+    Layout = null;
+}
+
+Estimado/a @ViewBag.Nombre
+<br />
+Le informamos que se ha realizado el depósito correspondiente a la solicitud de anticipo con identificador @ViewBag.Identificador con destino a @ViewBag.Destino del día @ViewBag.Dia
+<br />
+Enviado el @DateTime.Now.ToShortDateString() a las @DateTime.Now.ToShortTimeString()
+<br />
+<br />
+<img src="http://sgp.justicialapampa.gob.ar/assets/img/sistemasfirma.png"/>

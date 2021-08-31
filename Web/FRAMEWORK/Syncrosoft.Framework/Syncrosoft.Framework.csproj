@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6798BC29-06F4-4440-BAB8-33D89E184513}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Syncrosoft.Framework</RootNamespace>
+    <AssemblyName>Syncrosoft.Framework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>
+    </TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\Syncrosoft.Framework.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|AnyCPU'">
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\Syncrosoft.Framework.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\docs\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\AutoFill\media\docs\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\AutoFill\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\ColReorder\media\docs\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\ColReorder\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\ColVis\media\docs\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\ColVis\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\FixedColumns\docs\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\FixedColumns\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\Scroller\media\docs\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\Scroller\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\extras\TableTools\media\js\" />
+    <Folder Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.1\media\js\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controles\MVC\JQuery.cs" />
+    <Compile Include="Controles\MVC\JQuery.Datatables\DataTablesData.cs" />
+    <Compile Include="Controles\MVC\JQuery.Datatables\DataTablesFilter.cs" />
+    <Compile Include="Controles\MVC\JQuery.Datatables\DataTablesHelper.cs" />
+    <Compile Include="Controles\MVC\JQuery.Datatables\DataTablesModelBinder.cs" />
+    <Compile Include="Controles\MVC\JQuery.Datatables\DataTablesParam.cs" />
+    <Compile Include="Controles\MVC\JQuery.Datatables\DataTablesResult.cs" />
+    <Compile Include="Controles\MVC\JQuery.Datatables\DataTableVm.cs" />
+    <Compile Include="Controles\MVC\JQuery.Datatables\DynamicLinq\DynamicLinq.cs" />
+    <Compile Include="Controles\MVC\JQuery.Datatables\StaticReflectionHelper.cs" />
+    <Compile Include="Enumeraciones.cs" />
+    <Compile Include="Utils\CaptchaImage\CaptchaImage.cs" />
+    <Compile Include="Utils\CodigoAleatorio\CodigoAleatorio.cs" />
+    <Compile Include="Utils\Correo\Correos.cs" />
+    <Compile Include="Utils\Encriptacion\Encriptacion.cs" />
+    <Compile Include="Utils\Log\Logger.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=3.0.0.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.3.0.50813.1\lib\net40\System.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.1.0.20105.408\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.1.0.20105.408\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Controles\MVC\JQuery.Datatables\App_Start\RegisterDatatablesModelBinder.cs.pp" />
+    <None Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\psd\collection.psd" />
+    <None Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\psd\copy document.psd" />
+    <None Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\psd\file_types.psd" />
+    <None Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\psd\printer.psd" />
+    <None Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\Sorting icons.psd" />
+    <None Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\AutoFill\media\js\AutoFill.min.js.gz" />
+    <None Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColReorder\media\js\ColReorder.min.js.gz" />
+    <None Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColVis\media\js\ColVis.min.js.gz" />
+    <None Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\FixedColumns\media\js\FixedColumns.min.js.gz" />
+    <None Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\Scroller\media\js\dataTables.scroller.min.js.gz" />
+    <None Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\TableTools\media\js\TableTools.min.js.gz" />
+    <None Include="Controles\MVC\JQuery.Datatables\Views\Shared\DataTable.cshtml" />
+    <None Include="Controles\MVC\JQuery.Datatables\Views\Web.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\docs\media\css\doc.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\docs\media\css\shCore.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\docs\media\css\shThemeDataTables.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\docs\media\images\arrow.jpg" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\docs\media\images\extended.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\AutoFill\media\css\AutoFill.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\AutoFill\media\docs\media\css\doc.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\AutoFill\media\docs\media\css\shCore.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\AutoFill\media\docs\media\css\shThemeDataTables.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\AutoFill\media\docs\media\images\arrow.jpg" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\AutoFill\media\docs\media\images\extended.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\AutoFill\media\images\filler.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColReorder\media\css\ColReorder.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColReorder\media\docs\media\css\doc.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColReorder\media\docs\media\css\shCore.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColReorder\media\docs\media\css\shThemeDataTables.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColReorder\media\docs\media\images\arrow.jpg" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColReorder\media\docs\media\images\extended.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColReorder\media\images\insert.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColVis\media\css\ColVis.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColVis\media\css\ColVisAlt.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColVis\media\docs\media\css\doc.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColVis\media\docs\media\css\shCore.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColVis\media\docs\media\css\shThemeDataTables.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColVis\media\docs\media\images\arrow.jpg" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColVis\media\docs\media\images\extended.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\ColVis\media\images\button.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\FixedColumns\docs\media\css\doc.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\FixedColumns\docs\media\css\shCore.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\FixedColumns\docs\media\css\shThemeDataTables.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\FixedColumns\docs\media\images\arrow.jpg" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\FixedColumns\docs\media\images\extended.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\Scroller\media\css\dataTables.scroller.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\Scroller\media\docs\media\css\doc.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\Scroller\media\docs\media\css\shCore.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\Scroller\media\docs\media\css\shThemeDataTables.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\Scroller\media\docs\media\images\arrow.jpg" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\Scroller\media\docs\media\images\extended.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\Scroller\media\images\loading-background.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\css\TableTools.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\css\TableTools_JUI.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\background.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\collection.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\collection_hover.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\copy.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\copy_hover.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\csv.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\csv_hover.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\pdf.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\pdf_hover.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\print.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\print_hover.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\xls.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\extras\TableTools\media\images\xls_hover.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\css\demo_page.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\css\demo_table.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\css\demo_table_jui.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\css\jquery.dataTables.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\css\jquery.dataTables_themeroller.css" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\back_disabled.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\back_enabled.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\back_enabled_hover.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\favicon.ico" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\forward_disabled.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\forward_enabled.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\forward_enabled_hover.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\sort_asc.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\sort_asc_disabled.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\sort_both.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\sort_desc.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Content\DataTables-1.9.2\media\images\sort_desc_disabled.png" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\docs\media\js\doc.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\docs\media\js\jquery.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\docs\media\js\shBrushJScript.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\docs\media\js\shCore.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\AutoFill\media\docs\media\js\doc.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\AutoFill\media\docs\media\js\jquery.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\AutoFill\media\docs\media\js\shBrushJScript.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\AutoFill\media\docs\media\js\shCore.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\AutoFill\media\js\AutoFill.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\AutoFill\media\js\AutoFill.min.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColReorder\media\docs\media\js\doc.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColReorder\media\docs\media\js\jquery.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColReorder\media\docs\media\js\shBrushJScript.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColReorder\media\docs\media\js\shCore.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColReorder\media\js\ColReorder.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColReorder\media\js\ColReorder.min.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColVis\media\docs\media\js\doc.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColVis\media\docs\media\js\jquery.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColVis\media\docs\media\js\shBrushJScript.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColVis\media\docs\media\js\shCore.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColVis\media\js\ColVis.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\ColVis\media\js\ColVis.min.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\FixedColumns\docs\media\js\doc.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\FixedColumns\docs\media\js\jquery.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\FixedColumns\docs\media\js\shBrushJScript.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\FixedColumns\docs\media\js\shCore.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\FixedColumns\media\js\FixedColumns.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\FixedColumns\media\js\FixedColumns.min.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\Scroller\media\docs\media\js\doc.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\Scroller\media\docs\media\js\jquery.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\Scroller\media\docs\media\js\shBrushJScript.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\Scroller\media\docs\media\js\shCore.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\Scroller\media\js\dataTables.scroller.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\Scroller\media\js\dataTables.scroller.min.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\TableTools\media\js\TableTools.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\TableTools\media\js\TableTools.min.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\extras\TableTools\media\js\ZeroClipboard.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\media\js\jquery.dataTables.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\media\js\jquery.dataTables.min.js" />
+    <Content Include="Controles\MVC\JQuery.Datatables\Scripts\DataTables-1.9.2\media\js\jquery.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

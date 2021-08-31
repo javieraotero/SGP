@@ -1,0 +1,122 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model List<SSO.SGP.EntidadesDeNegocio.EjecucionesPresupuestarias>
+
+    @{
+        Layout = null;
+        var hash = "form" + Session.GetHashCode();
+    }
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @*<script src="Areas/Expedientes/ts/ExpedientesADM/Index.js"></script>
+        <script src="Areas/Expedientes/ts/ExpedientesADM/ExpedientesADMManager.js"></script>*@
+    <script src="ts/Syncro/SyncroModal.js"></script>
+    <script src="~/assets/plugins/amcharts_3.21.13.free/amcharts/amcharts.js"></script>
+    <script src="~/assets/plugins/amcharts_3.21.13.free/amcharts/gauge.js"></script>
+    <script src="~/assets/plugins/amcharts_3.21.13.free/amcharts/plugins/export/export.js"></script>
+    <link href="~/assets/plugins/amcharts_3.21.13.free/amcharts/plugins/export/export.css" rel="stylesheet" />
+    <script src="~/assets/plugins/amcharts_3.21.13.free/amcharts/themes/light.js"></script>
+    @using (Html.BeginForm("Index", "ExpedientesADM", FormMethod.Post, new { id = hash }))
+    {
+        <div class="container-fluid">
+            @{
+                var registros = Model.Count();
+                var rows = registros / 4;
+                var inicio = 1;
+            }
+            @for (int i = 1; i <= rows; i++)
+            {
+                var t = 0;
+                <div class="row">
+                    @for (int j = inicio; j <= registros; j++)
+                    {
+                        if (t == 4)
+                        {
+                            break;
+                        }
+                        else
+                        {
+                            <div class="col-md-3" id="chartdiv@(inicio)" style="height:270px">
+                            </div>
+                            t++;
+                            inicio++;
+                        }
+                    }
+                </div>
+            }
+        </div> <!--fin de container-fluid-->
+                }
+
+    <script type="text/javascript">
+
+        $(function () {
+            app.Desbloquear();
+
+        });
+
+        @for (int i = 0; i < Model.Count(); i++) {
+            <text>
+        var chart@(i) = AmCharts.makeChart("chartdiv@(i)", {
+            "theme": "light",
+            "type": "gauge",
+            "axes": [{
+                "topTextFontSize": 20,
+                "topTextYOffset": 70,
+                "axisColor": "#31d6ea",
+                "axisThickness": 1,
+                "endValue": @Model[i].Presupuestado.ToString().Replace(",","."),
+                "gridInside": true,
+                "inside": true,
+                "radius": "50%",
+                "valueInterval": @Model[i].Presupuestado.ToString().Replace(",", "."),
+                "tickColor": "#67b7dc",
+                "startAngle": -90,
+                "endAngle": 90,
+                "unit": "$",
+                "bandOutlineAlpha": 0,
+                "bands": [{
+                    "color": "#0080ff",
+                    "endValue": @Model[i].Presupuestado.ToString().Replace(",","."),
+                    "innerRadius": "105%",
+                    "radius": "170%",
+                    "gradientRatio": [0.5, 0, -0.5],
+                    "startValue": 0
+                }, {
+                    "color": "#3cd3a3",
+                    "endValue": @(Model[i].CreditoDisponible.ToString().Replace(",", ".")),
+                    "balloonText" : "$ " + @(Model[i].CreditoDisponible.ToString().Replace(",", ".")),
+                    "innerRadius": "105%",
+                    "radius": "170%",
+                    "gradientRatio": [0.5, 0, -0.5],
+                    "startValue": 0
+                }]
+            }],
+            "titles": [
+    {
+        "text": "@Model[i].PartidaPresupuestarias.NumeroDePartida",
+        "size": 15
+    }],
+            "arrows": [{
+                "alpha": 1,
+                "innerRadius": "35%",
+                "nailRadius": 0,
+                "radius": "170%",
+                "value":@(Model[i].CreditoDisponible.ToString().Replace(",", ".")),
+            }]
+        });
+
+
+        $("a[href='http://www.amcharts.com']").hide();
+        </text>
+
+                    }
+
+
+
+        //if (oExpedientesADM == null)
+        //    var oExpedientesADM = new ExpedientesADM.ts.ExpedientesADMManager();
+
+    </script>

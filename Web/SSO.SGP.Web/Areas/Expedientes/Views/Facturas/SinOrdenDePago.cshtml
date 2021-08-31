@@ -1,0 +1,103 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Facturas
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/Facturas/SinOP.js"></script>
+<script src="Areas/Expedientes/ts/Facturas/FacturasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "Facturas", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresFacturas = new ColumnCommand[3] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "FacturasController_editar(this)",
+                    function = "oFacturas.editar_dtFacturas();",
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "FacturasController_eliminar(this)",
+                    function = "oFacturas.eliminar_dtFacturas();",
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "asignar",
+                    //function = "FacturasController_eliminar(this)",
+                    function = "oFacturas.asignar_dtFacturas();",
+                    icon = "../assets/img/icons/16x16/asignar.png",
+                    tooltip = "Asignar Factura"
+                 }
+                };
+				
+                var vmFacturas = Html.DataTableVm("dtSinOrdenDePago", (FacturasController h) => h.getFacturasAfectadasSinOrdenDePago(null));
+                
+				vmFacturas.operators = operadoresFacturas;
+                //vmFacturas.fnDrawCallBack = "render_dtFacturas(this);";
+                vmFacturas.ColumnFilter = true;
+                //vmFacturas.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmFacturas.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("~/Views/Shared/DataTable.cshtml", vmFacturas)
+			
+			
+			<script type="text/javascript">
+					function FacturasController_editar(el) {
+					var id = getData(el, 1);
+					oFacturas.editar_dtFacturas(id);
+					}
+					
+					function FacturasController_eliminar(el) {
+					var id = getData(el, 1);
+					oFacturas.eliminar_dtFacturas(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedFacturas@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oFacturas == null)
+			var oFacturas = new Facturas.ts.FacturasManager();
+		
+		var viewSinOP = new Facturas.ts.SinOP("@(hash)");
+        oFacturas.setSinOP(viewSinOP);
+		
+        viewSinOP.setdtSinOP(dtSinOrdenDePago);
+		
+	</script>	

@@ -1,0 +1,20 @@
+Politica de Privacidad
+Nuestras Aplicaciones android Publicadas en Google Play contiene un componente declarado en Android Manifest Permission llamado android.permission.READ_PHONE_STATE  (Allows read only access to phone state, including the phone number of the device, current cellular network information, the status of any ongoing calls, and a list of any PhoneAccounts registered on the device.) el cualse relaciona a las politicas de Informacion Personal y Sensible de Google Play.
+
+Por este medio damos Fé que nuestras Aplicaciones no guarda, espía, vende o difunde datos del telefono que contenga alguna de nuestras Apps Instaladas.
+
+Estos elementos (android.permission.READ_PHONE_STATE) son escenciales para el correcto funcionamiento de las aplicaciones que realizan funcion de Radio/Streaming y trabajar en segundo plano. Permitiendo asi poner STOP el audio/musica que suena en la App al entrar una llamada y poder atenderla correctamente.
+
+Camaron Hosting, no almacena, ni difunde datos del usuario a los cuales tampoco tiene acceso alguno a la informacion.
+Damos por este medio Nuestra Práctica de Buena Fé en nuestras Aplicaciones Android.
+
+Privacy Policy
+Our Published Android Apps on Google Play contains a component declared in Android Manifest Permission called android.permission.READ_PHONE_STATE (Allows to read only access to phone state, including the phone number of the device, current cellular network information, the status of any ongoing calls, And a list of any PhoneAccounts registered on the device.) Which relates to the Google Play Personal and Sensitive Information policies.
+
+By this means we give Faith that our Applications does not save, spy, or disseminate data of the phone that contains any of our Apps.
+
+These elements (android.permission.READ_PHONE_STATE) are essential for the correct functioning of applications that perform Radio / Streaming function and work in the background. Thus allowing STOP the audio / music that sounds in the App when entering a call and able to attend it correctly.
+
+Camaron Hosting, does not store or disseminate user data to which it also has no access to the information.
+
+We hereby hereby endorse our Good Faith Practice in our Android Applications.

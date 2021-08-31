@@ -1,0 +1,96 @@
+@{
+    Layout = null;
+}
+@model List<SSO.SGP.EntidadesDeNegocio.PlantaDePersonalResult>
+    <link href="~/assets/plugins/bootstrap/css/bootstrap.css" rel="stylesheet" />
+
+    <table>
+        <tr>
+            <td>
+                <img src="~/assets/img/juslapampa.png" height="150px" style="margin-left:10px;margin-right:10px;margin-bottom:10px;margin-top:15px">
+            </td>
+            <td>
+                <h2>
+                    Secretaría de Recursos Humanos del Poder Judicial de La Pampa<br />
+                    Información de Cargos al @DateTime.Now.ToShortDateString()
+                </h2>
+            </td>
+        </tr>
+    </table>
+    @{ 
+        var Presupuesto = Model.Where(x => x.Id != 500).Sum(x => x.Presupuesto);
+        var Planta = Model.Sum(x => x.PlantaPermanente);
+        var Vacantes = Presupuesto - Planta;
+        var Contrato = Model.Where(x => x.Id != 500).Sum(x => x.Contratados);
+        var Saldo = Vacantes - Contrato;
+    }
+    <br />
+    <table class="table table-bordered table-hover table-advance table-striped">
+        <thead>
+            <tr>
+                <th>
+                    Descripción
+                </th>
+                <th>
+                    Cantidad
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Cargos creados por presupuesto
+                </td>
+                <td>
+                    @Model.Where(x=>x.Id != 500).Sum(x => x.Presupuesto)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cargos ocupados por planta permanente
+                </td>
+                <td>
+                    @Model.Sum(x => x.PlantaPermanente)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cargos vacantes
+                </td>
+                <td>
+                    @Vacantes 
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cargos ocupados por contrato
+                </td>
+                <td>
+                    @Model.Where(x=>x.Id != 500).Sum(x => x.Contratados)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Saldo
+                </td>
+                <td>
+                    @Saldo
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    Cargos ocupados por sustituto
+                </td>
+                <td>
+                    @Model.Sum(x => x.Sustitutos)
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <p class="page-footer-copyright" style="text-align:center">
+        <img src="~/assets/img/sistemasfirma.png">
+    </p>
+
+

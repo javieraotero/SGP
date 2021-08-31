@@ -1,0 +1,17 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+}
+
+
+Estimada/o @ViewBag.Nombre
+<br />
+<br />
+Al funcionario <strong>@Model.Agente</strong> que ha solicitado su subrogancia para la licencia @Model.Licencias.Descripcion a partir de d&iacute;a @Model.FechaDesde.ToShortDateString() al @Model.FechaHasta.Value.ToShortDateString() le han APROBADO su licencia.
+<br />
+<br />
+El c&oacute;digo de esta confirmación es: @ViewBag.Token y fue generada el @DateTime.Now.ToShortDateString() @DateTime.Now.ToShortTimeString()
+<br />
+Gracias!

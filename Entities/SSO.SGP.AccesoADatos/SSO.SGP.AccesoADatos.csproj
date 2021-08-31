@@ -1,0 +1,388 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7423F2EC-D1D3-4B66-98C6-F7EFB5AA83B1}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SSO.SGP.AccesoADatos</RootNamespace>
+    <AssemblyName>SSO.SGP.AccesoADatos</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncrosoft.Framework">
+      <HintPath>..\SSO.SGP.EntidadesDeNegocio\bin\Syncrosoft.Framework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AccesoADatos\ActividadesInternasRefAD.cs" />
+    <Compile Include="AccesoADatos\ActuacionesAD.cs" />
+    <Compile Include="AccesoADatos\ActuacionesadmAD.cs" />
+    <Compile Include="AccesoADatos\ActuacionesCivilAD.cs" />
+    <Compile Include="AccesoADatos\ActuacionesCivilNotificacionAD.cs" />
+    <Compile Include="AccesoADatos\ActuacionesNotificacionAD.cs" />
+    <Compile Include="AccesoADatos\ActuacionesPersonaDelitoAD.cs" />
+    <Compile Include="AccesoADatos\ActuacionesProvisoriasAD.cs" />
+    <Compile Include="AccesoADatos\ActuacionesVocesAD.cs" />
+    <Compile Include="AccesoADatos\AcumuladosAD.cs" />
+    <Compile Include="AccesoADatos\AdministracionPedidosActuacionesAD.cs" />
+    <Compile Include="AccesoADatos\AdministracionPedidosAD.cs" />
+    <Compile Include="AccesoADatos\AgentesAD.cs" />
+    <Compile Include="AccesoADatos\ArchivosAD.cs" />
+    <Compile Include="AccesoADatos\ECO_UsuariosAD.cs" />
+    <Compile Include="AccesoADatos\ECO_ProveedoresSubRubrosAD.cs" />
+    <Compile Include="AccesoADatos\ECO_ProveedoresSociosAD.cs" />
+    <Compile Include="AccesoADatos\ECO_ProveedoresSubRubroRefAD.cs" />
+    <Compile Include="AccesoADatos\ECO_ProveedoresAdjuntosAD.cs" />
+    <Compile Include="AccesoADatos\ECO_ProveedoresRubroRefAD.cs" />
+    <Compile Include="AccesoADatos\PersonasTrazabilidadAD.cs" />
+    <Compile Include="AccesoADatos\ECO_ProveedoresAD.cs" />
+    <Compile Include="AccesoADatos\TurnosWebAD.cs" />
+    <Compile Include="AccesoADatos\ConceptosDeGastosRefAD.cs" />
+    <Compile Include="AccesoADatos\ConcursosDeIngresoEvaluacionesAD.cs" />
+    <Compile Include="AccesoADatos\ConcursosDeIngresoPreguntasAD.cs" />
+    <Compile Include="AccesoADatos\ConcursosDeIngresoRespuestasAD.cs" />
+    <Compile Include="AccesoADatos\ConcursosEvaluacionesRespuestasAD.cs" />
+    <Compile Include="AccesoADatos\ConcursosInscripcionesEvaluacionesAD.cs" />
+    <Compile Include="AccesoADatos\EstadosDeViaticosRefAD.cs" />
+    <Compile Include="AccesoADatos\MontosDeViaticosAD.cs" />
+    <Compile Include="AccesoADatos\RegistroRebeldiadtoAD.cs" />
+    <Compile Include="AccesoADatos\AgentesBonificacionesAD.cs" />
+    <Compile Include="AccesoADatos\AgentesDocenciaAD.cs" />
+    <Compile Include="AccesoADatos\AmbitosAD.cs" />
+    <Compile Include="AccesoADatos\ArchivoExpedienteAD.cs" />
+    <Compile Include="AccesoADatos\ArchivoExpedientePasesAD.cs" />
+    <Compile Include="AccesoADatos\ArticulosDeComprasDeSuministrosAD.cs" />
+    <Compile Include="AccesoADatos\ArticulosDePedidoDeSuministrosAD.cs" />
+    <Compile Include="AccesoADatos\ArticulosDeSuministrosAD.cs" />
+    <Compile Include="AccesoADatos\AtencionesRefAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasAnterioresAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasCivilAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasDemorasAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasEstadosAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasEstadosCivilAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasImputadosAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasNotificacionAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasNotificacionCivilAD.cs" />
+    <Compile Include="AccesoADatos\AudienciasSolicitudAD.cs" />
+    <Compile Include="AccesoADatos\AuditoriaAD.cs" />
+    <Compile Include="AccesoADatos\BarriosRefAD.cs" />
+    <Compile Include="AccesoADatos\CajaForenseAD.cs" />
+    <Compile Include="AccesoADatos\CallesRefAD.cs" />
+    <Compile Include="AccesoADatos\CambiosRadicacionAD.cs" />
+    <Compile Include="AccesoADatos\CargosFuncionalesRefAD.cs" />
+    <Compile Include="AccesoADatos\CargosRefAD.cs" />
+    <Compile Include="AccesoADatos\CategoriasCausasAD.cs" />
+    <Compile Include="AccesoADatos\CategoriasCausasCivilAD.cs" />
+    <Compile Include="AccesoADatos\CategoriasDeImagenesRefAD.cs" />
+    <Compile Include="AccesoADatos\CategoriasExpedienteadmRefAD.cs" />
+    <Compile Include="AccesoADatos\CategoriasExpedientesAD.cs" />
+    <Compile Include="AccesoADatos\CategoriasRefAD.cs" />
+    <Compile Include="AccesoADatos\CausasAccesosAD.cs" />
+    <Compile Include="AccesoADatos\CausasAD.cs" />
+    <Compile Include="AccesoADatos\CausasDocumentoAD.cs" />
+    <Compile Include="AccesoADatos\CausasEstadoAD.cs" />
+    <Compile Include="AccesoADatos\CausasReceptoriaAD.cs" />
+    <Compile Include="AccesoADatos\CausasResponsableAD.cs" />
+    <Compile Include="AccesoADatos\CesidaCargosRefAD.cs" />
+    <Compile Include="AccesoADatos\CesidaCategoriasAD.cs" />
+    <Compile Include="AccesoADatos\CesidaEmpresasRefAD.cs" />
+    <Compile Include="AccesoADatos\CesidaFuncionesRefAD.cs" />
+    <Compile Include="AccesoADatos\CesidaJornadasRefAD.cs" />
+    <Compile Include="AccesoADatos\CesidaMovimientoAgentesAD.cs" />
+    <Compile Include="AccesoADatos\CesidaMovimientosAD.cs" />
+    <Compile Include="AccesoADatos\CesidaMovimientosAgentesDetallesAD.cs" />
+    <Compile Include="AccesoADatos\CesidaOrganismosRefAD.cs" />
+    <Compile Include="AccesoADatos\CesidaParametrosDeMovimientosAD.cs" />
+    <Compile Include="AccesoADatos\CesidaRevistasRefAD.cs" />
+    <Compile Include="AccesoADatos\CesidaTitulosRefAD.cs" />
+    <Compile Include="AccesoADatos\CesidaUbicacionesAD.cs" />
+    <Compile Include="AccesoADatos\CesidaValoresDeParametrosAD.cs" />
+    <Compile Include="AccesoADatos\CircunscripcionesRefAD.cs" />
+    <Compile Include="AccesoADatos\ColaDeMovimientoscesidaAD.cs" />
+    <Compile Include="AccesoADatos\ColumnasAD.cs" />
+    <Compile Include="AccesoADatos\CoMediadoresAD.cs" />
+    <Compile Include="AccesoADatos\CoMediadoresContadoresAD.cs" />
+    <Compile Include="AccesoADatos\CoMediadoresEspecialidadAD.cs" />
+    <Compile Include="AccesoADatos\CoMediadoresInscripcionAD.cs" />
+    <Compile Include="AccesoADatos\CompraDeSuministrosAD.cs" />
+    <Compile Include="AccesoADatos\ConcursosAD.cs" />
+    <Compile Include="AccesoADatos\ConcursosDeIngresoAD.cs" />
+    <Compile Include="AccesoADatos\ConcursosDeIngresoInscripcionesAD.cs" />
+    <Compile Include="AccesoADatos\ConexionesAD.cs" />
+    <Compile Include="AccesoADatos\ContadoresAD.cs" />
+    <Compile Include="AccesoADatos\ControlPresentacionesAD.cs" />
+    <Compile Include="AccesoADatos\DelitosCapituloRefAD.cs" />
+    <Compile Include="AccesoADatos\DelitosRefAD.cs" />
+    <Compile Include="AccesoADatos\DelitosTituloRefAD.cs" />
+    <Compile Include="AccesoADatos\DenegatoriasrrhhAD.cs" />
+    <Compile Include="AccesoADatos\DenunciasAD.cs" />
+    <Compile Include="AccesoADatos\DerivacionesOaVytAD.cs" />
+    <Compile Include="AccesoADatos\DivisionesExtraPresupuestariasAD.cs" />
+    <Compile Include="AccesoADatos\EjecucionesPresupuestariasAD.cs" />
+    <Compile Include="AccesoADatos\EjecucionesPresupuestariasReestructurasAD.cs" />
+    <Compile Include="AccesoADatos\ElementosSecuestradosAD.cs" />
+    <Compile Include="AccesoADatos\ElementosSecuestradosDocumentoAD.cs" />
+    <Compile Include="AccesoADatos\ElementosSecuestradosMovimientoAD.cs" />
+    <Compile Include="AccesoADatos\EmbargosyOtrosAD.cs" />
+    <Compile Include="AccesoADatos\EstadosActuacionRefAD.cs" />
+    <Compile Include="AccesoADatos\EstadosArchivoExpedienteRefAD.cs" />
+    <Compile Include="AccesoADatos\EstadosAudienciaRefAD.cs" />
+    <Compile Include="AccesoADatos\EstadosCausaRefAD.cs" />
+    <Compile Include="AccesoADatos\EstadosCivilRefAD.cs" />
+    <Compile Include="AccesoADatos\EstadosElementosSecuestradosRefAD.cs" />
+    <Compile Include="AccesoADatos\EstadosEscolaridadRefAD.cs" />
+    <Compile Include="AccesoADatos\EstadosExpedienteRefAD.cs" />
+    <Compile Include="AccesoADatos\EstadosIncidentesAD.cs" />
+    <Compile Include="AccesoADatos\EstadosPreventivoRefAD.cs" />
+    <Compile Include="AccesoADatos\EstadosUsuarioRefAD.cs" />
+    <Compile Include="AccesoADatos\EventosAD.cs" />
+    <Compile Include="AccesoADatos\EventosCivilAD.cs" />
+    <Compile Include="AccesoADatos\ExcusacionesAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesAccesosAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesadmAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesAnotacionesAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesArchivoAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesDelitoAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesDocumentoAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesDocumentoadmAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesElementoAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesEstadoAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesPaseAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesPaseadmAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesPersonaAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesPersonaadmAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesPersonaDetenidaAD.cs" />
+    <Compile Include="AccesoADatos\ExpedientesResponsableAD.cs" />
+    <Compile Include="AccesoADatos\FacturasAD.cs" />
+    <Compile Include="AccesoADatos\FacturasImputadasAD.cs" />
+    <Compile Include="AccesoADatos\FacturasImputadasDetalleAD.cs" />
+    <Compile Include="AccesoADatos\FeriadosRefAD.cs" />
+    <Compile Include="AccesoADatos\FeriasAgentesAD.cs" />
+    <Compile Include="AccesoADatos\FeriasRefAD.cs" />
+    <Compile Include="AccesoADatos\FormasDePagoRefAD.cs" />
+    <Compile Include="AccesoADatos\FormulariosAD.cs" />
+    <Compile Include="AccesoADatos\FuerosRefAD.cs" />
+    <Compile Include="AccesoADatos\GrupoElementosPoliciaRefAD.cs" />
+    <Compile Include="AccesoADatos\GrupoFamiliarAD.cs" />
+    <Compile Include="AccesoADatos\GruposEstadoAudienciaRefAD.cs" />
+    <Compile Include="AccesoADatos\GruposEstadoCausaRefAD.cs" />
+    <Compile Include="AccesoADatos\GruposEstadoExpedienteRefAD.cs" />
+    <Compile Include="AccesoADatos\GruposTipoActuacionCivilRefAD.cs" />
+    <Compile Include="AccesoADatos\GruposTipoActuacionRefAD.cs" />
+    <Compile Include="AccesoADatos\GruposUsuarioRefAD.cs" />
+    <Compile Include="AccesoADatos\ImagenesrrhhAD.cs" />
+    <Compile Include="AccesoADatos\ImputacionesContablesAD.cs" />
+    <Compile Include="AccesoADatos\ImputacionesContablesDetalleAD.cs" />
+    <Compile Include="AccesoADatos\IncidentesAD.cs" />
+    <Compile Include="AccesoADatos\IncidentesEstadoAD.cs" />
+    <Compile Include="AccesoADatos\ItemsMenuAD.cs" />
+    <Compile Include="AccesoADatos\JuecesContadoresAD.cs" />
+    <Compile Include="AccesoADatos\JuecesSorteoAD.cs" />
+    <Compile Include="AccesoADatos\LicenciasAgenteAD.cs" />
+    <Compile Include="AccesoADatos\LicenciasOrdinariasInicialesAD.cs" />
+    <Compile Include="AccesoADatos\LicenciasRefAD.cs" />
+    <Compile Include="AccesoADatos\LiquidacionAbogadosAD.cs" />
+    <Compile Include="AccesoADatos\LiquidacionAD.cs" />
+    <Compile Include="AccesoADatos\LiquidacionCapitalesAD.cs" />
+    <Compile Include="AccesoADatos\LiquidacionConfiguracionValoresAD.cs" />
+    <Compile Include="AccesoADatos\LiquidacionGastosAD.cs" />
+    <Compile Include="AccesoADatos\LocalidadesRefAD.cs" />
+    <Compile Include="AccesoADatos\LogsReceptoriaAD.cs" />
+    <Compile Include="AccesoADatos\MateriasAD.cs" />
+    <Compile Include="AccesoADatos\MediadoresAD.cs" />
+    <Compile Include="AccesoADatos\MediadoresContadoresAD.cs" />
+    <Compile Include="AccesoADatos\MediadoresInscripcionAD.cs" />
+    <Compile Include="AccesoADatos\MediadoresInscripcionEstadoAD.cs" />
+    <Compile Include="AccesoADatos\MediadoresPeriodoAD.cs" />
+    <Compile Include="AccesoADatos\MediadoresPeriodosTipoAD.cs" />
+    <Compile Include="AccesoADatos\MediadoresTipoAD.cs" />
+    <Compile Include="AccesoADatos\MedidasDisciplinariasAD.cs" />
+    <Compile Include="AccesoADatos\MenusAD.cs" />
+    <Compile Include="AccesoADatos\MesesRefAD.cs" />
+    <Compile Include="AccesoADatos\ModalidadesAsistenciaoaVytAD.cs" />
+    <Compile Include="AccesoADatos\ModalidadesPoliciaRefAD.cs" />
+    <Compile Include="AccesoADatos\ModelosEscritoAD.cs" />
+    <Compile Include="AccesoADatos\ModelosEscritoadmAD.cs" />
+    <Compile Include="AccesoADatos\ModulosAD.cs" />
+    <Compile Include="AccesoADatos\MonitoreoActividadesAD.cs" />
+    <Compile Include="AccesoADatos\MotivosCancelacionCivilRefAD.cs" />
+    <Compile Include="AccesoADatos\MotivosCancelacionRefAD.cs" />
+    <Compile Include="AccesoADatos\MotivosDemoraRefAD.cs" />
+    <Compile Include="AccesoADatos\MotivosElementosSecuentradosMovimientoRefAD.cs" />
+    <Compile Include="AccesoADatos\MotivosPostergacionCivilRefAD.cs" />
+    <Compile Include="AccesoADatos\MotivosPostergacionRefAD.cs" />
+    <Compile Include="AccesoADatos\MovimientoscesidaAD.cs" />
+    <Compile Include="AccesoADatos\MovimientosDeAgentesAD.cs" />
+    <Compile Include="AccesoADatos\MovimientosDeStockAD.cs" />
+    <Compile Include="AccesoADatos\NombramientosAD.cs" />
+    <Compile Include="AccesoADatos\NombramientosMovimientosAD.cs" />
+    <Compile Include="AccesoADatos\NoticiasCivil.cs" />
+    <Compile Include="AccesoADatos\NoticiasAD.cs" />
+    <Compile Include="AccesoADatos\NotificacionesAD.cs" />
+    <Compile Include="AccesoADatos\NotificacionesCivilAD.cs" />
+    <Compile Include="AccesoADatos\OperacionesContablesRefAD.cs" />
+    <Compile Include="AccesoADatos\OrdenesCapturaAD.cs" />
+    <Compile Include="AccesoADatos\OrganismosRefAD.cs" />
+    <Compile Include="AccesoADatos\OrganismosSecuenciaModelosRefAD.cs" />
+    <Compile Include="AccesoADatos\OrganismosSecuenciaRefAD.cs" />
+    <Compile Include="AccesoADatos\ParametrosadmAD.cs" />
+    <Compile Include="AccesoADatos\ParametrosReceptoriaAD.cs" />
+    <Compile Include="AccesoADatos\ParametrosSeguridadRefAD.cs" />
+    <Compile Include="AccesoADatos\ParametrosTrabajoCivilRefAD.cs" />
+    <Compile Include="AccesoADatos\ParametrosTrabajoRefAD.cs" />
+    <Compile Include="AccesoADatos\PartidasPresupuestariasAD.cs" />
+    <Compile Include="AccesoADatos\PasosAD.cs" />
+    <Compile Include="AccesoADatos\PedidosDeSuministrosAD.cs" />
+    <Compile Include="AccesoADatos\PeritosAD.cs" />
+    <Compile Include="AccesoADatos\PeritosContadoresAD.cs" />
+    <Compile Include="AccesoADatos\PeritosEspecialidadAD.cs" />
+    <Compile Include="AccesoADatos\PeritosInscripcionAD.cs" />
+    <Compile Include="AccesoADatos\PeritosPeriodoAD.cs" />
+    <Compile Include="AccesoADatos\PeritosSancionesAD.cs" />
+    <Compile Include="AccesoADatos\PeritosSorteoAD.cs" />
+    <Compile Include="AccesoADatos\PeritosTiposPeriodoAD.cs" />
+    <Compile Include="AccesoADatos\PermisosAD.cs" />
+    <Compile Include="AccesoADatos\PersonasAD.cs" />
+    <Compile Include="AccesoADatos\PersonasCaracteristicasRefAD.cs" />
+    <Compile Include="AccesoADatos\PersonasDocumentacionAD.cs" />
+    <Compile Include="AccesoADatos\PersonasParentescosAD.cs" />
+    <Compile Include="AccesoADatos\PersonasPertenenciasAD.cs" />
+    <Compile Include="AccesoADatos\PresentacionesCausaAD.cs" />
+    <Compile Include="AccesoADatos\PresentacionesCausaConexionAD.cs" />
+    <Compile Include="AccesoADatos\PrestacionesRefAD.cs" />
+    <Compile Include="AccesoADatos\PresupuestacionAD.cs" />
+    <Compile Include="AccesoADatos\PresupuestacionCapitalesAD.cs" />
+    <Compile Include="AccesoADatos\PresupuestacionConfiguracionAD.cs" />
+    <Compile Include="AccesoADatos\PresupuestacionConfiguracionValoresAD.cs" />
+    <Compile Include="AccesoADatos\PresupuestacionGastosAD.cs" />
+    <Compile Include="AccesoADatos\PreventivosAD.cs" />
+    <Compile Include="AccesoADatos\PreventivosDelitosAD.cs" />
+    <Compile Include="AccesoADatos\PreventivosElementosAD.cs" />
+    <Compile Include="AccesoADatos\PreventivosPersonaAD.cs" />
+    <Compile Include="AccesoADatos\ProtocolosAD.cs" />
+    <Compile Include="AccesoADatos\ProtocolosCategoriasAD.cs" />
+    <Compile Include="AccesoADatos\ProveedoresAD.cs" />
+    <Compile Include="AccesoADatos\ProvinciasRefAD.cs" />
+    <Compile Include="AccesoADatos\ReportesAD.cs" />
+    <Compile Include="AccesoADatos\ReportesParametrosAD.cs" />
+    <Compile Include="AccesoADatos\ReservaSalasAudienciaAD.cs" />
+    <Compile Include="AccesoADatos\ResultadosNotificacionAD.cs" />
+    <Compile Include="AccesoADatos\RolesElementoRefAD.cs" />
+    <Compile Include="AccesoADatos\RolesPersonaadmRefAD.cs" />
+    <Compile Include="AccesoADatos\RolesPersonaCivilRefAD.cs" />
+    <Compile Include="AccesoADatos\RolesPersonaRefAD.cs" />
+    <Compile Include="AccesoADatos\SaldosDeLicenciasOrdinariasAD.cs" />
+    <Compile Include="AccesoADatos\SectoresNotificacionAD.cs" />
+    <Compile Include="AccesoADatos\SectoresPoliciaRefAD.cs" />
+    <Compile Include="AccesoADatos\SexosRefAD.cs" />
+    <Compile Include="AccesoADatos\SitiosPoliciaRefAD.cs" />
+    <Compile Include="AccesoADatos\SituacionesDeRevistaAD.cs" />
+    <Compile Include="AccesoADatos\SolicitudesDeViaticosAD.cs" />
+    <Compile Include="AccesoADatos\SolicitudesDeViaticosAgentesAD.cs" />
+    <Compile Include="AccesoADatos\SolicitudesDeViaticosRendicionesAD.cs" />
+    <Compile Include="AccesoADatos\SolicitudesDeViaticosRendicionesAgentesAD.cs" />
+    <Compile Include="AccesoADatos\SolicitudesDeViaticosRendicionesDetalleAD.cs" />
+    <Compile Include="AccesoADatos\SucesosAD.cs" />
+    <Compile Include="AccesoADatos\SucesosCausasAD.cs" />
+    <Compile Include="AccesoADatos\SucesosReceptoriaAD.cs" />
+    <Compile Include="AccesoADatos\SucesosTitulosAD.cs" />
+    <Compile Include="AccesoADatos\SuspensionPlazoAD.cs" />
+    <Compile Include="AccesoADatos\SustitucionesAD.cs" />
+    <Compile Include="AccesoADatos\TablasAD.cs" />
+    <Compile Include="AccesoADatos\TiposActuacionadmRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposActuacionCivilRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposActuacionRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposArchivadoRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposAudienciaCivilRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposAudienciaRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposCambiosCircunscripcionAD.cs" />
+    <Compile Include="AccesoADatos\TiposCuentasBancariasRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposDatoRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposDenunciasRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposDocumentacionPersonaRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposDocumentoRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposEscolaridadRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposExpedienteadmRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposFormatoArchivoRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposMateriasRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposModeloEscritoRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposModelosEscritoadmRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposNotificacionAD.cs" />
+    <Compile Include="AccesoADatos\TiposOcupacionRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposOrganismoRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposOrigenExpedienteRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposOrigenoaVytAD.cs" />
+    <Compile Include="AccesoADatos\TiposParentescosRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposPersonaCaracteristicaRefAD.cs" />
+    <Compile Include="AccesoADatos\TiposRelevarControlAD.cs" />
+    <Compile Include="AccesoADatos\TiposSucesosAD.cs" />
+    <Compile Include="AccesoADatos\TurnosAD.cs" />
+    <Compile Include="AccesoADatos\UnidadesDeOrganizacionRefAD.cs" />
+    <Compile Include="AccesoADatos\UnidadesrrhhRefAD.cs" />
+    <Compile Include="AccesoADatos\UsuariosAccesosAD.cs" />
+    <Compile Include="AccesoADatos\UsuariosAD.cs" />
+    <Compile Include="AccesoADatos\UsuariosCambiosClaveAD.cs" />
+    <Compile Include="AccesoADatos\UsuariosOrganismosGruposAD.cs" />
+    <Compile Include="AccesoADatos\VehiculosOficialesRefAD.cs" />
+    <Compile Include="AccesoADatos\VocesAD.cs" />
+    <Compile Include="AccesoADatos\webpages_RolesAD.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SSO.SGP.EntidadesDeNegocio\SSO.SGP.EntidadesDeNegocio.csproj">
+      <Project>{f75feec5-5fe2-4455-bc0d-5eac00a83baf}</Project>
+      <Name>SSO.SGP.EntidadesDeNegocio</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

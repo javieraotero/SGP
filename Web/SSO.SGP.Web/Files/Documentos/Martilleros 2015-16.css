@@ -1,0 +1,512 @@
+﻿<style xmlns="http://www.w3.org/1999/xhtml">span { white-space: pre-wrap; }
+p.pt-Normal {
+    margin-top: 0.45pt;
+    line-height: 5.0pt;
+    font-family: 'Times New Roman', 'serif';
+    font-size: 5pt;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+span.pt-000000 {
+    font-size: 5pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000001 {
+    margin-left: 3.26in;
+    font-family: 'Times New Roman', 'serif';
+    font-size: 10pt;
+    line-height: 108%;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+span.pt-Fuentedeprrafopredeter {
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+span.pt-000002 {
+    font-size: 10pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000003 {
+    margin-top: 4.4pt;
+    margin-left: 1.68in;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 14pt;
+    line-height: 108%;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+span.pt-Fuentedeprrafopredeter-000004 {
+    font-family: 'Arial', 'sans-serif';
+    font-size: 14pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000005 {
+    margin-top: 0.1pt;
+    line-height: 5.0pt;
+    font-family: 'Times New Roman', 'serif';
+    font-size: 5.5pt;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+span.pt-000006 {
+    font-size: 5.5pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000007 {
+    line-height: 10.0pt;
+    font-family: 'Times New Roman', 'serif';
+    font-size: 10pt;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000008 {
+    line-height: 18.0pt;
+    margin-left: 1.68in;
+    font-family: Arial Black;
+    font-size: 14pt;
+    margin-top: 0;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+span.pt-Fuentedeprrafopredeter-000009 {
+    font-family: Arial Black;
+    font-size: 14pt;
+    position: relative;
+    top: 0.5pt;
+    font-style: normal;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+span.pt-Fuentedeprrafopredeter-000010 {
+    font-family: Arial Black;
+    font-size: 14pt;
+    letter-spacing: 0;
+    position: relative;
+    top: 0.5pt;
+    font-style: normal;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000011 {
+    margin-top: 0.15pt;
+    line-height: 1.0pt;
+    font-family: 'Times New Roman', 'serif';
+    font-size: 1.5pt;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+span.pt-000012 {
+    font-size: 1.5pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+table.pt-000013 {
+    border-collapse: collapse;
+    border: none;
+    margin-left: 5.65pt;
+    margin-bottom: .001pt;
+}
+tr.pt-000014 {
+    height: 0.24in;
+}
+td.pt-000015 {
+    vertical-align: top;
+    width: 477.45pt;
+    border-top: solid #000000 1.0pt;
+    padding-top: 0;
+    border-right: solid #000000 1.0pt;
+    padding-right: 5.4pt;
+    border-bottom: solid #000000 1.0pt;
+    padding-bottom: 0;
+    border-left: solid #000000 1.0pt;
+    padding-left: 5.4pt;
+}
+p.pt-Normal-000016 {
+    margin-top: 1.15pt;
+    margin-left: 1.81in;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 11pt;
+    line-height: 108%;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+span.pt-Fuentedeprrafopredeter-000017 {
+    font-family: 'Arial', 'sans-serif';
+    font-size: 11pt;
+    font-style: normal;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000018 {
+    margin-top: 1.2pt;
+    margin-left: 3.11in;
+    margin-right: 3.11in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 9pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+span.pt-Fuentedeprrafopredeter-000019 {
+    font-family: 'Arial', 'sans-serif';
+    font-size: 9pt;
+    font-style: normal;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000020 {
+    margin-top: 1.25pt;
+    margin-left: 2.77in;
+    margin-right: 2.77in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+span.pt-Fuentedeprrafopredeter-000021 {
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    font-style: normal;
+    font-weight: normal;
+    margin: 0;
+    padding: 0;
+}
+p.pt-Normal-000022 {
+    margin-top: 1.25pt;
+    margin-left: 2.39in;
+    margin-right: 2.39in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000023 {
+    margin-top: 1.2pt;
+    margin-left: 2.41in;
+    margin-right: 2.72in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000024 {
+    margin-top: 1.15pt;
+    margin-left: 1.96in;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 11pt;
+    line-height: 108%;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000025 {
+    margin-top: 1.25pt;
+    margin-left: 2.83in;
+    margin-right: 2.83in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000026 {
+    margin-top: 1.1pt;
+    margin-left: 0.85in;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 11pt;
+    line-height: 108%;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000027 {
+    margin-top: 1.25pt;
+    margin-left: 2.46in;
+    margin-right: 2.90in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000028 {
+    margin-top: 1.25pt;
+    margin-left: 2.74in;
+    margin-right: 2.74in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000029 {
+    margin-top: 1.25pt;
+    margin-left: 2.31in;
+    margin-right: 2.62in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000030 {
+    margin-top: 1.2pt;
+    margin-left: 2.60in;
+    margin-right: 3.16in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000031 {
+    margin-top: 1.3pt;
+    margin-left: 2.50in;
+    margin-right: 3.03in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000032 {
+    margin-top: 1.25pt;
+    margin-left: 2.32in;
+    margin-right: 2.81in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000033 {
+    margin-top: 1.25pt;
+    margin-left: 2.80in;
+    margin-right: 2.80in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000034 {
+    margin-top: 1.25pt;
+    margin-left: 2.29in;
+    margin-right: 2.66in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000035 {
+    margin-top: 1.3pt;
+    margin-left: 2.09in;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000036 {
+    margin-top: 1.25pt;
+    margin-left: 2.40in;
+    margin-right: 2.78in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000037 {
+    margin-top: 1.25pt;
+    margin-left: 2.44in;
+    margin-right: 2.78in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000038 {
+    margin-top: 1.25pt;
+    margin-left: 2.79in;
+    margin-right: 2.79in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000039 {
+    margin-top: 1.2pt;
+    margin-left: 2.39in;
+    margin-right: 2.79in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000040 {
+    margin-top: 1.3pt;
+    margin-left: 2.44in;
+    margin-right: 2.84in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000041 {
+    margin-top: 1.25pt;
+    margin-left: 2.38in;
+    margin-right: 2.78in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000042 {
+    margin-top: 1.25pt;
+    margin-left: 2.57in;
+    margin-right: 2.57in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000043 {
+    margin-top: 1.25pt;
+    margin-left: 2.33in;
+    margin-right: 2.64in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000044 {
+    margin-top: 1.2pt;
+    margin-left: 2.50in;
+    margin-right: 2.50in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000045 {
+    margin-top: 1.25pt;
+    margin-left: 2.36in;
+    margin-right: 2.70in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000046 {
+    margin-top: 1.25pt;
+    margin-left: 2.43in;
+    margin-right: 2.77in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000047 {
+    margin-top: 1.25pt;
+    margin-left: 2.45in;
+    margin-right: 2.88in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000048 {
+    margin-top: 1.25pt;
+    margin-left: 2.54in;
+    margin-right: 2.97in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000049 {
+    margin-top: 1.3pt;
+    margin-left: 2.42in;
+    margin-right: 2.82in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+tr.pt-000050 {
+    height: 0.23in;
+}
+p.pt-Normal-000051 {
+    margin-top: 1.25pt;
+    margin-left: 2.26in;
+    margin-right: 2.67in;
+    text-align: center;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000052 {
+    margin-top: 0.8pt;
+    line-height: 10.0pt;
+    font-family: 'Times New Roman', 'serif';
+    font-size: 10pt;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: .001pt;
+}
+p.pt-Normal-000053 {
+    margin-top: 1.95pt;
+    margin-right: 0.07in;
+    text-align: right;
+    font-family: 'Arial', 'sans-serif';
+    font-size: 8pt;
+    line-height: 108%;
+    margin-left: 0;
+    margin-bottom: .001pt;
+}
+</style>

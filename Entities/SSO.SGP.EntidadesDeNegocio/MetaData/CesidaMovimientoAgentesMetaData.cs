@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
+namespace SSO.SGP.MetaData
+{
+    /// <summary>
+    /// MetaData Generada por el Generador de codigo.
+    /// </summary>
+    public partial class CesidaMovimientoAgentesMetaData
+    {
+        #region Propiedades
+
+        [Display(Name = "Id")]
+        public int Id { get; set; }
+
+        [Display(Name = "Agente")]
+        public int Agente { get; set; }
+
+        [Display(Name = "Movimiento")]
+        public int Movimiento { get; set; }
+
+        [Display(Name = "UsuarioAlta")]
+        public int UsuarioAlta { get; set; }
+
+        [Display(Name = "FechaAlta")]
+        public DateTime FechaAlta { get; set; }
+
+        [Display(Name = "Autorizado")]
+        public bool Autorizado { get; set; }
+
+        [Display(Name = "MensajeRespuesta")]
+        public string MensajeRespuesta { get; set; }
+
+        [Display(Name = "NroLote")]
+        public int? NroLote { get; set; }
+
+        [Display(Name = "CodOperacion")]
+        public int? CodOperacion { get; set; }
+
+        [Display(Name = "Persona")]
+        public int? Persona { get; set; }
+
+        [Display(Name = "FechaEnvio")]
+        public DateTime? FechaEnvio { get; set; }
+
+        [Display(Name = "FechaAutoriza")]
+        public DateTime? FechaAutoriza { get; set; }
+
+        [Display(Name = "UsuarioAutoriza")]
+        public int? UsuarioAutoriza { get; set; }
+
+        public int? Nombramiento { get; set; }
+
+        #endregion
+
+
+    }
+}

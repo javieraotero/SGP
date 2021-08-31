@@ -1,0 +1,97 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.FacturasImputadas
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/FacturasImputadas/Index.js"></script>
+<script src="ts/FacturasImputadas/FacturasImputadasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "FacturasImputadas", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresFacturasImputadas = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "FacturasImputadasController_editar(this)",
+                    function = oFacturasImputadas.editar_dtFacturasImputadas();
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "FacturasImputadasController_eliminar(this)",
+                    function = oFacturasImputadas.eliminar_dtFacturasImputadas();
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmFacturasImputadas = Html.DataTableVm("dtFacturasImputadas", (FacturasImputadasController h) => h.getFacturasImputadasGrilla(null));
+                
+				vmFacturasImputadas.operators = operadoresFacturasImputadas;
+                //vmFacturasImputadas.fnDrawCallBack = "render_dtFacturasImputadas(this);";
+                vmFacturasImputadas.ColumnFilter = true;
+                //vmFacturasImputadas.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmFacturasImputadas.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("DataTable", vmFacturasImputadas)
+			
+			
+			<script type="text/javascript">
+					function FacturasImputadasController_editar(el) {
+					var id = getData(el, 1);
+					oFacturasImputadas.editar_dtFacturasImputadas(id);
+					}
+					
+					function FacturasImputadasController_eliminar(el) {
+					var id = getData(el, 1);
+					oFacturasImputadas.eliminar_dtFacturasImputadas(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedFacturasImputadas@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oFacturasImputadas == null)
+			var oFacturasImputadas = new FacturasImputadas.ts.FacturasImputadasManager();
+		
+		var viewIndex = new FacturasImputadas.ts.Index("@(hash)");
+		oFacturasImputadas.setIndex(viewIndex); 
+		
+		viewIndex.setFacturasImputadas(dtFacturasImputadas);
+		
+	</script>	

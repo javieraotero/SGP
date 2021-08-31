@@ -1,0 +1,187 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Custom.CustomPartidaPresupuestaria
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<script src="@Url.Content("~/assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/ts/Syncro/SyncroTabla.js")" type="text/javascript"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-switch/static/stylesheets/bootstrap-switch.min.css")" />
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@Scripts.Render("~/bundles/jqueryval")
+
+<script src="Areas/Expedientes/ts/PartidasPresupuestarias/Crear.js"></script>
+<script src="Areas/Expedientes/ts/PartidasPresupuestarias/PartidasPresupuestariasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+
+@using (Html.BeginForm("Crear", "PartidasPresupuestarias", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-2">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.NumeroDePartida, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.NumeroDePartida, new { @class = "form-control col-md-12", @id = "NumeroDePartida" + hash, @tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.NumeroDePartida)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Descripcion, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control col-md-12", @id = "Descripcion" + hash, @tabindex = "3" })
+                        @Html.ValidationMessageFor(model => model.Descripcion)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Prioridad, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.CheckBoxFor(
+                m => m.Prioridad,
+                new { @id = "Prioridad" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Prioridad@(hash)').bootstrapSwitch();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Prioridad)
+                    </div>
+                </div>
+
+
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Mnemo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Mnemo, new { @class = "form-control col-md-12", @id = "Mnemo" + hash, @tabindex = "4" })
+                        @Html.ValidationMessageFor(model => model.Mnemo)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.UnidadDeOrganizacion, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("UnidadDeOrganizacion", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.UnidadesDeOrganizacionRef, new { @class = "form-control col-md-12", @id = "UnidadesDeOrganizacionRef" + hash, @tabindex = "5" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#UnidadesDeOrganizacionRef@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.UnidadDeOrganizacion)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="control-group">
+                    <label class="control-label">Divisiones Extra Presupuestarias</label>
+                    <div class="controls">
+                        <table class="table table-advance table-bordered">
+                            <thead>
+                                <tr>
+                                    <th width="60%">
+                                        Nombre
+                                    </th>
+                                    <th width="35%">
+                                        Cod. CESIDA
+                                    </th>
+                                    <th>
+
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="text" id="NombrePartida@(hash)" class="form-control col-md-12" />
+                                    </td>
+                                    <td>
+                                        <input type="text" id="CodigoCesida@(hash)" class="form-control col-md-12" />
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-xs blue" id="AgregarDivision@(hash)">+</button>
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody id="detalledivision">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+        <div class="row">
+
+            <div class="col-md-2">
+
+                <div class="control-group">
+                    &nbsp;
+		<div class="controls">
+            <input type="button" class="btn" id="AsociarDivision@(hash)" value="Asociar División Extrapresupestraria" name="AsociarDivisionPartidasPresupuestarias" />
+        </div>
+                </div>
+
+
+
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+
+
+
+
+        <div class="form-actions">
+
+            <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+
+            <input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+
+            <input type="button" value="Guardar & Nuevo" id="GuardarYNuevo@(hash)" class="btn blue" />
+
+        </div>
+        <!--fin form-actions>-->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oPartidasPresupuestarias == null)
+        var oPartidasPresupuestarias = new PartidasPresupuestarias.ts.PartidasPresupuestariasManager();
+
+    var viewCrear = new PartidasPresupuestarias.ts.Crear("@(hash)");
+    oPartidasPresupuestarias.setCrear(viewCrear);
+
+
+</script>

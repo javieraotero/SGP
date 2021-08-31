@@ -1,0 +1,33 @@
+@model IEnumerable<SSO.SGP.EntidadesDeNegocio.Menus>
+@{
+    Layout = null;
+}
+
+<ul class="nav navbar-nav">
+    <li class="classic-menu-dropdown active">
+        <a href="index.html">Inicio <span class="selected"></span>
+        </a>
+    </li>
+    @foreach (var item in Model)
+    {
+        if (item.Padre == null)
+        {
+        <li class="classic-menu-dropdown">
+            <a data-hover="dropdown" data-close-others="true" data-toggle="dropdown" href="javascript:;">@item.Label <i class="fa fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu pull-left">
+                @foreach (var item2 in Model)
+                {
+                    if (item2.Padre.HasValue && item2.Padre.Value == item.Id)
+                    {
+                        var def = "false";
+                        if (item2.Id == SSO.SGP.Web.SessionHelper.MenuDefault) { def = "true"; }
+                        <li><a data-toggle="menu" data-default="@def"   data-title="@item2.TituloDePagina" data-description="@item2.Descripcion" data-url="@Url.Action(item2.Accion, item2.Controlador)" data-tabs="@item2.Tabs" href="@Url.Action("default", @item2.Controlador)"><i class="icon-user"></i> @item2.Label</a> </li>   
+                 }
+                }
+            </ul>
+        </li>
+        }
+    }
+</ul>
+

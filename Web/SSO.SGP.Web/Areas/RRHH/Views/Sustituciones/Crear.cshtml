@@ -1,0 +1,172 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Sustituciones
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/Sustituciones/Crear.js"></script>
+<script src="Areas/RRHH/ts/Sustituciones/SustitucionesManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+
+@using (Html.BeginForm("Crear", "Sustituciones", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-3">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Acuerdo, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Acuerdo, new {@class = "form-control col-md-12", @id="Acuerdo"+hash, @tabindex="3"})
+			@Html.ValidationMessageFor(model => model.Acuerdo)
+		</div>
+	</div>	
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-4">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Desde, new { @class= "control-label" })
+		<div class="controls">
+		<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+			@Html.TextBoxFor(model => model.Desde, "{0:dd/MM/yyyy}", new {@class="m-wrap form-control m-ctrl-medium date-picker", @id="Desde"+hash, @tabindex="4" })
+			<span class="add-on"><i class="icon-calendar"></i></span> 
+		</div>
+		<script type="text/javascript">
+			$(function () {
+				$('#Desde@(hash)').datepicker(pickerOpts);
+			});
+		</script>
+		@Html.ValidationMessageFor(model => model.Desde)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-4">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Hasta, new { @class= "control-label" })
+		<div class="controls">
+		<div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+			@Html.TextBoxFor(model => model.Hasta, "{0:dd/MM/yyyy}", new {@class="m-wrap form-control m-ctrl-medium date-picker", @id="Hasta"+hash, @tabindex="5" })
+			<span class="add-on"><i class="icon-calendar"></i></span> 
+		</div>
+		<script type="text/javascript">
+			$(function () {
+				$('#Hasta@(hash)').datepicker(pickerOpts);
+			});
+		</script>
+		@Html.ValidationMessageFor(model => model.Hasta)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-6">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Motivo, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Motivo, new {@class = "form-control col-md-12", @id="Motivo"+hash, @tabindex="6"})
+			@Html.ValidationMessageFor(model => model.Motivo)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-6">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Cargo, new { @class= "control-label" })
+		<div class="controls">
+			@Html.DropDownList("Cargo", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.CargosRef, new { @class = "form-control col-md-12", @id="CargosRef"+hash, @tabindex="7" })
+			<script type="text/javascript">
+				$(function () {
+				    $('#CargosRef@(hash)').chosen();
+				});
+			</script>
+		@Html.ValidationMessageFor(model => model.Cargo)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-6">
+				
+	<div class="control-group" id="test">
+		@Html.LabelFor(model => model.Organismo, new { @class= "control-label" })
+		<div class="controls">
+			<input type="text" id="txtOrganismo@(hash)" class="form-control col-md-12" tabindex="8" placeholder="Seleccione Organismo" />
+			<p class="help-block"></p>
+			<input type="hidden" id="Organismo@(hash)" name="Organismo" />
+			@Html.ValidationMessageFor(model => model.Organismo)
+			<script type="text/javascript">
+			$(function () {
+				$("#txtOrganismo@(hash)").autocomplete({
+					source: "@Url.Action("OrganismosJson", "Agentes")",
+					appendTo: '#test',
+					minLength: 2,
+					select: function (event, ui) {
+						$("#txtOrganismo@(hash)").val(ui.item.label);
+						$("#Organismo@(hash)").val(ui.item.id);
+						return false;
+					}
+				});
+			});
+			</script>
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+	<div class="form-actions">
+
+        <input type="hidden" id="Agente@(hash)" name="Agente" value="@ViewBag.Agente" />
+ 	
+		<input type="button" value="Cancelar" id="CancelarSustituciones@(hash)" class="btn" />
+
+		<input type="button" value="Guardar" id="GuardarSustituciones@(hash)" class="btn green" />
+
+		<input type="button" value="Guardar & Nuevo" id="GuardarYNuevoSustituciones@(hash)" class="btn blue" />
+
+	</div><!--fin form-actions>-->
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oSustituciones == null)
+			var oSustituciones = new Sustituciones.ts.SustitucionesManager();
+		
+		var viewCrear = new Sustituciones.ts.Crear("@(hash)");
+		oSustituciones.setCrear(viewCrear); 
+		
+		
+	</script>	

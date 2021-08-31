@@ -1,0 +1,35 @@
+
+/// <reference path="../IControlador.ts"/>
+/// <reference path="../AppManager.ts"/>
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;		
+
+@{
+    Layout = null;
+}
+
+<!-- SCRIPTS & CSS -->
+<script src="ts/DivisionesExtraPresupuestarias/DivisionesExtraPresupuestariasManager.js"></script>
+<style>
+    #tabs li .ui-icon-close {
+        float: left;
+        margin: 0.4em 0.2em;
+        cursor: pointer;
+    }
+</style>
+<div class="container-fluid">
+    <div id="tabs" class="tabbable tabbable-custom ui-tabs ui-widget ui-widget-content ui-corner-all">
+        <ul class="nav nav-tabs ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all" id="ul">
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+   var oDivisionesExtraPresupuestarias = new DivisionesExtraPresupuestarias.ts.DivisionesExtraPresupuestariasManager();
+
+    $(function () {
+        app.inicializarTab();
+    });    
+   
+</script>

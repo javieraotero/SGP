@@ -1,0 +1,216 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@using SSO.SGP.EntidadesDeNegocio;
+@model ICollection<SSO.SGP.EntidadesDeNegocio.OrganismosRef>
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+    var paso = ViewBag.Paso;
+}
+
+<script src="@Url.Content("~/assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-switch/static/stylesheets/bootstrap-switch.min.css")" />
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/FeriasAgentes/Index.js"></script>
+<script src="Areas/RRHH/ts/FeriasAgentes/FeriasAgentesManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<script src="ts/Syncro/SyncroAutocomplete.js"></script>
+@using (Html.BeginForm("Index", "FeriasAgentes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-advance">
+                <tr>
+                    <td>
+                        <input type="text" id="txtOrganismo@(hash)" class="form-control col-md-12" tabindex="1" placeholder="Seleccione Organismo" />
+                        <p class="help-block"></p>
+                        <input type="hidden" id="Organismo@(hash)" name="Organismo" />
+                    </td>
+                    <td>
+                        <select id="Circunscripciones" class="form-control">
+                            <option value="0">Todas</option>
+                            <option value="1">Primera Circunscripción</option>
+                            <option value="2">Segunda Circunscripción</option>
+                            <option value="3">Tercera Circunscripción</option>
+                            <option value="4">Cuarta Circunscripción</option>    
+                        </select>
+                    </td>
+                    <td>
+                        <input type="checkbox" id="Pendientes" class="form-control" /> Solo pendientes
+                        <script>
+                            $(function () {
+                                $("#Pendientes").bootstrapSwitch();
+                            });
+                        </script>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+        
+            <div class="row">
+            <div class="col-md-12">
+                @foreach (OrganismosRef o in Model)
+                {
+                    <div data-id="@o.Id" id="Organismo-@o.Id">
+                    <table class="table table-striped table-advance table-hover">
+                        <thead>
+                            <tr>
+                                <td colspan="4">@o.Descripcion</td>
+                            </tr>
+                            <tr>
+                                <th style="width: 10%">Días</th>
+                                <th style="width: 30%">Rango 1</th>
+                                <th style="width: 30%">Rango 2</th>
+                                <th style="width: 30%">Rango 3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Nombramientos n in o.Nombramientos.Where(n => n.FechaDeBaja == null && n.FechaEliminacion == null).OrderBy(n => n.Cargos.Grupo).ThenBy(n => n.Cargos.Orden))
+                            {
+                                var dias = "";
+                                var desde1 = "";
+                                var desde2 = "";
+                                var desde3 = "";
+                                var hasta1 = "";
+                                var hasta2 = "";
+                                var hasta3 = "";
+                                var id = "";
+                                var cargado = "none";
+                                var observaciones = "";
+                                var sinefecto = "";                               
+                                
+                                if (n.Agentes.FeriasAgentes.Where(f => f.Feria == ViewBag.IdFeria && f.Instancia == ViewBag.Paso).Count() > 0)
+                                {
+                                    FeriasAgentes fa = n.Agentes.FeriasAgentes.Where(f => f.Feria == ViewBag.IdFeria && f.Instancia == ViewBag.Paso).FirstOrDefault();
+                                    dias = fa.Dias.ToString();
+                                    desde1 = fa.Desde1.ToShortDateString();
+                                    hasta1 = fa.Hasta1.ToShortDateString();
+                                    desde2 = (fa.Desde2.HasValue) ? fa.Desde2.Value.ToShortDateString() : "";
+                                    desde3 = (fa.Desde3.HasValue) ? fa.Desde3.Value.ToShortDateString() : "";
+                                    hasta2 = (fa.Hasta2.HasValue) ? fa.Hasta2.Value.ToShortDateString() : "";
+                                    hasta3 = (fa.Hasta3.HasValue) ? fa.Hasta3.Value.ToShortDateString() : "";
+                                    id = fa.Id.ToString();
+                                    observaciones = (!String.IsNullOrEmpty(fa.Observaciones)) ? fa.Observaciones : "";
+                                    sinefecto = (fa.SinEfecto) ? "checked='checked'" : "";
+                                    cargado = "initial";                                    
+                                }
+                                if (ViewBag.Paso == 2)
+                                {                                                                                                                                              
+                                    FeriasAgentes fa1 = n.Agentes.FeriasAgentes.Where(f => f.Feria == ViewBag.IdFeria && f.Instancia == 1).FirstOrDefault();
+                                    if (fa1 != null)
+                                    {
+                                        dias = fa1.Dias.ToString();                         
+                                        desde1 = string.IsNullOrEmpty(desde1) ? fa1.Desde1.ToShortDateString() : desde1;
+                                        hasta1 = string.IsNullOrEmpty(hasta1) ? fa1.Hasta1.ToShortDateString() : hasta1;
+                                        desde2 = string.IsNullOrEmpty(desde2) ? ((fa1.Desde2.HasValue) ? fa1.Desde2.Value.ToShortDateString() : "") : desde2;
+                                        desde3 = string.IsNullOrEmpty(desde3) ? ((fa1.Desde3.HasValue) ? fa1.Desde3.Value.ToShortDateString() : "") : desde3;
+                                        hasta2 = string.IsNullOrEmpty(hasta2) ? ((fa1.Hasta2.HasValue) ? fa1.Hasta2.Value.ToShortDateString() : "") : hasta2;
+                                        hasta3 = string.IsNullOrEmpty(hasta3) ? ((fa1.Hasta3.HasValue) ? fa1.Hasta3.Value.ToShortDateString() : "") : hasta3;
+                                    }
+
+                                    
+                                }
+                                <tr data-agente="@n.Agente">
+                                    <td colspan="4"><i id="estado_@n.Agente" class="fa fa-check" style="color:green;display:@cargado"></i>@n.Agentes.Personas.Apellidos, @n.Agentes.Personas.Nombres (@n.Cargos.Descripcion)</td>
+                                </tr >
+                                <tr data-tipo="feriaagente"  data-organismo="@o.Id" data-agente="@n.Agente">
+                                    <td>
+                                        <input type="text" value="@dias" name="dias" id="dias_@n.Agente" class="form-control" />
+                                        <input type="hidden" value="@id" name="id" id="id_@n.Agente" />
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-large date-picker input-daterange" data-dateformat="dd/mm/yyyy">
+                                            <input name="desde1" value="@desde1" class="form-control" id="desde1_@n.Agente" data-tipo="desde" type="text" data-agente="@n.Agente" data-tipo="desde1" data-type="fecha" />
+                                            <span class="input-group-addon">a</span>
+                                            <input name="hasta1" value="@hasta1" class="form-control" id="hasta1_@n.Agente" data-tipo="hasta" data-agente="@n.Agente" data-orden="1" type="text" data-type="fecha" />
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-large date-picker input-daterange" data-dateformat="dd/mm/yyyy">
+                                            <input name="desde2" value="@desde2" class="form-control" id="desde2_@n.Agente" data-tipo="desde" type="text" data-agente="@n.Agente" data-type="fecha"/>
+                                            <span class="input-group-addon">a</span>
+                                            <input name="hasta2" value="@hasta2" class="form-control" id="hasta2_@n.Agente" data-tipo="hasta" data-agente="@n.Agente" data-orden="2" type="text" data-type="fecha"/>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-large date-picker input-daterange" data-dateformat="dd/mm/yyyy">
+                                            <input name="desde3" value="@desde3" class="form-control" id="desde3_@n.Agente" data-tipo="desde" data-agente="@n.Agente" type="text" data-type="fecha" />
+                                            <span class="input-group-addon">a</span>
+                                            <input name="hasta3" value="@hasta3" class="form-control" id="hasta3_@n.Agente" data-tipo="hasta" data-orden="3" data-agente="@n.Agente" type="text" data-type="fecha" />
+                                        </div>
+                                    </td>
+                                </tr>
+                                if (paso == 2)
+                                {
+                                    FeriasAgentes a = ((FeriasRef)ViewBag.Paso1).FeriasAgentes.Where(fa => fa.Agente == n.Agente && fa.Instancia == 1).FirstOrDefault();                               
+                                    if (a != null)
+                                    {
+                                <tr>
+                                    <td>
+                                        <span>@a.Dias</span>
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-large date-picker input-daterange" data-dateformat="dd/mm/yyyy">
+                                            <span>@a.Desde1.ToShortDateString()</span>-<span>@a.Hasta1.ToShortDateString()</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-large date-picker input-daterange" data-dateformat="dd/mm/yyyy">
+                                            <span>@(a.Desde2.HasValue ? a.Desde2.Value.ToShortDateString() : "")</span>-<span>@(a.Hasta2.HasValue ? a.Hasta2.Value.ToShortDateString() : "")</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="input-group input-large date-picker input-daterange" data-dateformat="dd/mm/yyyy">
+                                            <span>@(a.Desde2.HasValue ? a.Desde2.Value.ToShortDateString() : "")</span>-<span>@(a.Hasta2.HasValue ? a.Hasta2.Value.ToShortDateString() : "")</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                    }
+                                <tr data-paso2="paso2_@n.Agente">
+                                    <td colspan="4">
+                                        <input type="text" value="@observaciones" id="observaciones_@n.Agente" name="observaciones" class="form-control col-md-6" />Dejar sin efecto<input type="checkbox" @sinefecto name="sinefecto" class="form-control" /> 
+                                    </td>
+                                </tr>
+                                }
+
+                            }
+                        </tbody>
+                    </table>
+                    <div class="form-actions">
+                        <input type="button" value="Guardar @o.Descripcion" data-id="@o.Id" data-tipo="guardar" class="btn green" />
+                    </div>
+                    <br />
+                </div>
+                    <!--fin form-actions>-->
+                }
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+    </div> <!--fin de container-fluid-->
+    <input type="hidden" id="Feria@(hash)" value="@ViewBag.IdFeria" />
+    <input type="hidden" id="Desde@(hash)" value="@ViewBag.Desde" />
+    <input type="hidden" id="Hasta@(hash)" value="@ViewBag.Hasta" />
+    <input type="hidden" id="Paso@(hash)" value="@ViewBag.Paso" />
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oFeriasAgentes == null)
+        var oFeriasAgentes = new FeriasAgentes.ts.FeriasAgentesManager();
+
+    var viewIndex = new FeriasAgentes.ts.Index("@(hash)");
+    oFeriasAgentes.setIndex(viewIndex);
+
+    //viewIndex.setFeriasAgentes(dtFeriasAgentes);
+
+</script>

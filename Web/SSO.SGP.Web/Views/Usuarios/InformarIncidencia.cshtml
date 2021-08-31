@@ -1,0 +1,66 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/Usuarios/InformarIncidencia.js"></script>
+<script src="ts/Usuarios/UsuariosManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("InformarInicidencia", "Usuarios", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="control-group">
+                    <label class="control-label">Titulo</label>
+                    <div class="controls">
+                        <input type="text" class="form-control col-md-12" id="Titulo" name="Titulo"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="control-group">
+                    <label class="control-label">Descripción</label>
+                    <div class="controls">
+                        <textarea id="Descripcion" name="Descripcion" class="form-control col-md-12" style="width:100%" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+
+        @*    <input type="hidden" value="doc" id="NombreUsuario" name="NombreUsuario"  />*@
+
+        <div class="form-actions">
+
+            <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+            <input type="button" value="Enviar" id="Guardar@(hash)" class="btn green" />
+
+        </div>
+        <!--fin form-actions>-->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oUsuarios == null)
+        var oUsuarios = new Usuarios.ts.UsuariosManager();
+
+    var viewIncidencia = new Usuarios.ts.InformarIncidencia("@(hash)");
+    oUsuarios.setInformarIncidencia(viewIncidencia);
+
+
+</script>

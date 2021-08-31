@@ -1,0 +1,97 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.ExpedientesDocumentoADM
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/ExpedientesDocumentoADM/Index.js"></script>
+<script src="ts/ExpedientesDocumentoADM/ExpedientesDocumentoADMManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "ExpedientesDocumentoADM", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresExpedientesDocumentoADM = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "ExpedientesDocumentoADMController_editar(this)",
+                    function = oExpedientesDocumentoADM.editar_dtExpedientesDocumentoADM();
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "ExpedientesDocumentoADMController_eliminar(this)",
+                    function = oExpedientesDocumentoADM.eliminar_dtExpedientesDocumentoADM();
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmExpedientesDocumentoADM = Html.DataTableVm("dtExpedientesDocumentoADM", (ExpedientesDocumentoADMController h) => h.getExpedientesDocumentoADMGrilla(null));
+                
+				vmExpedientesDocumentoADM.operators = operadoresExpedientesDocumentoADM;
+                //vmExpedientesDocumentoADM.fnDrawCallBack = "render_dtExpedientesDocumentoADM(this);";
+                vmExpedientesDocumentoADM.ColumnFilter = true;
+                //vmExpedientesDocumentoADM.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmExpedientesDocumentoADM.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("DataTable", vmExpedientesDocumentoADM)
+			
+			
+			<script type="text/javascript">
+					function ExpedientesDocumentoADMController_editar(el) {
+					var id = getData(el, 1);
+					oExpedientesDocumentoADM.editar_dtExpedientesDocumentoADM(id);
+					}
+					
+					function ExpedientesDocumentoADMController_eliminar(el) {
+					var id = getData(el, 1);
+					oExpedientesDocumentoADM.eliminar_dtExpedientesDocumentoADM(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedExpedientesDocumentoADM@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oExpedientesDocumentoADM == null)
+			var oExpedientesDocumentoADM = new ExpedientesDocumentoADM.ts.ExpedientesDocumentoADMManager();
+		
+		var viewIndex = new ExpedientesDocumentoADM.ts.Index("@(hash)");
+		oExpedientesDocumentoADM.setIndex(viewIndex); 
+		
+		viewIndex.setExpedientesDocumentoADM(dtExpedientesDocumentoADM);
+		
+	</script>	

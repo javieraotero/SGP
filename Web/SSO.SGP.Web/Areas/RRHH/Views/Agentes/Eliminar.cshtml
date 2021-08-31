@@ -1,0 +1,242 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Agentes
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/Agentes/Eliminar.js"></script>
+<script src="Areas/RRHH/ts/Agentes/AgentesManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Eliminar", "Agentes", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Legajo, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Legajo, new {@class = "form-control col-md-12", @id="Legajo"+hash, @tabindex="2"})
+			@Html.ValidationMessageFor(model => model.Legajo)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Telefono, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Telefono, new {@class = "form-control col-md-12", @id="Telefono"+hash, @tabindex="3"})
+			@Html.ValidationMessageFor(model => model.Telefono)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Profesion, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Profesion, new {@class = "form-control col-md-12", @id="Profesion"+hash, @tabindex="4"})
+			@Html.ValidationMessageFor(model => model.Profesion)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.EstudiosCursados, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.EstudiosCursados, new {@class = "form-control col-md-12", @id="EstudiosCursados"+hash, @tabindex="5"})
+			@Html.ValidationMessageFor(model => model.EstudiosCursados)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.AfiliadoISS, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.AfiliadoISS, new {@class = "form-control col-md-12", @id="AfiliadoISS"+hash, @tabindex="6"})
+			@Html.ValidationMessageFor(model => model.AfiliadoISS)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.FechaDeCasamiento, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.FechaDeCasamiento, new {@class = "form-control col-md-12", @id="FechaDeCasamiento"+hash, @tabindex="7"})
+			@Html.ValidationMessageFor(model => model.FechaDeCasamiento)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Persona, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Persona, new {@class = "form-control col-md-12", @id="Persona"+hash, @tabindex="8"})
+			@Html.ValidationMessageFor(model => model.Persona)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.NumeroPS, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.NumeroPS, new {@class = "form-control col-md-12", @id="NumeroPS"+hash, @tabindex="12"})
+			@Html.ValidationMessageFor(model => model.NumeroPS)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Domicilio, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.Domicilio, new {@class = "form-control col-md-12", @id="Domicilio"+hash, @tabindex="13"})
+			@Html.ValidationMessageFor(model => model.Domicilio)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.FechaUltimoAscenso, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.FechaUltimoAscenso, new {@class = "form-control col-md-12", @id="FechaUltimoAscenso"+hash, @tabindex="14"})
+			@Html.ValidationMessageFor(model => model.FechaUltimoAscenso)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.UltimoCargo, new { @class= "control-label" })
+		<div class="controls">
+			@Html.TextBoxFor(model => model.UltimoCargo, new {@class = "form-control col-md-12", @id="UltimoCargo"+hash, @tabindex="15"})
+			@Html.ValidationMessageFor(model => model.UltimoCargo)
+		</div>
+	</div>	
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+		
+			  @Html.HiddenFor(model => model.Id, new {@id="Id" + hash})
+		
+
+		
+			  @Html.HiddenFor(model => model.Activo, new {@id="Activo" + hash})
+		
+
+		
+			  @Html.HiddenFor(model => model.FechaBaja, new {@id="FechaBaja" + hash})
+		
+
+		
+			  @Html.HiddenFor(model => model.FechaAlta, new {@id="FechaAlta" + hash})
+		
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oAgentes == null)
+			var oAgentes = new Agentes.ts.AgentesManager();
+		
+		var viewEliminar = new Agentes.ts.Eliminar("@(hash)");
+		oAgentes.setEliminar(viewEliminar); 
+		
+		
+	</script>	

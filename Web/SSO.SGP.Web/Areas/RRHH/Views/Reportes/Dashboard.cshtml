@@ -1,0 +1,90 @@
+@model SSO.SGP.EntidadesDeNegocio.CustomDashboard
+@{
+    ViewBag.Title = "Index";
+                            //Layout = "~/Views/Shared/_Horizontal.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat blue">
+                <div class="visual">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="details">
+                    <div id="PlantaPermanente" class="number">
+                        @Model.TotalPlantaPermanente
+                    </div>
+                    <div class="desc">
+                        Planta Permanente
+                    </div>
+                </div>
+                <a class="more" href="#">Ver<i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat red">
+                <div class="visual">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="details">
+                    <div id="Contratados" class="number">
+                        @Model.TotalContratados
+                    </div>
+                    <div class="desc">
+                        Contratados
+                    </div>
+                </div>
+                <a class="more" href="#">Ver<i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat green">
+                <div class="visual">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        @Model.TotalSustitutos
+                    </div>
+                    <div class="desc">
+                        Sustitutos
+                    </div>
+                </div>
+                <a class="more" href="#">Ver<i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <div class="dashboard-stat purple">
+                <div class="visual">
+                    <i class="fa fa-user"></i>
+                </div>
+                <div class="details">
+                    <div class="number">
+                        @Model.TotalEnLicencia
+                    </div>
+                    <div class="desc">
+                        En Licencia
+                    </div>
+                </div>
+                <a class="more" href="#">Ver<i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="control-group">
+               
+		<div class="controls">
+        </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

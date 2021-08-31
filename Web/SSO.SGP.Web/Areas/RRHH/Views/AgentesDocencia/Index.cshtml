@@ -1,0 +1,102 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.AgentesDocencia
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+<script src="Areas/RRHH/ts/AgentesDocencia/Index.js"></script>
+<script src="Areas/RRHH/ts/AgentesDocencia/AgentesDocenciaManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "AgentesDocencia", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+            ColumnCommand[] operadoresAgentesDocencia = new ColumnCommand[2] {
+
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "AgentesDocenciaController_editar(this)",
+                    function = "oAgentesDocencia.editar_dtAgentesDocencia()",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "AgentesDocenciaController_eliminar(this)",
+                    function = "oAgentesDocencia.eliminar_dtAgentesDocencia()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"
+                 }
+                };
+            int agente = ViewBag.Agente;
+
+            var vmAgentesDocencia = Html.DataTableVm("dtAgentesDocencia", (AgentesDocenciaController h) => h.getAgentesDocenciaGrilla(null, agente), "agente="+agente);
+            vmAgentesDocencia.operators = operadoresAgentesDocencia;
+            //vmAgentesDocencia.fnDrawCallBack = "render_dtAgentesDocencia(this);";
+            vmAgentesDocencia.ColumnFilter = true;
+            //vmAgentesDocencia.FilterOn("activo").Select("Si", "No");
+            //Cantidad de registros a mostrar
+            vmAgentesDocencia.CantidadRegistrosDefault = 25;
+
+            }
+            @Html.Partial("~/Views/Shared/DataTable.cshtml", vmAgentesDocencia)
+			
+			
+			<script type="text/javascript">
+					function AgentesDocenciaController_editar(el) {
+					var id = getData(el, 1);
+					oAgentesDocencia.editar_dtAgentesDocencia(id);
+					}
+					
+					function AgentesDocenciaController_eliminar(el) {
+					var id = getData(el, 1);
+					oAgentesDocencia.eliminar_dtAgentesDocencia(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedAgentesDocencia@(hash)" value="" />
+            <input type="hidden" id="Agente@(hash)" value="@ViewBag.Agente" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+    <div class="form-actions">
+
+        <input type="button" value="Nuevo" id="Nuevo@(hash)" class="btn green" />
+
+    </div>
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oAgentesDocencia == null)
+			var oAgentesDocencia = new AgentesDocencia.ts.AgentesDocenciaManager();
+		
+		var viewIndex = new AgentesDocencia.ts.Index("@(hash)");
+		oAgentesDocencia.setIndex(viewIndex); 
+		
+		viewIndex.setAgentesDocencia(dtAgentesDocencia);
+		
+	</script>	

@@ -1,0 +1,30 @@
+@model IEnumerable<SSO.SGP.EntidadesDeNegocio.Menus>
+@{
+    Layout = null;
+}
+
+    
+<ul>
+    @foreach (var item in Model)
+    {
+        if (item.MenusMenu.Count > 0)
+        {
+            <li class="has-sub">
+                <a href="javascript:;" class="">
+                        <i class="icon-bookmark-empty"></i>@item.Label
+					<span class="arrow"></span>
+                    </a>
+                    <ul class="sub">
+                        @foreach (var item2 in item.MenusMenu)
+                        {
+                            <li><a class="" data-toggle="menu" data-title="@item2.TituloDePagina" data-description="@item2.Descripcion" data-url="@Url.Action(item2.Accion, item2.Controlador)" data-tabs="@item2.Tabs" href="@Url.Action("default", @item2.Controlador)">@item2.Label</a></li>   
+                        }
+                    </ul>
+            </li>
+        } 
+        else 
+        {
+            <li><a class="" data-toggle="menu" data-title="@item.TituloDePagina" data-description="@item.Descripcion" data-url="@Url.Action(@item.Accion, @item.Controlador)" data-tabs="@item.Tabs" href="@Url.Action("default", @item.Controlador)"><i class="icon-th"></i>@item.Label</a></li>
+        }
+    }
+</ul>

@@ -1,0 +1,97 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.CustomExepcionLicencia
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasAgente/Excepcion.js"></script>
+
+@using (Html.BeginForm("CrearExcepcion", "LicenciasAgente", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Resolucion, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Resolucion, new { @class = "form-control col-md-6", @id = "Resolucion" + hash, @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.Resolucion)
+                    </div>
+                </div>               
+            </div>
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.DiasOtorgados, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.DiasOtorgados, new { @class = "form-control col-md-6", @id = "DiasOtorgados" + hash, @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.DiasOtorgados)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.FechaFin, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.FechaFin, new { @class = "form-control col-md-6", @id = "FechaFin" + hash, @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.FechaFin)
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#FechaFin@(hash)').datepicker();
+                                $('#FechaFin@(hash)').inputmask("99/99/9999");
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-11">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Observaciones, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Observaciones, new { @class = "form-control col-md-6", @id = "Observaciones" + hash, @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.Observaciones)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    &nbsp;
+                    <div class="controls">
+                        <input type="button" class="btn green" id="Guardar@(hash)" value="Guardar" />
+                        <input type="button" class="btn" id="Cancelar@(hash)" value="Cancelar" />
+                        <input type="hidden" id="Licencia@(hash)" name="Licencia" value="@ViewBag.Licencia" />
+                        <input type="hidden" id="Agente@(hash)" name="Agente" value="@ViewBag.Agente" />
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!--fin de row -->
+    </div>
+
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oLicenciasAgente == null)
+        var oLicenciasAgente = new LicenciasAgente.ts.LicenciasAgenteManager();
+
+    var viewExcepcion = new LicenciasAgente.ts.Excepcion("@(hash)");
+    oLicenciasAgente.setExcepcion(viewExcepcion);
+
+
+</script>

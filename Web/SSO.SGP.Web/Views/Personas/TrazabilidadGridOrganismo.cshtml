@@ -1,0 +1,306 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.PersonasTrazabilidad
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+@*<script src="Areas/RRHH/ts/Agentes/Index.js"></script>
+    <script src="Areas/RRHH/ts/Agentes/AgentesManager.js"></script>*@
+<script src="ts/Syncro/SyncroModal.js"></script>
+<link href="~/assets/css/xeus_forms.css" rel="stylesheet" />
+<script src="~/Scripts/moment-with-locales.min.js"></script>
+<link href="~/assets/plugins/datetimerangepicker/build/css/calentim.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/datetimerangepicker/build/js/calentim.min.js"></script>
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <td class="form-inline" style="background-color: ghostwhite;">
+                            @*<div class="form-group">
+            <select id="select_organismo" class="form-control">
+                <option data-display="Seleccione un organismo" value="-1">Seleccione Organismo</option>
+                @foreach (var o in new SSO.SGP.AccesoADatos.OrganismosRefAD().ObtenerParaTurnos().ToList())
+                {
+                    <option value="@o.value">@o.text</option>
+                }
+            </select>
+            <script>
+                $(function () {
+                    //$('#organismo').niceSelect();
+
+                    $("#select_organismo").change(function (e) {
+                        filterTurnos();
+                    });
+
+                });
+            </script>
+        </div>*@
+                            <div class="form-group">
+                                <select id="search_organismo" class="form-control">
+                                    <option value="0">Incluir todos los organismos</option>
+                                    @*<option data-display="Seleccione un organismo" value="-1">Organismo</option>*@
+                                    @foreach (var o in new SSO.SGP.AccesoADatos.OrganismosRefAD().ObtenerSoloRRHH().ToList())
+                                    {
+                                        <option value="@o.Id">@o.Descripcion</option>
+                                    }
+                                    <option value="2592">Mesa de Entradas Superior Tribunal de Justicia</option>
+                                    <option value="2593">Mesa de entradas Fuero Penal Centro Judicial Santa Rosa</option>
+                                    <option value="2594">Mesa de entradas Fuero Civil Centro Judicial Santa Rosa</option>
+                                    <option value="2595">Mesa de entradas Ministerio Publico Centro Judicial Santa Rosa</option>
+                                    <option value="2596">Mesa de entradas Servicios Generales Centro Judicial Santa Rosa</option>
+                                    <option value="2597">Mesa de entradas Palacio de Justicia General Pico</option>
+                                    <option value="2598">Mesa de entradas Palacio de Justicia General Acha</option>
+                                    <option value="2599">Mesa de entradas Palacio de Justicia Victorica</option>
+                                </select>
+                                <script>
+                        $(function () {
+                            //$('#organismo').niceSelect();
+
+                            $("#search_organismo").find("option[value=" + @SSO.SGP.Web.SessionHelper.OficinaActual +"]").prop("selected", "selected");
+                            $('#search_organismo').chosen();
+                            //$("#select_organismo").change(function (e) {
+                            //    filterTurnos();
+                            //});
+
+                        });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <select id="excluir_empleados" class="form-control">
+                                    <option value="0">Todos</option>
+                                    <option value="1">Excluir empleados</option>
+                                </select>
+                                <script>
+                        $(function () {
+                            //$('#organismo').niceSelect();
+
+                            //$("#excluir_empleados").find("option[value=" + @SSO.SGP.Web.SessionHelper.OficinaActual +"]").prop("selected", "selected");
+                            $('#excluir_empleados').chosen();
+                            //$("#select_organismo").change(function (e) {
+                            //    filterTurnos();
+                            //});
+
+                        });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="DNI" class="form-control input-sm" style="width:250px!important" id="dni_search">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Fechas" class="form-control input-sm" style="width:250px!important" id="fecha_search">
+                                <script>
+                                    var desde = "";
+                                    var hasta = "";
+                                    var dia = 0;
+                                    var mes = 0;
+                                    var fecha = null; 
+                                    moment.locale('es');
+                                    var fecha = $("#fecha_search").calentim({
+                                        locale: "es", startEmpty: true, onafterselect:
+                                            function (calentim, startDate, endDate) {
+                                                //console.log("callback calentim creacion");
+                                                desde = startDate.toDate().toISOString();
+                                                hasta = endDate.toDate().toISOString();
+                                                filterTrazabilidad();
+
+                                                fecha = desde;
+
+                                                console.log(startDate.toDate().getDay());
+
+                                                dia = new Date(fecha).getDate();
+                                                mes = new Date(fecha).getMonth()+1;
+
+                                                //console.log(dia);
+                                            }
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn green" id="generar_excel">Excel</button>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn green" id="generar_txt">txt CESIDA</button>
+                            </div>
+                            @*<div class="form-group">
+            <button id="imprimir" class="btn btn-info">Imprimir</button>
+            <button id="contactar" class="btn btn-info">Imprimir para Contactar</button>
+            <script>
+                $(function () {
+                    $("#imprimir").click(function (e) {
+                        e.preventDefault();
+                        window.open("rrhh/reportes/turnospdf/?organismo=" + $("#select_organismo").val() + "&desde=" + desde + "&hasta=" + hasta);
+                    });
+
+                    $("#contactar").click(function (e) {
+                        e.preventDefault();
+                        window.open("rrhh/reportes/turnoscontactarpdf/?organismo=" + $("#select_organismo").val());
+                    });
+                });
+            </script>
+        </div>*@
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                @{
+                    ColumnCommand[] operadoresAgentes = new ColumnCommand[2] {
+                 new ColumnCommand {
+                    display = "ver",
+                    function = "oAgentes.ver_turno()",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    iconclass = "edit",
+                    tooltip = "Editar este registro"
+                 },
+                  new ColumnCommand {
+                    display = "ver",
+                    function = "oAgentes.quitar_turno()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    iconclass = "edit",
+                    tooltip = "Quitar este registro"
+                 }
+                };
+
+                    var vmAgentes = Html.DataTableVm("dtTrazabilidad", (PersonasController h) => h.getTrazabilidadDetalle(null, null, null, null, null, false, false));
+
+                    vmAgentes.operators = operadoresAgentes;
+                    vmAgentes.OpcionesEnGrilla = false;
+                    //vmAgentes.fnDrawCallBack = "render_dtTurnos(this);";
+                    vmAgentes.ColumnFilter = true;
+                    //vmAgentes.FilterOn("activo").Select("Si", "No");
+                    //Cantidad de registros a mostrar
+                    vmAgentes.CantidadRegistrosDefault = 25;
+
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmAgentes)
+
+                <input type="hidden" id="SelectedAgentes@(hash)" value="" />
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+
+    $(function() {
+        //filterTrazabilidad();
+
+        $("#search_organismo").change(function(e) {
+            console.log("filtrar");
+            filterTrazabilidad();
+        });
+
+        $("#dni_search").blur(function () {
+            filterTrazabilidad();
+        });
+
+        $("#generar_excel").click(function (e) {
+            e.preventDefault();
+            
+            var sql = "select Fecha, Hora, NroDocumento DNI, Nombre, Telefono, Organismo, Domicilio [Domicilio Organismo] from TrazabilidadDePersonas where fecha is not null";
+
+            //var sql2 = "select cesida, nrodocumento, apellidos, nombres, telefono from TrazabilidadDePersonas where fecha is not null";
+
+            var where = "";
+
+            if (desde != "")
+                where += " and fecha >= '" + desde.replace("T"," ").replace("Z","") + "' and fecha <= '" + hasta.replace("T"," ").replace("Z","") + "'" 
+
+            if ($("#search_organismo").val() != "0")
+                where += " and IdOrganismo = " + $("#search_organismo").val();
+
+            var excluir_empleados = $("#excluir_empleados").val();
+
+            var excluir = false;
+            if (excluir_empleados == 1)
+                excluir = true;
+
+            if (excluir)
+                 where += " and agente is null"
+
+            console.log(sql + where);
+
+            window.open("/rrhh/reportes/excelsintitulo/?query=" + sql + where + "&filename=trazabilidad");
+            //window.open("/rrhh/reportes/toText/?query=" + sql+where + "&filename=trazabilidad");
+        });
+
+          $("#generar_txt").click(function (e) {
+            e.preventDefault();
+            
+           /// var sql = "select Fecha, Hora, NroDocumento DNI, Nombre, Telefono, Organismo, Domicilio [Domicilio Organismo] from TrazabilidadDePersonas where fecha is not null";
+
+            var sql = "select cesida, nrodocumento, apellidos, nombres, left(telefono,15) from TrazabilidadDePersonas where fecha is not null";
+
+            var where = "";
+
+            //if (desde != "")
+            //    where += " and fecha >= '" + desde.replace("T"," ").replace("Z","") + "' and fecha <= '" + hasta.replace("T"," ").replace("Z","") + "'" 
+
+            //where += ''
+
+            //if ($("#search_organismo").val() != "0")
+            //    where += " and IdOrganismo = " + $("#search_organismo").val();
+
+            var excluir_empleados = $("#excluir_empleados").val();
+
+            //var excluir = false;
+            //if (excluir_empleados == 1)
+            //    excluir = true;
+
+            //if (excluir)
+              where += " and agente is null and day(fecha) = " + dia + " and month(fecha) = " + mes;
+
+            console.log(sql + where);
+
+            //window.open("/rrhh/reportes/excelsintitulo/?query=" + sql + where + "&filename=trazabilidad");
+            window.open("/rrhh/reportes/toText/?query=" + sql+where + "&filename=trazabilidad");
+        });
+
+        $("#excluir_empleados").change(function (e) {
+            filterTrazabilidad();
+        });
+
+    });
+
+    function filterTrazabilidad() {
+        var organismo = $("#search_organismo").val();
+        var dni = $("#dni_search").val();
+        var excluir_empleados = $("#excluir_empleados").val();
+
+        var excluir = false;
+        if (excluir_empleados == 1)
+            excluir = true;
+
+        dtTrazabilidad.fnNewAjax("/Personas/getTrazabilidadDetalle/?organismo="+organismo+"&desde="+desde+"&hasta="+hasta+"&dni="+dni+"&excluir_empleados="+excluir+"&todos_organismos=false");
+    }
+
+    //if (oAgentes == null)
+    //    var oAgentes = new Agentes.ts.AgentesManager();
+
+
+    @*var viewIndex = new Agentes.ts.Index("@(hash)");
+    oAgentes.setIndex(viewIndex);
+
+    viewIndex.setAgentes(dtAgentes);*@
+
+</script>

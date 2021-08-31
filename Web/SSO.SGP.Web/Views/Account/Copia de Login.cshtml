@@ -1,0 +1,166 @@
+@model SSO.SGP.Web.Models.LoginModel
+
+@{
+    ViewBag.Title = "Iniciar sesión";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="utf-8" />
+    <title>NombreProy :: Login</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <link href="@Url.Content("~/assets-old/bootstrap/css/bootstrap.min.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets-old/css/metro.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets-old/font-awesome/css/font-awesome.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets-old/css/style.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets-old/css/style_responsive.css")" rel="stylesheet" />
+    <link href="@Url.Content("~/assets-old/css/style_default.css")" rel="stylesheet" id="style_color" />
+    <link rel="stylesheet" type="text/css" href="@Url.Content("~/assets-old/uniform/css/uniform.default.css")" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="login" onload="Inicializar()">
+    <!-- BEGIN LOGO -->
+    <div class="logo">
+        <img src="@Url.Content("~/assets-old/img/logo-big.png")" alt="" />
+    </div>
+    <!-- END LOGO -->
+    <!-- BEGIN LOGIN -->
+    <div class="content">
+        <!-- BEGIN LOGIN FORM -->
+        <section id="loginForm">
+            @*<form class="form-vertical login-form" action="index.html">*@
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "myform", @class = "form-vertical login-form" }))
+            {
+                @Html.AntiForgeryToken()
+                <h3 class="form-title">@ViewBag.Title</h3>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="input-icon left">
+                            <i class="icon-user"></i>
+                            @*<input class="m-wrap" type="text" placeholder="Nombre de usuario" />*@
+                            @Html.TextBoxFor(m => m.UserName, new { autocomplete = "off", @class = "m-wrap", placeholder = "Nombre de usuario" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="input-icon left">
+                            <i class="icon-lock"></i>
+                            @*<input class="m-wrap" type="password" style="" placeholder="Contraseña" />*@
+                            @Html.PasswordFor(m => m.Password, new { autocomplete = "off", @class = "m-wrap", placeholder = "Contraseña" })
+                        </div>
+                        @Html.ValidationMessageFor(m => m.Password)
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <label class="checkbox">
+                        @*<input type="checkbox" />*@
+                        @Html.CheckBoxFor(m => m.RememberMe)
+                        No cerrar sesión
+                    </label>
+                    <a href="#" id="login-btn" class="btn green pull-right">Entrar <i class="m-icon-swapright m-icon-white"></i></a>
+                    @*<input type="submit" value="Iniciar sesión" />*@
+                </div>
+                @Html.ValidationSummary(true)
+                <div class="forget-password">
+                    <h4>¿No puedes acceder a tu cuenta?</h4>
+                    <p>
+                        no te preocupes, click <a href="javascript:;" class="" id="forget-password">aquí</a>
+                        para recuperar tu contraseña.
+                    </p>
+                </div>
+            }
+        </section>
+        @*</form>*@
+        <!-- END LOGIN FORM -->
+        <!-- BEGIN FORGOT PASSWORD FORM -->
+        @*<form class="form-vertical forget-form" action="index.html">*@
+        @using (Html.BeginForm("PasswordRecovery", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "myformPassRecovery", @class = "form-vertical forget-form" }))
+        {
+            @Html.AntiForgeryToken()
+            <h3 class="">¿Olvidaste tu contraseña?</h3>
+            <p>Ingresa tu e-mail para recuperarla.</p>
+            <div class="control-group">
+                <div class="controls">
+                    <div class="input-icon left">
+                        <i class="icon-envelope"></i>
+                        @*<input class="m-wrap" type="text" placeholder="Email" />*@
+                        @Html.EditorFor(m => m.Email)
+                    </div>
+                    @Html.ValidationMessageFor(m => m.Email)
+                </div>
+            </div>
+            <div class="form-actions">
+                <a href="javascript:;" id="back-btn" class="btn">
+                    <i class="m-icon-swapleft"></i>Atras
+                </a>
+                <a href="#" id="forget-btn" class="btn green pull-right">Enviar <i class="m-icon-swapright m-icon-white"></i>
+                </a>
+            </div>
+        }
+        @*</form>*@
+        <!-- END FORGOT PASSWORD FORM -->
+    </div>
+    <!-- END LOGIN -->
+    <!-- BEGIN COPYRIGHT -->
+    <div class="copyright">
+        2013 &copy; Syncrosoft. Sistemas Informáticos.
+    </div>
+    <!-- END COPYRIGHT -->
+    <!-- BEGIN JAVASCRIPTS -->
+    <script src="@Url.Content("~/assets-old/js/jquery-1.8.3.min.js")"></script>
+    <script src="@Url.Content("~/assets-old/bootstrap/js/bootstrap.min.js")"></script>
+    <script src="@Url.Content("~/assets-old/uniform/jquery.uniform.min.js")"></script>
+    <script src="@Url.Content("~/assets-old/js/jquery.blockui.js")"></script>
+    <script src="@Url.Content("~/assets-old/js/app.js")"></script>
+    <script>
+        jQuery(document).ready(function () {
+            App.initLogin();
+
+            $("#login-btn").click(function () {
+                $("#myform").submit();
+            });
+
+            $("input[type='text'], textarea, input[type='password']").change(function () {
+                this.value = this.value.replace(/<(.|\n)*?>/g, "");
+            });
+
+            $("#Email").attr("placeholder", "Email");
+            $("#Email").addClass("m-wrap");
+
+            $("#forget-btn").click(function () {
+                $("#myformPassRecovery").submit();
+            });
+
+            $("#Password").keydown(function (event) {
+                if (event.which == 13) 
+                {
+                    $("#myform").submit();
+                }
+            });
+        });
+
+        function Inicializar() {
+            document.getElementById("UserName").focus();
+        }
+
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+    <!-- END JAVASCRIPTS -->
+</body>
+<!-- END BODY -->
+</html>

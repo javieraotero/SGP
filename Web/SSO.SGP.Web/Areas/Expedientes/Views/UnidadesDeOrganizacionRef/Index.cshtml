@@ -1,0 +1,97 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.UnidadesDeOrganizacionRef
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/UnidadesDeOrganizacionRef/Index.js"></script>
+<script src="ts/UnidadesDeOrganizacionRef/UnidadesDeOrganizacionRefManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "UnidadesDeOrganizacionRef", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresUnidadesDeOrganizacionRef = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "UnidadesDeOrganizacionRefController_editar(this)",
+                    function = oUnidadesDeOrganizacionRef.editar_dtUnidadesDeOrganizacionRef();
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "UnidadesDeOrganizacionRefController_eliminar(this)",
+                    function = oUnidadesDeOrganizacionRef.eliminar_dtUnidadesDeOrganizacionRef();
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmUnidadesDeOrganizacionRef = Html.DataTableVm("dtUnidadesDeOrganizacionRef", (UnidadesDeOrganizacionRefController h) => h.getUnidadesDeOrganizacionRefGrilla(null));
+                
+				vmUnidadesDeOrganizacionRef.operators = operadoresUnidadesDeOrganizacionRef;
+                //vmUnidadesDeOrganizacionRef.fnDrawCallBack = "render_dtUnidadesDeOrganizacionRef(this);";
+                vmUnidadesDeOrganizacionRef.ColumnFilter = true;
+                //vmUnidadesDeOrganizacionRef.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmUnidadesDeOrganizacionRef.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("DataTable", vmUnidadesDeOrganizacionRef)
+			
+			
+			<script type="text/javascript">
+					function UnidadesDeOrganizacionRefController_editar(el) {
+					var id = getData(el, 1);
+					oUnidadesDeOrganizacionRef.editar_dtUnidadesDeOrganizacionRef(id);
+					}
+					
+					function UnidadesDeOrganizacionRefController_eliminar(el) {
+					var id = getData(el, 1);
+					oUnidadesDeOrganizacionRef.eliminar_dtUnidadesDeOrganizacionRef(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedUnidadesDeOrganizacionRef@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oUnidadesDeOrganizacionRef == null)
+			var oUnidadesDeOrganizacionRef = new UnidadesDeOrganizacionRef.ts.UnidadesDeOrganizacionRefManager();
+		
+		var viewIndex = new UnidadesDeOrganizacionRef.ts.Index("@(hash)");
+		oUnidadesDeOrganizacionRef.setIndex(viewIndex); 
+		
+		viewIndex.setUnidadesDeOrganizacionRef(dtUnidadesDeOrganizacionRef);
+		
+	</script>	

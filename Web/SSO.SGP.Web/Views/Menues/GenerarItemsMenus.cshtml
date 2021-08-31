@@ -1,0 +1,56 @@
+@model IEnumerable<SSO.SGP.EntidadesDeNegocio.Menus>
+@{
+    Layout = null;
+}
+
+<ul class="page-sidebar-menu" id="ulmenu">
+    <li class="sidebar-toggler-wrapper">
+        <div class="sidebar-toggler hidden-phone">
+        </div>
+    </li>
+    @*<li class="sidebar-search-wrapper">
+        <form class="sidebar-search" action="extra_search.html" method="POST">
+            <div class="form-container">
+                <div class="input-box">
+                    <a href="javascript:;" class="remove"></a>
+                    <select class="form-control col-md-12">
+                        <option>Opcion1</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+    </li>*@
+    @{ 
+        string rutaMenuDefault = SSO.SGP.Web.SessionHelper.MenuDefault;
+        int idMenuDefault = int.Parse(rutaMenuDefault.Substring(rutaMenuDefault.IndexOf("_") + 1));
+    }
+    @foreach (var item in Model)
+    {
+        if (item.Padre == null)
+        {
+        <li>
+            <a href="javascript:;" class="">
+                <i class="@( (!string.IsNullOrEmpty(item.IconClass) ? item.IconClass : "fa fa-briefcase"))"></i>
+                <span class="title">@item.Label</span>
+                <span class="arrow "></span>
+            </a>
+            <ul class="sub-menu">
+                @foreach (var item2 in Model)
+                {
+                    if (item2.Padre.HasValue && item2.Padre.Value == item.Id)
+                    {
+                        var def = "false";
+                        if (item2.Id == idMenuDefault) { def = "true"; }
+                        if (item2.Area != null) {
+                            <li><a class="" data-toggle="menu" data-default="@def"   data-title="@item2.TituloDePagina" data-description="@item2.Descripcion" data-url="@Url.Action(item2.Accion, item2.Controlador)" data-tabs="@item2.Tabs" href="@Url.Action("default", @item2.Controlador, new { area = @item2.Area})">@item2.Label</a></li>   
+                        } else {
+                            <li><a class="" data-toggle="menu" data-default="@def"   data-title="@item2.TituloDePagina" data-description="@item2.Descripcion" data-url="@Url.Action(item2.Accion, item2.Controlador)" data-tabs="@item2.Tabs" href="@Url.Action("default", @item2.Controlador)">@item2.Label</a></li>   
+                        }    
+                    }
+                }
+            </ul>
+        </li>
+        }
+    }
+</ul>
+

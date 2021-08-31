@@ -1,0 +1,13 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.Usuarios
+
+@{
+    Layout = null;
+}
+
+Bienvenido a NombreSistema/Empresa.
+<br />
+@Model.Nombre necesitamos que verifiques tu email.  Click en el siguiente link para confirmar tu suscripción!
+@Html.ActionLink("Confirmar Registro", "ValidarRegistro", "Account", "http", "localhost", "", new { code = @ViewBag.Token.ToString() }, null)
+<br />
+Gracias!

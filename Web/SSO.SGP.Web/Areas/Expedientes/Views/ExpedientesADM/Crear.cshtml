@@ -1,0 +1,276 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@using SSO.SGP.EntidadesDeNegocio.Vistas;
+@model SSO.SGP.EntidadesDeNegocio.Expedientesadm
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-switch/static/stylesheets/bootstrap-switch.min.css")" />
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/ExpedientesADM/Crear.js"></script>
+<script src="Areas/Expedientes/ts/ExpedientesADM/ExpedientesADMManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<script src="ts/Syncro/SyncroSelect.js"></script>
+@using (Html.BeginForm("Crear", "ExpedientesADM", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-md-6">
+                <label class="control-label">Número asignado</label>
+                <div class="control-group">
+                    <span id="spNumeroExpediente" style="font-size:22px;color:black">XXXXXX</span>
+                    <input type="hidden" name="Numero" id="hidNumero"/>
+                    <input type="hidden" name="NumeroDeCorresponde" id="hidCorresponde" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Tipo, new { @class = "control-label" })
+                    <div class="controls">
+                        <select id="TiposExpedienteADMRef@(hash)" name="Tipo" class="form-control col-md-12">
+                            <option value="0">Seleccione...</option>
+                            @foreach (var t in (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.TiposExpedienteADMRef)
+                            {
+                                <option value="@t.Value">@t.Text</option>
+                            }
+                        </select>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#TiposExpedienteADMRef@(hash)').chosen();
+                        });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Tipo)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Categoria, new { @class = "control-label" })
+                    <div class="controls">                   
+                        <select id="CategoriasExpedienteADMRef@(hash)" name="Categoria" class="form-control col-md-12">
+                            <option value="0">Seleccione...</option>
+                            @foreach (var t in (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.CategoriasExpedienteADMRef)
+                            {
+                                <option value="@t.Value">@t.Text</option>
+                            }
+                        </select>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#CategoriasExpedienteADMRef@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Categoria)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-2">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Numero, new { @class = "control-label" })
+                    <div class="controls">
+                        @*@Html.TextBoxFor(model => model.Numero, new { @class = "form-control col-md-12", @id = "Numero" + hash, @tabindex = "3" })*@
+                        <input type="text" id="Numero@(hash)" name="Numero" tabindex="3" class="form-control col-md-12" disabled="disabled" value="0" />
+                        @*@Html.ValidationMessageFor(model => model.Numero)*@
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-2">
+                <div class="control-group">
+                    <label class="control-label">Es Corresponde?</label>
+                    <div class="controls">
+                        <input type="checkbox" id="chkCorresponde@(hash)" name="chkEntregado"  />
+                        <input type="hidden" id="Corresponde@(hash)"  value="false" />
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#chkCorresponde@(hash)').bootstrapSwitch();
+                                $('#chkCorresponde@(hash)').on("switch-change", function (e, data) {
+                                    $("#Corresponde@(hash)").val(data.value)
+                                    //console.log("change", data.value);
+                                });
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <div class="col-md-3">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Fecha, new { @class = "control-label" })
+                    <div class="controls">
+                        <div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                            @Html.TextBoxFor(model => model.Fecha, "{0:dd/MM/yyyy}", new { @class = "m-wrap form-control m-ctrl-medium date-picker", @id = "Fecha" + hash, @tabindex = "5" })
+                            <span class="add-on"><i class="icon-calendar"></i></span>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Fecha@(hash)').datepicker(pickerOpts);
+                            });
+                        </script>                      
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-5">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.OrganismoIniciador, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("OrganismoIniciador", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.OrganismosRef, new { @class = "form-control col-md-12", @id = "OrganismoIniciador" + hash, @tabindex = "6" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#OrganismoIniciador@(hash)').append("<option value='0'>Seleccione</option>");
+                                $('#OrganismoIniciador@(hash)').find("option[value=0]").prop("selected", "selected");
+                                $('#OrganismoIniciador@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.OrganismoIniciador)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.TextoIniciador, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.TextoIniciador, new { @class = "form-control col-md-12", @id = "TextoIniciador" + hash, @tabindex = "7" })
+                        @Html.ValidationMessageFor(model => model.TextoIniciador)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Caratula, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Caratula, new { @class = "form-control col-md-12", @id = "Caratula" + hash })
+                        @Html.ValidationMessageFor(model => model.Caratula)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="control-group">
+                    <label class="control-label" for="Destino">Destino</label>
+                    <div class="controls">
+                        @Html.DropDownList("Destino", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.OrganismosRef, new { @class = "form-control col-md-12", @id = "Destino" + hash, @tabindex = "9" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Destino@(hash)').chosen();
+                            });
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Ambito, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Ambito", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.Ambitos, new { @class = "form-control col-md-12", @id = "Ambito" + hash, @tabindex = "10" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Ambito@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Ambito)
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <br />
+        <!--fin de row -->
+        <div class="row" id="divDetalle@(hash)">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab-1@(hash)" data-toggle="tab">Actuaciones</a>
+                    </li>
+                    <li class="">
+                        <a href="#tab-2@(hash)" data-toggle="tab">Facturas</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="tab-1@(hash)">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="button" value="Nueva Actuación" id="NuevaActuacion@(hash)" class="btn green" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @(SyncroHtml.TablaJson<ActuacionesadmViewT>(new ActuacionesadmViewT(), "Actuacionesadm/", new { @id = "Actuaciones" + hash, @class = "table table-striped table-bordered table-advance table-hover", data_cargar = "false" }))
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="tab-2@(hash)">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="button" value="Nueva Factura" id="NuevaFactura@(hash)" class="btn green" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                @(SyncroHtml.TablaJson<FacturasViewT>(new FacturasViewT(), "", new { @id = "Facturas" + hash, @class = "table table-striped table-bordered table-advance table-hover", data_cargar = "false" }))
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="form-actions">
+
+            <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+
+            <input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+
+            @*<input type="button" value="Guardar & Nuevo" id="GuardarYNuevo@(hash)" class="btn blue" />*@
+
+            <input type="button" value="Imprmir Carátula" id="Imprimir@(hash)" class="btn yellow" />
+
+            <input type="hidden" id="Id@(hash)" />
+        </div>
+        <!--fin form-actions>-->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+        jQuery.validator.methods.date = function (value, element) {
+            return this.optional(element) || !/Invalid|NaN/.test(new Date(value)) || /^(\d+)\/(\d+)\/(\d{2,})$/.test(value);
+            // OLD: return this.optional(element) || !/Invalid|NaN/.test(new Date(value));
+        }
+    });
+
+    if (oExpedientesADM == null)
+        var oExpedientesADM = new ExpedientesADM.ts.ExpedientesADMManager();
+
+    var viewCrear = new ExpedientesADM.ts.Crear("@(hash)");
+    oExpedientesADM.setCrear(viewCrear);
+</script>

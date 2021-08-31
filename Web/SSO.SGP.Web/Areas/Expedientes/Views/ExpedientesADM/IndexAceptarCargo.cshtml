@@ -1,0 +1,88 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Expedientesadm
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/ExpedientesADM/IndexAceptarCargo.js"></script>
+<script src="Areas/Expedientes/ts/ExpedientesADM/ExpedientesADMManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "ExpedientesADM", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-md-12">
+
+                @{ 			
+                 ColumnCommand[] operadoresExpedientesADM = new ColumnCommand[1] {
+				
+                 new ColumnCommand {
+                    display = "Detalle",
+                    //function = "ExpedientesADMController_editar(this)",
+                    function = "oExpedientesADM.detalle_dtExpedientesADM()",
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Ver Detalle"   
+                 }
+                };
+
+                var vmExpedientesADM = Html.DataTableVm("dtExpedientesADM", (ExpedientesADMController h) => h.getExpedientesADMGrilla(null));
+
+                vmExpedientesADM.operators = operadoresExpedientesADM;
+                //vmExpedientesADM.fnDrawCallBack = "render_dtExpedientesADM(this);";
+                vmExpedientesADM.ColumnFilter = true;
+                //vmExpedientesADM.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmExpedientesADM.CantidadRegistrosDefault = 25;
+                  
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmExpedientesADM)
+
+
+                <script type="text/javascript">
+                    function ExpedientesADMController_editar(el) {
+                        var id = getData(el, 1);
+                        oExpedientesADM.editar_dtExpedientesADM(id);
+                    }
+
+                    function ExpedientesADMController_eliminar(el) {
+                        var id = getData(el, 1);
+                        oExpedientesADM.eliminar_dtExpedientesADM(id);
+                    }
+                </script>
+
+
+                <input type="hidden" id="SelectedExpedientesADM@(hash)" value="" />
+
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+
+
+
+
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oExpedientesADM == null)
+        var oExpedientesADM = new ExpedientesADM.ts.ExpedientesADMManager();
+
+    var viewIndex = new ExpedientesADM.ts.Index("@(hash)"); 
+    oExpedientesADM.setIndex(viewIndex);
+
+    viewIndex.setExpedientesADM(dtExpedientesADM);
+
+</script>

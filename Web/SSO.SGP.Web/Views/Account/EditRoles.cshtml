@@ -1,0 +1,175 @@
+@model SSO.SGP.EntidadesDeNegocio.Usuarios
+@{
+    ViewBag.Title = "Edit";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Asignar Roles a Usuario</title>
+</head>
+<body>
+    @using (Html.BeginForm("EditRoles", "Account", FormMethod.Post, new { id = "formRoles" }))
+    {
+        @Html.AntiForgeryToken()
+        <div class="box">
+            <div class="header">
+                <h3>
+                    Editar Usuario</h3>
+                <span></span>
+            </div>
+            <div class="content no-padding">
+                <input type="hidden" id="UsuarioSel" name="UsuarioSel" value="@ViewBag.IdUsuarioSel" />
+                <div class="_25">
+                    <p>
+                        <table>
+                            <tr>
+                                <td>
+                                    @Html.Label("Roles")
+                                </td>
+                                <td>
+                                    @Html.DropDownList("webpages_Roles", string.Empty)
+                                </td>
+                            </tr>
+                        </table>
+                    </p>
+                </div>
+                <div class="_25">
+                    <p>
+                        <input type="button" id="guardar" value="Asignar" style="width: 100px" />
+                        @*<input type="button" id="cancelar" value="Cancelar" />*@
+                    </p>
+                </div>
+                <div class="_50">
+                    <table id="tblRolesRel">
+                    <thead>
+                        <tr>
+                            <th>
+                                <u>Roles que posee el usuario</u>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.webpages_Roles)
+                        {           
+                            <tr id="@item.RoleName">
+                                <td>@item.RoleName
+                                </td>
+                                <td>
+                                    <a href="#" t="eliminarR" v="@item.RoleName">Quitar Rol</a>
+                                </td>
+                            </tr>   
+                        }
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="actions-right">
+                    <input type="button" value="Cerrar" id="cancelarRol" style="width: 100px;" />
+                </div>
+            </div>
+        </div>
+    }
+    
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+
+          function eliminar(el) {
+              nomRol = $(el).attr("v");
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteRol", "Account", new { idUsuario = @ViewBag.IdUsuarioSel, nombreRol = " + nomRol + " })",  
+                    data: { idUsuario: @ViewBag.IdUsuarioSel, nombreRol: nomRol},
+                    success: function (data) {
+                        if (data[0]) {
+                                $.jGrowl(data[1], { theme: "success" });
+                                $("#" + nomRol).fadeOut('slow');
+                            } else {
+                                error=1;
+                                $.jGrowl(data[1], { theme: "error" });
+                            }
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        alert("Error el procesar ajax'" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                    },
+                    complete: function () {
+                        $("#ProgressDialog").dialog("close");
+                    }
+                });
+            }
+
+        $(document).ready(function () {
+
+            $("#ProgressDialog").dialog("close");
+
+            $("select").chosen();
+
+            $("#guardar").click(function () {
+                var form = $('#formRoles');
+                form.validate();
+                if (form.valid()) {
+                    $("#ProgressDialog").dialog("open");
+                    nomRol = $("#webpages_Roles option:selected").text();
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("EditRoles", "Account", new { idUsuario = @ViewBag.IdUsuarioSel, nombreRol = " + nomRol + " })",
+                        data: { idUsuario: @ViewBag.IdUsuarioSel, nombreRol: nomRol},
+                        success: function (data) {
+                            if (data[0]) {
+                                $.jGrowl(data[1], { theme: "success" });
+                                // agregar el registro a la tabla de roles relacionados
+                                str = "<tr id='" + nomRol + "'><td>" + $("#webpages_Roles option:selected").text() + "</td><td><a id='"+nomRol+"' href='#' t='eliminarR' v='" + nomRol + "' onclick='eliminar(this)'>Quitar Rol</a></td></tr>";
+                                $(str).appendTo("#tblRolesRel tbody");
+                            } else {
+                                error=1;
+                                $.jGrowl(data[1], { theme: "error" });
+                            }
+                        },
+                        error: function (jqXhr, textStatus, errorThrown) {
+                            alert("Error el procesar ajax'" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                        },
+                        complete: function () {
+                            $("#ProgressDialog").dialog("close");
+                        }
+                    });
+                }
+            });
+
+
+
+            $("a[t='eliminarR']").click(function (e) {
+                
+               nomRol = $(this).attr("v");
+                 $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("DeleteRol", "Account", new { idUsuario = @ViewBag.IdUsuarioSel, nombreRol = " + nomRol + " })",  
+                    data: { idUsuario: @ViewBag.IdUsuarioSel, nombreRol: nomRol},
+                    success: function (data) {
+                        if (data[0]) {
+                                $.jGrowl(data[1], { theme: "success" });
+                                $("#" + nomRol).fadeOut('slow');
+                            } else {
+                                error=1;
+                                $.jGrowl(data[1], { theme: "error" });
+                            }
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        alert("Error el procesar ajax'" + jqXhr.status + "' (textStatus: '" + textStatus + "', errorThrown: '" + errorThrown + "')");
+                    },
+                    complete: function () {
+                        $("#ProgressDialog").dialog("close");
+                    }
+                });
+
+            });
+
+            $("#cancelarRol").click(function (e) {
+            closeCurrentTab();
+        })
+
+        });
+    </script>
+</body>
+</html>

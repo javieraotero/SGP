@@ -1,0 +1,176 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables
+@using SSO.SGP.Web.Controllers
+@model IEnumerable<SSO.SGP.EntidadesDeNegocio.Usuarios>
+<script src="@Url.Content("~/Scripts/DataTables-1.9.2/media/js/jquery.dataTables.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/DataTables-1.9.2/media/js/jquery.dataTables.columnFilter.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/Scripts/ContextMenu/jquery.ui.position.js")" type="text/javascript"></script>
+<link type="text/css" href="@Url.Content("~/Content/DataTables-1.9.2/media/css/demo_table_jui.css")" rel="stylesheet"/>
+<link type="text/css" href="@Url.Content("~/Scripts/ContextMenu/jquery.contextMenu.css")" rel="stylesheet"/>
+
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = null;
+}
+            @{
+                //Definición de los comandos de la tabla
+                ColumnCommand[] operadores = new ColumnCommand[3] {
+                 new ColumnCommand {
+                    display = "Editar",
+                    function = "EditEvent(this)",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar usuario y claves"   
+                 },
+                 new ColumnCommand {
+                    display = "Eliminar",
+                    function = "DeleteEvent(this)",
+                    icon = "../assets/img/icons/16x16/activatedeactivate.gif",
+                    tooltip = "Desactivar"
+                 },
+                 new ColumnCommand {
+                    display = "Gestionar Roles",
+                    function = "EditarRoles(this)",
+                    icon = "../assets/img/icons/16x16/role.png",
+                    tooltip = "Gestionar roles"
+                 }
+                 //,
+                 //new ColumnCommand {
+                 //   display = "Resetear contraseña",
+                 //   function = "ResetearPassword(this)",
+                 //   icon = "../Images/icons/16x16/reset.png",
+                 //   tooltip = "Resetear contraseña"
+                 //}
+                };
+
+                var vm2 = Html.DataTableVm("dtUsuarios", (AccountController h) => h.getUsuarios(null));
+                vm2.operators = operadores;
+                vm2.ColumnFilter = true;
+                vm2.fnDrawCallBack = "render(this);";
+
+
+                vm2.FilterOn("Activo").Select("Si", "No");
+
+                //Cantidad de registros a mostrar
+                vm2.CantidadRegistrosDefault = 50;
+                  
+            }
+            @Html.Partial("DataTable", vm2)
+           
+<script type="text/javascript">
+
+    var index;
+    var id;
+
+    $(function () {
+
+        $("#dtUsuarios tbody").click(function (event) {
+            $(dtUsuarios.fnSettings().aoData).each(function () {
+                $(this.nTr).removeClass('row_selected');
+            });
+            $(event.target).closest("tr").addClass('row_selected');
+
+            id = dtUsuarios.fnGetData($(event.target).closest("tr").index())[0]; // getting the value of the first (invisible) column
+            //that.Agentes_Id = id;
+            index = $(event.target).closest("tr").index();
+        });
+
+    });
+
+    function render(el) {
+        $("#dtUsuarios tbody tr td:nth-child(7)").each(function() {
+        if ($(this).text() == "No") {
+            //$(this).css("background", "red"); 
+            $(this).closest("tr").find("td").css("color", "red"); 
+            $(this).closest("tr").find("td").css("background", "#F7E4EB"); 
+
+            // tooltip para desactivar
+            $(this).closest("tr").find("td:nth-child(8)").find("img").eq(1).attr("title","Activar");
+
+        }
+     });
+    }
+    
+    function getData(col) {
+        //var anSelected = app.fnGetSelected(this.Agentes);
+        return(dtUsuarios.fnGetData(this.index)[col]); 
+    }
+
+    function EditEvent(el) {
+        var id = getData(0);
+        var user = getData(1);
+        $("#ProgressDialog").dialog("open");
+        //var $tabs = $('#tabs').tabs();
+        // $('#tabs').tabs("add", "Edit/"+id, "Editar").tabs('select', $tabs.tabs('length') - 1);
+        //createTab("Editar", "Account/EditUsuario/" + id, true, false, true);
+        app.modal.cargar("Editar " + user, "Account/EditUsuario/" + id);
+    }
+
+    function EditarRoles(el) {
+        var id = getData(0);
+        var user = getData(1);
+        $("#ProgressDialog").dialog("open");
+        //var $tabs = $('#tabs').tabs();
+        //$('#tabs').tabs("add", "EditRoles/" + id, "Editar Roles de " + user).tabs('select', $tabs.tabs('length') - 1);
+        //createTab("Editar Roles de " + user, "Account/EditRoles/" + id, true, false, true);
+        app.modal.cargar("Editar roles de " + user, "Account/EditRoles/" + id);
+    }
+
+    function ResetearPassword(el) {
+//        var id = $(el).closest('tr').find('td').first().text();
+//        var user = $(el).closest('tr').find('td').first().next().text();
+//        $("#ProgressDialog").dialog("open");
+//        var $tabs = $('#tabs').tabs();
+////         $('#tabs').tabs("add", "Edit/"+id, "Editar").tabs('select', $tabs.tabs('length') - 1);
+//        $('#tabs').tabs("add", "EditRoles/" + id, "Editar Roles de " + user).tabs('select', $tabs.tabs('length') - 1);
+    }
+
+    $(document).ready(function () {
+        var el = $("#page-container");
+        App.unblockUI(el);
+    });
+
+    function DeleteEvent(el) {
+        var id = getData(el, 1);
+        var Activo = getData(el, 7);
+         
+         var Mensaje = "Está seguro que desea Activar el registro?";
+
+         if (Activo == "Si")
+            var Mensaje = "Está seguro que desea Desactivar el registro?";
+
+         $.fallr("show", {
+            buttons: {
+                button1: {text: "Si", danger: true, onclick:  function() {
+                    $("#ProgressDialog").dialog("open");
+                    $.ajax({
+                        type: "POST",
+                        url: "Delete",
+                        data: {id: id},
+                        success: function(data) {
+                            if (data[0]) {
+                                $.jGrowl(data[1], { theme: "success" });
+                                dtUsuarios.fnDraw();
+                            } else {
+                                error=1;
+                                $.jGrowl(data[1], { theme: "error" });
+                            }
+                        },
+                        error: function(jqXhr, textStatus, errorThrown) {
+                            alert("Error al procesar formulario ajax");
+                        },
+                        complete: function() {
+                            $("#ProgressDialog").dialog("close");
+                         }
+                    }); //end ajax
+                    //Se cierra dialogo
+                    $.fallr("hide");
+                } },
+                button2: { text: "Cancelar", onclick: function () { $.fallr("hide") } }
+            },
+            content: "<p>" + Mensaje + "</p>", 
+            icon: "error"
+        });
+    }
+
+</script>

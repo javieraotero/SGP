@@ -1,0 +1,66 @@
+@using ActionMailer.Net
+@model IList<SSO.SGP.EntidadesDeNegocio.Vistas.TurnosWebView>
+
+@{
+    Layout = null;
+}
+
+
+
+<p>
+    Listodo de Turnos por contactar
+</p>
+<br />
+<table width="100%" style="font-family: Arial; font-size: 10pt;">
+    <tr>
+        <td style="height: 40px">
+            <strong>
+                Trámite
+            </strong>
+        </td>
+        <td style="height: 40px">
+            <strong>
+                Persona
+            </strong>
+        </td>
+        <td style="height: 40px">
+            <strong>
+                Teléfono
+            </strong>
+        </td>
+        <td style="height: 40px">
+            <strong>
+                DNI
+            </strong>
+        </td>
+        <td align="right" style="height: 40px">
+            <strong>
+                Observaciones
+            </strong>
+        </td>        
+    </tr>
+
+    @foreach (SSO.SGP.EntidadesDeNegocio.Vistas.TurnosWebView @Item in @Model)
+    {
+<tr>
+    <td style="font-family: Arial; font-size: 8pt;">
+        @Item.Id
+    </td>
+    <td style="font-family: Arial; font-size: 8pt;">
+        @Item.Nombre
+    </td>
+    <td style="font-family: Arial; font-size: 8pt;">
+        @Item.Telefono
+    </td>
+    <td style="font-family: Arial; font-size: 8pt;">
+        @Item.DNI
+    </td>
+    <td align="right" style="font-family: Arial; font-size: 8pt;">
+        @Item.Comentarios
+    </td>
+</tr>
+    }
+
+</table>
+
+

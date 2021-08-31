@@ -1,0 +1,39 @@
+@model IEnumerable<SSO.SGP.EntidadesDeNegocio.Notificacionesadm>
+@{
+    Layout = null;
+}
+
+@if (Model != null && Model.Count() > 0)
+{
+    
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+        <i class="fa fa-warning"></i>
+        <span class="badge">@Model.Count()
+        </span>
+    </a>
+    <ul class="dropdown-menu extended notification">
+        <li>
+            <p>
+                @ViewBag.Titulo
+            </p>
+        </li>
+        <li>
+            <ul class="dropdown-menu-list scroller" style="height: @(Model.Count() * 41)px;">
+                @foreach (var item in Model)
+                {
+                    <li>
+                        <a href="#">
+                            <span class="label label-sm label-icon label-@item.Tipo">
+                                <i class="fa fa-bell-o"></i>
+                            </span>
+                            @item.Descripcion
+                        </a>
+                    </li>
+                }
+            </ul>
+        </li>
+        @*<li class="external">
+                <a href="#">See all notifications <i class="m-icon-swapright"></i></a>
+            </li>*@
+    </ul>
+}

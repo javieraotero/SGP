@@ -1,0 +1,484 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@using SSO.SGP.EntidadesDeNegocio;
+@using SSO.SGP.EntidadesDeNegocio.Results;
+@model SSO.SGP.EntidadesDeNegocio.LicenciasAgente
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/ts/Syncro/SyncroTabla.js")" type="text/javascript"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasAgente/Crear.js?v=11"></script>
+<script src="Areas/RRHH/ts/LicenciasAgente/LicenciasAgenteManager.js?v=10"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<script src="ts/Syncro/SyncroAutocomplete.js"></script>
+<script src="ts/Syncro/SyncroSelect.js"></script>
+<script src="~/assets/plugins/jquery-inputmask/jquery.inputmask.js"></script>
+<script src="~/assets/plugins/jquery.pulsate.min.js"></script>
+@using (Html.BeginForm("Crear", "LicenciasAgente", FormMethod.Post, new { id = hash }))
+{
+<div class="container-fluid">
+    @*<div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                <strong>Atención!</strong> Esta solicitud de licencia impacta sobre el sistema de RRHH. <br />
+                La solicitud no se registrará como una licencia, hasta que el funcionario responsable de su aprobación la apruebe o desapruebe.
+            </div>
+        </div>
+    </div>*@
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-info alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                @{
+                    string ayuda = "";
+                    if (SSO.SGP.Web.SessionHelper.es_MP)
+                    {
+                        if ((int)ViewBag.Grupo == 1)
+                        {
+                            ayuda = "Funcionarios_Ministerio_Publico.pdf";
+                        }
+                        else
+                        {
+                            ayuda = "Empleados_Ministerio_Publico.pdf";
+                        }
+                    }
+                    else
+                    {
+                        if ((int)ViewBag.Grupo == 1)
+                        {
+                            if (ViewBag.JuezPaz == "1")
+                            {
+                                ayuda = "Jueces_de_Paz_Titulares.pdf";
+                            }
+                            else
+                            {
+                                ayuda = "Funcionarios.pdf";
+                            }
+                        }
+                        else
+                        {
+                            if ((int)ViewBag.Grupo == 5)
+                            {
+                                ayuda = "Jueces_de_Paz_Suplentes.pdf";
+                            }
+                            else
+                            {
+                                ayuda = "Empleados.pdf";
+                            }
+                        }
+                    }
+                }
+                <strong>Ayuda </strong><a href="~/Files/tutoriales/@ayuda" target="_blank">Descargue aquí documento de ayuda de Solicitudes de Licencia</a>                
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="control-group">
+                <label class="form-label"></label>
+                <div class="controls">
+                    <input type="text" id="txtAgenteRRHH@(hash)" disabled="disabled" class="form-control col-md-12" style="font-weight:bolder" tabindex="1" placeholder="Seleccione AgenteRRHH" value="@ViewBag.Agente" /><br />
+                    <p id="Legajo@(hash)">Legajo de RRHH: @ViewBag.Legajo</p>
+                    <p class="help-block"></p>
+                    <input type="hidden" id="AgenteSolicita" name="AgenteRRHH" value="@ViewBag.IdAgente" />
+                </div>
+            </div>
+        </div>
+        <!--fin de div md-12-->
+        <div class="col-md-2">
+            <div class="control-group">
+                @Html.LabelFor(model => model.FechaDesde, new { @class = "control-label" })
+                <div class="controls">
+                    <div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                        @Html.TextBoxFor(model => model.FechaDesde, "{0:dd/MM/yyyy}", new { @class = "m-wrap form-control m-ctrl-medium date-picker", @id = "FechaDesde" + hash, @tabindex = "2" })
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <script type="text/javascript">
+                            $(function () {
+                                $('#FechaDesde@(hash)').datepicker({
+                                    onSelect: function (date) {
+                                        @*$("#Dias@(hash)").val("");
+                                        $("#FechaHasta@(hash)").val("");
+                                        $("#Dias@(hash)").focus();*@
+                                        oLicenciasAgente.changeFechaDesde();
+                                    }
+                                });
+                                $('#FechaDesde@(hash)').inputmask("99/99/9999");
+                            });
+                    </script>
+                    @* @Html.ValidationMessageFor(model => model.FechaDesde)*@
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1" id="divDias">
+            <div class="control-group">
+                @Html.Label("Días", new { @class = "control-label" })
+                <div class="controls">
+                    <input type="text" id="Dias@(hash)" class="form-control col-md-12" tabindex="3" />
+                </div>
+            </div>
+        </div>
+        <!--fin de div md-12-->
+        <div class="col-md-2" id="divFechaHasta">
+            <div class="control-group">
+                @Html.LabelFor(model => model.FechaHasta, new { @class = "control-label" })
+                <div class="controls">
+                    <div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                        @Html.TextBoxFor(model => model.FechaHasta, "{0:dd/MM/yyyy}", new { @class = "m-wrap form-control m-ctrl-medium date-picker", @id = "FechaHasta" + hash, @tabindex = "3", @disabled = "disabled" })
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <script type="text/javascript">
+                            $(function () {
+                                $('#FechaHasta@(hash)').datepicker({ onSelect: function (date) { $("#Licencia@(hash)").focus() } });
+                                $('#FechaHasta@(hash)').inputmask("99/99/9999");
+                            });
+                    </script>
+                    @* @Html.ValidationMessageFor(model => model.FechaHasta)*@
+                </div>
+            </div>
+        </div>
+        @*<div class="col-md-2">
+                <div class="control-group">
+                    @Html.Label("Expediente", new { @class = "control-label" })
+                    <div class="controls">
+                        <span id="Expediente@(hash)" style="float:left;vertical-align:middle"></span>
+                        <input type="text" id="AnioExpediente@(hash)" name="AnioExpediente" value="@DateTime.Now.Year" class="form-control col-md-5" tabindex="3" />
+                    </div>
+                </div>
+            </div>*@
+        <!--fin de div md-12-->
+    </div>
+    <!--fin del row-->
+
+    <div class="row">
+
+        <div class="col-md-6">
+
+            <div class="control-group">
+                @Html.LabelFor(model => model.Licencia, new { @class = "control-label" })
+                <div class="controls">                  
+                    <select id="LicenciasRef@(hash)" name="Licencia" class="form-control col-md-10">
+                        <option value="0">Seleccione Licencia</option>
+                        @foreach (var l in ((List<LicenciasRef>)ViewBag.Licencias).Where(x => x.Id == 7 || x.Id == 24 || x.Id == 47).ToList())
+                        {
+                            <option value="@l.Id" data-codigo="@l.CodigoRRHH">@l.Descripcion</option>
+                        }
+                        @foreach (var l in ((List<LicenciasRef>)ViewBag.Licencias).Where(x =>x.Id == 50 || x.Id == 26 || x.Id == 14 ||  x.Id == 13 || x.Id == 25 || x.Id == 45 || x.Id == 18 || x.Id == 19 || x.Id == 20 || x.Id == 44 || x.Id == 17 || x.Id == 15 || x.Id == 21 || x.Id == 22 || x.Id == 46 || x.Id == 48 || x.Id == 49 || x.Id == 8 || x.Id == 10 || x.Id == 23).ToList())
+                        {
+                            <option value="@l.Id" data-codigo="@l.CodigoRRHH">@l.Descripcion</option>
+                        }
+                    </select>
+                    <script type="text/javascript">
+                            $(function () {
+                                $('#LicenciasRef@(hash)').chosen();
+                                $('#LicenciasRef@(hash)').change(function (e) {
+                                    console.log($(this).val());
+                                    if ([7, 47, 24].indexOf(parseInt($(this).val())) < 0)
+                                        $("#carpetas").show();
+                                    else
+                                        $("#carpetas").hide();
+                                });
+                            });
+                    </script>
+                    @Html.ValidationMessageFor(model => model.Licencia)
+                </div>
+            </div>
+        </div>
+        @if (!SSO.SGP.Web.SessionHelper.Es_Funcionario)
+        {
+            <div class="col-md-6" id="div_subrogante@(hash)">
+                <div class="control-group">
+                    <label class="control-label">
+                        Esta solicitud será enviada para su aprobación a <strong>@ViewBag.Superior</strong> al correo electrónico:
+                        @if (string.IsNullOrEmpty(ViewBag.EmailSuperior))
+                        {
+                            @:El destinatario no tiene configurado su Email
+                        }
+                        else
+                        {
+                            @: @ViewBag.EmailSuperior
+                        }
+                    </label>
+                    <input type="checkbox" id="Otro_Superior" /> <strong>Debo enviar mi solicitud a otro funcionario</strong>
+                    <table border="0" width="100%" id="SeleccionaOtroFuncionario" style="display:none">
+                        <tr>
+                            <td>
+                                Seleccione el funcionario a quien dirige esta solicitud
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input type="text" id="txtOtrosFuncionariosRRHH@(hash)" class="form-control col-md-12" tabindex="1" placeholder="Seleccione funcionario" value="@ViewBag.Superior" /><br />
+                                <p id="LegajoOtroFuncionario@(hash)"></p>
+                                <p class="help-block" id="otro_funcionario_email">@ViewBag.EmailSuperior</p>
+                                <p class="help-block" id="otro_funcionario_organismo"></p>
+                                <p class="help-block" id="otro_funcionario_cargo"></p>
+                                <input type="hidden" id="OtrosFuncionariosRRHH@(hash)" name="OtrosFuncionariosRRHH" value="@ViewBag.IdSuperior" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        }
+    </div>
+    <br />
+    <div class="row" id="mensaje_certificado" style="display:none">
+        <div class="col-md-12">
+            <div class="alert alert-warning alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+                @*@if (!SSO.SGP.Web.SessionHelper.es_MP)
+                {*@
+                     @*<strong>Atención.</strong><span>Deberá presentar la constancia o certificado correspondiente en la Secretaría de Recursos Humanos(enviarlo a rrhh-licencias@juslapampa.gob.ar)</span>*@
+                    <strong>Atención.</strong><span>Si cuenta con certificado para esta licencia puede adjuntarlo en este momento. Caso contrario podrá adjuntarlo mas tarde</span>
+                @*}
+                else
+                {
+                    <strong>Atención.</strong><span>Deberá presentar la constancia o certificado correspondiente a Procuración General (enviarlo a procuracion-licencias@juslapampa.gob.ar)</span>
+                }*@
+            </div>
+        </div>
+    </div>
+    <!--fin del row-->
+    <div class="row" id="carpetas" style="display:none">
+        <div class="col-md-6">
+            <div class="control-group">
+                <div class="controls">
+                    <div class="col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="Escudo" style="font-weight: bold">Adjuntar Certificado</label>
+                            <div class="controls">
+                                <span class="btn btn-info fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>Seleccionar Archivo...</span>s
+                                    <input id="fileCertificado1@(hash)" type="file" name="files[]" data-url="ArchivosAdjuntos/UploadFilesLicencia/?agente=@ViewBag.IdAgente" multiple />
+                                    <input type="hidden" id="Certificado1@(hash)" name="Certificado1" />
+                                </span>
+                                <br />
+                                <br />
+                                <div id="progressfileCertificado1@(hash)" class="progress">
+                                    <div class="progress-bar progress-bar-success"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="control-group">
+                <div class="controls">
+                    <div class="col-md-12">
+                        <div class="control-group">
+                            <label class="control-label" for="Escudo" style="font-weight: bold">Adjuntar otro archivo</label>
+                            <div class="controls">
+                                <span class="btn btn-info fileinput-button">
+                                    <i class="glyphicon glyphicon-plus"></i>
+                                    <span>Seleccionar Archivo...</span>s
+                                    <input id="fileCertificado2@(hash)" type="file" name="files[]" data-url="ArchivosAdjuntos/UploadFilesLicencia/?agente=@ViewBag.IdAgente" multiple />
+                                    <input type="hidden" id="Certificado2@(hash)" name="Certificado2" />
+                                </span>
+                                <br />
+                                <br />
+                                <div id="progressCertificado2@(hash)" class="progress">
+                                    <div class="progress-bar progress-bar-success"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="control-group">
+                @Html.LabelFor(model => model.Observaciones, new { @class = "control-label" })
+                <div class="controls">
+                    @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control col-md-12", @id = "Observaciones" + hash, @tabindex = "5" })
+                    @Html.ValidationMessageFor(model => model.Observaciones)
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row" id="divSubrogante" style="display:@(((int)ViewBag.Grupo == 1 || (SSO.SGP.Web.SessionHelper.Es_Funcionario)) ? "block" : "none")">
+        <div class="col-md-6">
+            <div class="control-group">
+                <label class="control-label">Seleccione @ViewBag.TextoSubrogante</label>
+                <div class="controls">
+                    <input type="text" id="txtSubroganteRRHH@(hash)" class="form-control col-md-12" tabindex="1" placeholder="Seleccione un agente" /><br />
+                    <p id="Legajo@(hash)"></p>
+                    <p class="help-block"></p>
+                    <input type="hidden" id="SubroganteRRHH@(hash)" name="SubroganteRRHH" />
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="control-group">
+                <label class="control-label">Por favor, indique a quien envía su solicitud de licencia</label>
+                <div class="controls">
+                    @{ 
+                        if (ViewBag.JuezPaz == "0")
+                        {                                
+                    <table border="0" width="100%">
+                        <tr>
+                            <td>
+                                <input type="checkbox" id="dga" @((ViewBag.AgenteSolicitudLicenciaDefault == null && (int)ViewBag.Grupo == 1) ? "" : "") /> <strong>@(!SSO.SGP.Web.SessionHelper.es_MP ? (ViewBag.JuezPaz == "0" ? "Dirección General de Administración" : "Secretaría de Recursos Humanos") : "Procuración General")</strong>
+                            </td>
+                        </tr>
+                    </table>
+                            }
+                        }
+                    <table border="0" width="100%" id="SeleccionaFuncionario">
+                        <tr>
+                            <td>
+                            @if (!SSO.SGP.Web.SessionHelper.Es_Funcionario || ((string)ViewBag.Cargo).ToUpper().Contains("PROSECR"))
+                            {
+                                <input @(ViewBag.AgenteSolicitudLicenciaDefault == null ? "" : "checked") type="checkbox" id="dga2" /> <strong>Otro Magistrado/Funcionario</strong>
+                            }
+                            else
+                            {
+                                <input @(ViewBag.AgenteSolicitudLicenciaDefault == null ? "checked" : "checked") type="checkbox" id="dga2" /> <strong>Otro Magistrado/Funcionario</strong>
+                            }
+                            </td>
+                        </tr>
+                        <tr id="tr_otro_funcionario" style="display:@( (ViewBag.AgenteSolicitudLicenciaDefault != null || (SSO.SGP.Web.SessionHelper.Es_Funcionario || !((string)ViewBag.Cargo).ToUpper().Contains("PROSECR"))) ? "block" : "none")">
+                            <td>
+                                @{
+                                    var id = 0;
+                                    var nombre = "";
+                                    var email = "";
+                                    var organismo = "";
+                                    var cargo = "";
+                                    if (ViewBag.AgenteSolicitudLicenciaDefault != null)
+                                    {
+                                        var agente = (Agentes)ViewBag.AgenteSolicitudLicenciaDefault;
+                                        id = agente.Id;
+                                        nombre = agente.Personas.Apellidos.Trim() + ", " + agente.Personas.Nombres.Trim();
+                                        email = agente.Email;
+                                        organismo = agente.Nombramientos.Where(x => !x.FechaDeBaja.HasValue).Count() > 0 ? agente.Nombramientos.Where(x => !x.FechaDeBaja.HasValue).OrderByDescending(x=>x.FechaDeAlta).FirstOrDefault().Organismos.Descripcion : "-";
+                                        cargo = agente.Nombramientos.Where(x => !x.FechaDeBaja.HasValue).Count() > 0 ? agente.Nombramientos.Where(x => !x.FechaDeBaja.HasValue).OrderByDescending(x => x.FechaDeAlta).FirstOrDefault().Cargos.Descripcion : "-";
+                                    }
+                                }
+                                <input type="text" id="txtFuncionariosRRHH@(hash)" class="form-control col-md-12" tabindex="1" placeholder="Seleccione funcionario" value="@nombre" /><br />
+                                <p id="LegajoFuncionario@(hash)"></p>
+                                <p class="help-block" id="otro_funcionario_email_2">@(string.IsNullOrEmpty(email) ? "" : "Email: " + email)</p>
+                                <p class="help-block" id="otro_funcionario_organismo_2">@(string.IsNullOrEmpty(organismo) ? "" : "Organismo: " + organismo)</p>
+                                <p class="help-block" id="otro_funcionario_cargo_2">@(string.IsNullOrEmpty(cargo) ? "" : "Cargo: " + cargo)</p>
+                                <input type="hidden" id="FuncionariosRRHH@(hash)" name="FuncionariosRRHH" value="@(id > 0 ? id : 0)" />
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--fin del row-->
+    <div class="form-actions">
+        <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+        <input type="button" value="Solicitar" id="Guardar@(hash)" class="btn green" />
+        <input type="hidden" value="@ViewBag.IdSuperior" id="Superior" />
+        <input type="hidden" value="@SSO.SGP.Web.SessionHelper.Es_Funcionario.ToString().ToLower()" id="Es_Funcionario" />
+        <input type="hidden" value="@ViewBag.Nombramiento" id="Nombramiento" />
+        <input type="hidden" value="@(SSO.SGP.Web.SessionHelper.es_MP ? "true" : "false")" id="es_mp"/>
+    </div>
+    <!--fin form-actions>-->
+
+    <br />
+    <br />
+
+    <br />
+    <br />
+
+    <br />
+    <br />
+
+    <br />
+    <br />
+
+    <br />
+    <br />
+
+    <br />
+    <br />
+
+    <br />
+    <br />
+    <div id="panel_informacion" style="display:none">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="control-group">
+                    <label class="control-label">Desde</label>
+                    <div class="controls">
+                        <input type="text" id="FiltroDesde@(hash)" class="form-control col-md-12" value="01/01/@DateTime.Now.Year" />
+                        <script>
+                            $('#FiltroDesde@(hash)').inputmask("99/99/9999");
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="control-group">
+                    <label class="control-label">Hasta</label>
+                    <div class="controls">
+                        <input type="text" id="FiltroHasta@(hash)" class="form-control col-md-12" value="31/12/@DateTime.Now.Year" />
+                        <script>
+                            $('#FiltroHasta@(hash)').inputmask("99/99/9999");
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+
+                <div class="control-group">
+                    <label class="control-label">Mis licencias en el año</label>
+                    <div class="controls">
+                        @(SyncroHtml.TablaJson<SSO.SGP.EntidadesDeNegocio.Vistas.LicenciasAgenteViewT>(new SSO.SGP.EntidadesDeNegocio.Vistas.LicenciasAgenteViewT(), "LicenciasAgentes/JsonT", new { @id = "Licencias" + hash, @class = "table table-striped table-bordered table-advance table-hover", data_cargar = "false" }))
+                    </div>
+                </div>
+
+
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div class="controls">
+                    @(SyncroHtml.TablaJson<SSO.SGP.EntidadesDeNegocio.Vistas.ResumenDiasDeLicenciaDeAgenteViewT>(new SSO.SGP.EntidadesDeNegocio.Vistas.ResumenDiasDeLicenciaDeAgenteViewT(), "LicenciasAgentes/JsonTotales", new { @id = "ResumenDias" + hash, @class = "table table-striped table-bordered table-advance table-hover", data_cargar = "false" }))
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--fin de row -->
+
+</div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+
+    $(function () {
+        app.Desbloquear();
+        jQuery.validator.methods["date"] = function (value, element) { return true; }
+
+    });
+
+    if (oLicenciasAgente == null)
+        var oLicenciasAgente = new LicenciasAgente.ts.LicenciasAgenteManager();
+
+    var viewCrear = new LicenciasAgente.ts.Crear("@(hash)");
+    oLicenciasAgente.setSolicitar(viewCrear);
+</script>

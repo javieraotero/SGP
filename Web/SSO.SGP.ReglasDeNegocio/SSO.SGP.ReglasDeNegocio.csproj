@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{2E93A38A-77C2-4D9B-A63C-6AEB04CF2D6C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SSO.SGP.ReglasDeNegocio</RootNamespace>
+    <AssemblyName>SSO.SGP.ReglasDeNegocio</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReglasDeNegocio\ActividadesInternasRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\ActuacionesadmRN.cs" />
+    <Compile Include="ReglasDeNegocio\ActuacionesCivilNotificacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\ActuacionesCivilRN.cs" />
+    <Compile Include="ReglasDeNegocio\ActuacionesNotificacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\ActuacionesPersonaDelitoRN.cs" />
+    <Compile Include="ReglasDeNegocio\ActuacionesProvisoriasRN.cs" />
+    <Compile Include="ReglasDeNegocio\ActuacionesRN.cs" />
+    <Compile Include="ReglasDeNegocio\ActuacionesVocesRN.cs" />
+    <Compile Include="ReglasDeNegocio\AcumuladosRN.cs" />
+    <Compile Include="ReglasDeNegocio\AgentesBonificacionesRN.cs" />
+    <Compile Include="ReglasDeNegocio\AgentesRN.cs" />
+    <Compile Include="ReglasDeNegocio\AmbitosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ArchivoExpedientePasesRN.cs" />
+    <Compile Include="ReglasDeNegocio\ArchivoExpedienteRN.cs" />
+    <Compile Include="ReglasDeNegocio\ArticulosDeComprasDeSuministrosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ArticulosDePedidoDeSuministrosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ArticulosDeSuministrosRN.cs" />
+    <Compile Include="ReglasDeNegocio\AtencionesRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasAnterioresRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasCivilRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasDemorasRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasEstadosCivilRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasEstadosRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasImputadosRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasNotificacionCivilRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasNotificacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasRN.cs" />
+    <Compile Include="ReglasDeNegocio\AudienciasSolicitudRN.cs" />
+    <Compile Include="ReglasDeNegocio\AuditoriaRN.cs" />
+    <Compile Include="ReglasDeNegocio\BarriosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\CajaForenseRN.cs" />
+    <Compile Include="ReglasDeNegocio\CallesRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\CambiosRadicacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\CargosFuncionalesRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\CargosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\CategoriasCausasCivilRN.cs" />
+    <Compile Include="ReglasDeNegocio\CategoriasCausasRN.cs" />
+    <Compile Include="ReglasDeNegocio\CategoriasDeImagenesRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\CategoriasExpedienteadmRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\CategoriasExpedientesRN.cs" />
+    <Compile Include="ReglasDeNegocio\CategoriasRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\CausasAccesosRN.cs" />
+    <Compile Include="ReglasDeNegocio\CausasDocumentoRN.cs" />
+    <Compile Include="ReglasDeNegocio\CausasEstadoRN.cs" />
+    <Compile Include="ReglasDeNegocio\CausasReceptoriaRN.cs" />
+    <Compile Include="ReglasDeNegocio\CausasResponsableRN.cs" />
+    <Compile Include="ReglasDeNegocio\CausasRN.cs" />
+    <Compile Include="ReglasDeNegocio\CircunscripcionesRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\Class1.cs" />
+    <Compile Include="ReglasDeNegocio\ColumnasRN.cs" />
+    <Compile Include="ReglasDeNegocio\CoMediadoresContadoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\CoMediadoresEspecialidadRN.cs" />
+    <Compile Include="ReglasDeNegocio\CoMediadoresInscripcionRN.cs" />
+    <Compile Include="ReglasDeNegocio\CoMediadoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\CompraDeSuministrosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ConcursosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ConexionesRN.cs" />
+    <Compile Include="ReglasDeNegocio\ContadoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\ControlPresentacionesRN.cs" />
+    <Compile Include="ReglasDeNegocio\DelitosCapituloRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\DelitosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\DelitosTituloRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\DenegatoriasrrhhRN.cs" />
+    <Compile Include="ReglasDeNegocio\DenunciasRN.cs" />
+    <Compile Include="ReglasDeNegocio\DerivacionesOaVytRN.cs" />
+    <Compile Include="ReglasDeNegocio\DivisionesExtraPresupuestariasRN.cs" />
+    <Compile Include="ReglasDeNegocio\EjecucionesPresupuestariasRN.cs" />
+    <Compile Include="ReglasDeNegocio\ElementosSecuestradosDocumentoRN.cs" />
+    <Compile Include="ReglasDeNegocio\ElementosSecuestradosMovimientoRN.cs" />
+    <Compile Include="ReglasDeNegocio\ElementosSecuestradosRN.cs" />
+    <Compile Include="ReglasDeNegocio\EmbargosyOtrosRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosActuacionRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosArchivoExpedienteRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosAudienciaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosCausaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosCivilRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosElementosSecuestradosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosEscolaridadRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosExpedienteRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosIncidentesRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosPreventivoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EstadosUsuarioRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\EventosCivilRN.cs" />
+    <Compile Include="ReglasDeNegocio\EventosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExcusacionesRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesAccesosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesadmRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesAnotacionesRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesArchivoRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesDelitoRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesDocumentoadmRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesDocumentoRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesElementoRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesEstadoRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesPaseadmRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesPaseRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesPersonaadmRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesPersonaDetenidaRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesPersonaRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesResponsableRN.cs" />
+    <Compile Include="ReglasDeNegocio\ExpedientesRN.cs" />
+    <Compile Include="ReglasDeNegocio\FacturasImputadasDetalleRN.cs" />
+    <Compile Include="ReglasDeNegocio\FacturasImputadasRN.cs" />
+    <Compile Include="ReglasDeNegocio\FacturasRN.cs" />
+    <Compile Include="ReglasDeNegocio\FeriadosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\FeriasAgentesRN.cs" />
+    <Compile Include="ReglasDeNegocio\FeriasRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\FormasDePagoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\FormulariosRN.cs" />
+    <Compile Include="ReglasDeNegocio\FuerosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\GrupoElementosPoliciaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\GrupoFamiliarRN.cs" />
+    <Compile Include="ReglasDeNegocio\GruposEstadoAudienciaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\GruposEstadoCausaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\GruposEstadoExpedienteRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\GruposTipoActuacionCivilRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\GruposTipoActuacionRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\GruposUsuarioRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\ImagenesrrhhRN.cs" />
+    <Compile Include="ReglasDeNegocio\ImputacionesContablesDetalleRN.cs" />
+    <Compile Include="ReglasDeNegocio\ImputacionesContablesRN.cs" />
+    <Compile Include="ReglasDeNegocio\IncidentesEstadoRN.cs" />
+    <Compile Include="ReglasDeNegocio\IncidentesRN.cs" />
+    <Compile Include="ReglasDeNegocio\ItemsMenuRN.cs" />
+    <Compile Include="ReglasDeNegocio\JuecesContadoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\JuecesSorteoRN.cs" />
+    <Compile Include="ReglasDeNegocio\LicenciasAgenteRN.cs" />
+    <Compile Include="ReglasDeNegocio\LicenciasOrdinariasInicialesRN.cs" />
+    <Compile Include="ReglasDeNegocio\LicenciasRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\LiquidacionAbogadosRN.cs" />
+    <Compile Include="ReglasDeNegocio\LiquidacionCapitalesRN.cs" />
+    <Compile Include="ReglasDeNegocio\LiquidacionConfiguracionValoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\LiquidacionGastosRN.cs" />
+    <Compile Include="ReglasDeNegocio\LiquidacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\LocalidadesRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\LogsReceptoriaRN.cs" />
+    <Compile Include="ReglasDeNegocio\MateriasRN.cs" />
+    <Compile Include="ReglasDeNegocio\MediadoresContadoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\MediadoresInscripcionEstadoRN.cs" />
+    <Compile Include="ReglasDeNegocio\MediadoresInscripcionRN.cs" />
+    <Compile Include="ReglasDeNegocio\MediadoresPeriodoRN.cs" />
+    <Compile Include="ReglasDeNegocio\MediadoresPeriodosTipoRN.cs" />
+    <Compile Include="ReglasDeNegocio\MediadoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\MediadoresTipoRN.cs" />
+    <Compile Include="ReglasDeNegocio\MedidasDisciplinariasRN.cs" />
+    <Compile Include="ReglasDeNegocio\MenusRN.cs" />
+    <Compile Include="ReglasDeNegocio\MesesRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\ModalidadesAsistenciaoaVytRN.cs" />
+    <Compile Include="ReglasDeNegocio\ModalidadesPoliciaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\ModelosEscritoadmRN.cs" />
+    <Compile Include="ReglasDeNegocio\ModelosEscritoRN.cs" />
+    <Compile Include="ReglasDeNegocio\ModulosRN.cs" />
+    <Compile Include="ReglasDeNegocio\MonitoreoActividadesRN.cs" />
+    <Compile Include="ReglasDeNegocio\MotivosCancelacionCivilRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\MotivosCancelacionRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\MotivosDemoraRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\MotivosElementosSecuentradosMovimientoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\MotivosPostergacionCivilRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\MotivosPostergacionRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\MovimientosDeAgentesRN.cs" />
+    <Compile Include="ReglasDeNegocio\MovimientosDeStockRN.cs" />
+    <Compile Include="ReglasDeNegocio\NombramientosMovimientosRN.cs" />
+    <Compile Include="ReglasDeNegocio\NombramientosRN.cs" />
+    <Compile Include="ReglasDeNegocio\NoticiasRN.cs" />
+    <Compile Include="ReglasDeNegocio\NotificacionesCivilRN.cs" />
+    <Compile Include="ReglasDeNegocio\NotificacionesRN.cs" />
+    <Compile Include="ReglasDeNegocio\OperacionesContablesRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\OrdenesCapturaRN.cs" />
+    <Compile Include="ReglasDeNegocio\OrganismosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\OrganismosSecuenciaModelosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\OrganismosSecuenciaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\ParametrosadmRN.cs" />
+    <Compile Include="ReglasDeNegocio\ParametrosReceptoriaRN.cs" />
+    <Compile Include="ReglasDeNegocio\ParametrosSeguridadRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\ParametrosTrabajoCivilRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\ParametrosTrabajoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\PartidasPresupuestariasRN.cs" />
+    <Compile Include="ReglasDeNegocio\PasosRN.cs" />
+    <Compile Include="ReglasDeNegocio\PedidosDeSuministrosRN.cs" />
+    <Compile Include="ReglasDeNegocio\PeritosContadoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\PeritosEspecialidadRN.cs" />
+    <Compile Include="ReglasDeNegocio\PeritosInscripcionRN.cs" />
+    <Compile Include="ReglasDeNegocio\PeritosPeriodoRN.cs" />
+    <Compile Include="ReglasDeNegocio\PeritosRN.cs" />
+    <Compile Include="ReglasDeNegocio\PeritosSancionesRN.cs" />
+    <Compile Include="ReglasDeNegocio\PeritosSorteoRN.cs" />
+    <Compile Include="ReglasDeNegocio\PeritosTiposPeriodoRN.cs" />
+    <Compile Include="ReglasDeNegocio\PermisosRN.cs" />
+    <Compile Include="ReglasDeNegocio\PersonasCaracteristicasRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\PersonasDocumentacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\PersonasParentescosRN.cs" />
+    <Compile Include="ReglasDeNegocio\PersonasPertenenciasRN.cs" />
+    <Compile Include="ReglasDeNegocio\PersonasRN.cs" />
+    <Compile Include="ReglasDeNegocio\PresentacionesCausaConexionRN.cs" />
+    <Compile Include="ReglasDeNegocio\PresentacionesCausaRN.cs" />
+    <Compile Include="ReglasDeNegocio\PrestacionesRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\PresupuestacionCapitalesRN.cs" />
+    <Compile Include="ReglasDeNegocio\PresupuestacionConfiguracionRN.cs" />
+    <Compile Include="ReglasDeNegocio\PresupuestacionConfiguracionValoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\PresupuestacionGastosRN.cs" />
+    <Compile Include="ReglasDeNegocio\PresupuestacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\PreventivosDelitosRN.cs" />
+    <Compile Include="ReglasDeNegocio\PreventivosElementosRN.cs" />
+    <Compile Include="ReglasDeNegocio\PreventivosPersonaRN.cs" />
+    <Compile Include="ReglasDeNegocio\PreventivosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ProtocolosCategoriasRN.cs" />
+    <Compile Include="ReglasDeNegocio\ProtocolosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ProveedoresRN.cs" />
+    <Compile Include="ReglasDeNegocio\ProvinciasRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\ReportesParametrosRN.cs" />
+    <Compile Include="ReglasDeNegocio\ReportesRN.cs" />
+    <Compile Include="ReglasDeNegocio\ReservaSalasAudienciaRN.cs" />
+    <Compile Include="ReglasDeNegocio\ResultadosNotificacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\RolesElementoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\RolesPersonaadmRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\RolesPersonaCivilRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\RolesPersonaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\SaldosDeLicenciasOrdinariasRN.cs" />
+    <Compile Include="ReglasDeNegocio\SectoresNotificacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\SectoresPoliciaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\SexosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\SitiosPoliciaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\SituacionesDeRevistaRN.cs" />
+    <Compile Include="ReglasDeNegocio\SucesosCausasRN.cs" />
+    <Compile Include="ReglasDeNegocio\SucesosReceptoriaRN.cs" />
+    <Compile Include="ReglasDeNegocio\SucesosRN.cs" />
+    <Compile Include="ReglasDeNegocio\SucesosTitulosRN.cs" />
+    <Compile Include="ReglasDeNegocio\SuspensionPlazoRN.cs" />
+    <Compile Include="ReglasDeNegocio\SustitucionesRN.cs" />
+    <Compile Include="ReglasDeNegocio\TablasRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposActuacionadmRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposActuacionCivilRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposActuacionRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposArchivadoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposAudienciaCivilRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposAudienciaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposCambiosCircunscripcionRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposCuentasBancariasRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposDatoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposDenunciasRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposDocumentacionPersonaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposDocumentoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposEscolaridadRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposExpedienteadmRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposFormatoArchivoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposMateriasRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposModeloEscritoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposModelosEscritoadmRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposNotificacionRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposOcupacionRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposOrganismoRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposOrigenExpedienteRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposOrigenoaVytRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposParentescosRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposPersonaCaracteristicaRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposRelevarControlRN.cs" />
+    <Compile Include="ReglasDeNegocio\TiposSucesosRN.cs" />
+    <Compile Include="ReglasDeNegocio\TurnosRN.cs" />
+    <Compile Include="ReglasDeNegocio\UnidadesDeOrganizacionRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\UnidadesrrhhRefRN.cs" />
+    <Compile Include="ReglasDeNegocio\UsuariosAccesosRN.cs" />
+    <Compile Include="ReglasDeNegocio\UsuariosCambiosClaveRN.cs" />
+    <Compile Include="ReglasDeNegocio\UsuariosOrganismosGruposRN.cs" />
+    <Compile Include="ReglasDeNegocio\UsuariosRN.cs" />
+    <Compile Include="ReglasDeNegocio\VocesRN.cs" />
+    <Compile Include="ReglasDeNegocio\webpages_RolesRN.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Entities\SSO.SGP.AccesoADatos\SSO.SGP.AccesoADatos.csproj">
+      <Project>{7423f2ec-d1d3-4b66-98c6-f7efb5aa83b1}</Project>
+      <Name>SSO.SGP.AccesoADatos</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Entities\SSO.SGP.EntidadesDeNegocio\SSO.SGP.EntidadesDeNegocio.csproj">
+      <Project>{f75feec5-5fe2-4455-bc0d-5eac00a83baf}</Project>
+      <Name>SSO.SGP.EntidadesDeNegocio</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

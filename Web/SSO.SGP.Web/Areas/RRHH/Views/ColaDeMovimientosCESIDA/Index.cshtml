@@ -1,0 +1,96 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.ColaDeMovimientoscesida
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/ColaDeMovimientosCESIDA/Index.js"></script>
+<script src="Areas/RRHH/ts/ColaDeMovimientosCESIDA/ColaDeMovimientosCESIDAManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "ColaDeMovimientosCESIDA", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+            ColumnCommand[] operadoresColaDeMovimientosCESIDA = new ColumnCommand[2] {
+
+                 new ColumnCommand {
+                    display = "Ejecutar",
+                    function = "oColaDeMovimientosCESIDA.ejecutar()",
+                    icon = "../assets/img/icons/16x16/play.png",
+                    tooltip = "Ejecutar TEST"
+                 },
+                 new ColumnCommand {
+                    display = "Detalle",
+                    function = "oColaDeMovimientosCESIDA.detalle()",
+                    icon = "../assets/img/icons/16x16/detail.fw.png",
+                    tooltip = "Detalle del movimiento"
+                 },
+                };
+
+            var vmColaDeMovimientosCESIDA = Html.DataTableVm("dtColaDeMovimientosCESIDA", (ColaDeMovimientosCESIDAController h) => h.getColaDeMovimientosCESIDAGrilla(null));
+
+            vmColaDeMovimientosCESIDA.operators = operadoresColaDeMovimientosCESIDA;
+            //vmColaDeMovimientosCESIDA.fnDrawCallBack = "render_dtColaDeMovimientosCESIDA(this);";
+            vmColaDeMovimientosCESIDA.ColumnFilter = true;
+            //vmColaDeMovimientosCESIDA.FilterOn("activo").Select("Si", "No");
+            //Cantidad de registros a mostrar
+            vmColaDeMovimientosCESIDA.CantidadRegistrosDefault = 25;
+            }
+
+            @Html.Partial("~/Views/Shared/DataTable.cshtml", vmColaDeMovimientosCESIDA)
+			
+			
+			<script type="text/javascript">
+					function ColaDeMovimientosCESIDAController_editar(el) {
+					var id = getData(el, 1);
+					oColaDeMovimientosCESIDA.editar_dtColaDeMovimientosCESIDA(id);
+					}
+					
+					function ColaDeMovimientosCESIDAController_eliminar(el) {
+					var id = getData(el, 1);
+					oColaDeMovimientosCESIDA.eliminar_dtColaDeMovimientosCESIDA(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedColaDeMovimientosCESIDA@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oColaDeMovimientosCESIDA == null)
+			var oColaDeMovimientosCESIDA = new ColaDeMovimientosCESIDA.ts.ColaDeMovimientosCESIDAManager();
+		
+		var viewIndex = new ColaDeMovimientosCESIDA.ts.Index("@(hash)");
+		oColaDeMovimientosCESIDA.setIndex(viewIndex); 
+		
+		viewIndex.setColaDeMovimientosCESIDA(dtColaDeMovimientosCESIDA);
+		
+	</script>	

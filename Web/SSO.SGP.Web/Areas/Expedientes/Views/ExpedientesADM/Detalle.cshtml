@@ -1,0 +1,509 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@using SSO.SGP.EntidadesDeNegocio.Vistas;
+@using SSO.SGP.EntidadesDeNegocio;
+
+@model Expedientesadm
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/ExpedientesADM/Detalle.js"></script>
+<script src="Areas/Expedientes/ts/ExpedientesADM/ExpedientesADMManager.js"></script>
+<style>
+    tr.anulada {
+        background-color: coral;
+        color: white;
+    }
+</style>
+@using (Html.BeginForm("Crear", "ExpedientesADM", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Tipo, new { @class = "control-label bold" })
+                    <div class="controls">
+                        @Model.Tipos.Descripcion
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Categoria, new { @class = "control-label bold" })
+                    <div class="controls">
+                        @Model.Categorias.Descripcion
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-2">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Numero, new { @class = "control-label bold" })
+                    <div class="controls">
+                        @Model.Numero
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Fecha, new { @class = "control-label bold" })
+                    <div class="controls">
+                        @Model.Fecha
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+            <div class="col-md-5">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.OrganismoIniciador, new { @class = "control-label bold" })
+                    <div class="controls">
+                        @(Model.OrganismoIniciador.HasValue ? Model.OrganismoIniciadors.Descripcion : Model.TextoIniciador)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Caratula, new { @class = "control-label bold" })
+                    <div class="controls">
+                        @Model.Caratula
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin del row-->
+        <div class="row">
+            <!--fin de div md-12-->
+            <div class="col-md-4">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Ambito, new { @class = "control-label bold" })
+                    <div class="controls">
+                        @*@Model.Ambitos.Descripcion*@
+                    </div>
+                </div>
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <br />
+        <!--fin de row -->
+        <div class="row" id="divDetalle@(hash)">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs">
+                    <li class="active">
+                        <a href="#tab-1@(hash)" data-toggle="tab">Actuaciones</a>
+                    </li>
+                    <li class="">
+                        <a href="#tab-2@(hash)" data-toggle="tab">Contabilidad</a>
+                    </li>
+                    <li class="">
+                        <a href="#tab-3@(hash)" data-toggle="tab">Facturas</a>
+                    </li>
+                    <li class="">
+                        <a href="#tab-4@(hash)" data-toggle="tab">Documentos Adjuntos</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane fade active in" id="tab-1@(hash)">
+                    @if (!Model.Archivado)
+                    {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="button" value="Nueva Actuación" id="Pase@(hash)" class="btn green" />
+                            </div>
+                        </div>
+                    }
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-striped table-bordered table-advance" id="Actuaciones@(hash)">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Tipo</th>
+                                            <th>Origen</th>
+                                            <th>Titulo</th>
+                                            <th>Cargo a</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var a in Model.Actuacionesadm)
+                                        {
+                                            var clase = "";
+                                            if (a.Anulado) {
+                                                clase = "anulada";
+                                            }
+                                            <tr data-id="@a.Id" class="@clase" data-publicacion="@a.FechaPublicacion" data-cargo="@a.OrganismoCargo">
+                                                <td>
+                                                    @a.Fecha.ToShortDateString()
+                                                </td>
+                                                <td>
+                                                    @a.TipoActuacions.Descripcion
+                                                </td>
+                                                <td>
+                                                    @a.Descripcion
+                                                </td>
+                                                <td>
+                                                    @a.OficinaOrigens.Descripcion
+                                                </td>
+                                                <td>
+                                                    @{ 
+                                                        if (a.OrganismoCargo.HasValue) {
+                                                            var org = new SSO.SGP.AccesoADatos.OrganismosRefAD().ObtenerPorId(a.OrganismoCargo.Value);
+                                                            <text>@org.Descripcion</text>
+                                                        }
+                                                    }
+                                                </td>
+                                                <th>
+                                                @if (!Model.Archivado)
+                                                {
+                                                    <input class="btn green" type="button" data-id="@a.Id" value="Ver" onclick="return oExpedientesADM.verActuacion(this);" />
+                                                    <input class="btn red" type="button" data-id="@a.Id" value="Anular" onclick="return oExpedientesADM.anularActuacion(this);" />
+                                                    if (a.UsuarioAnulacion.HasValue)
+                                                    {
+                                                        <span>@(new SSO.SGP.AccesoADatos.UsuariosAD().ObtenerPorId(a.UsuarioAnulacion.Value).Usuario) </span>
+                                                    }
+                                                }
+                                                </th>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="tab-2@(hash)">
+                        @if (!Model.Archivado)
+                        {
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="button" value="Asignar" id="NuevoMovimiento@(hash)" class="btn green" />
+                                <input type="button" value="Afectar" id="Afectar@(hash)" class="btn green" />
+                                <input type="button" value="Compromiso y Ordenado" id="Ordenado@(hash)" class="btn yellow" />
+                                <input type="button" value="Sobre afectar" id="Sobreafectar@(hash)" class="btn green" />
+                                <input type="button" value="Desafectar" id="Desafectar@(hash)" class="btn red" />
+                                <input type="button" value="Afectación, Compromiso y Ordenado" id="AfectacionCompromisoOrdenado@(hash)" class="btn yellow" />
+                            </div>
+                        </div>
+                        }
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label class="control-label">Operaciones Contables</label>
+                                <table class="table table-striped table-bordered table-advance" id="Contabilidad@(hash)">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Tipo de movimiento</th>
+                                            <th>Importe</th>
+                                            <th>Creador</th>
+                                            <th>Detalle</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="body_contabilidad@(hash)">
+                                        @foreach (var i in (List<ImputacionesContables>)ViewBag.Contabilidad)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @i.Fecha.ToShortDateString()
+                                                </td>
+                                                <td>
+                                                    @i.Operacions.Descripcion
+                                                </td>
+                                                <td>
+                                                    @i.ImputacionesContablesDetalle.Sum(x => x.Importe)
+                                                </td>
+                                                <td>
+                                                    @{ 
+                                                        var u = new SSO.SGP.AccesoADatos.UsuariosAD().ObtenerPorId(i.UsuarioAlta);
+                                                        }
+                                                        @u.ApellidoYNombre
+                                                    </td>
+                                                <td>
+                                                @if (!Model.Archivado)
+                                                {
+                                                    <a href="#" data-id="@i.Id" data-tipo="contabilidad" id="detale_@i.Id">ver</a>
+                                                }
+                                                </td>
+                                            </tr>
+                                            <tr id="tr_@i.Id" style="display:none">
+                                                <td colspan="5">
+                                                    <table class="table table-bordered table-advance">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    Partida
+                                                                </th>
+                                                                <th>
+                                                                    Division
+                                                                </th>
+                                                                <th>
+                                                                    Importe
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @foreach (var d in i.ImputacionesContablesDetalle)
+                                                        {
+                                                            <tr>
+                                                                <td>
+                                                                    @d.Partidas.NumeroDePartida
+                                                                </td>
+                                                                <td>
+                                                                    @(d.ImputacionContables.Operacion == 1 ? d.Divisions.CodigoCESIDA + " - " + d.Divisions.Nombre : "-")
+                                                                </td>
+                                                                <td>
+                                                                    @d.Importe
+                                                                </td>
+                                                            </tr>
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                                        }
+                                    </tbody>
+                                </table>
+                                <br />
+                                <label class="control-label">Pendiente de Orden de Pago</label>
+                                <table id="table_pendiente_op@(hash)" class="table table-advance table-advance">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                Partida
+                                            </th>
+                                            <th>
+                                                Importe
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="body_pendiente_op@(hash)"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="tab-3@(hash)">
+                        @*<div class="row">
+                                <div class="col-md-12">
+                                    <input type="button" value="Nueva Fac" id="NuevoMovimiento@(hash)" class="btn green" />
+                                </div>
+                            </div>*@
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-striped table-bordered table-advance" id="Facturas@(hash)">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Proveedor</th>
+                                            <th>Número</th>
+                                            <th>Importe</th>
+                                            <th>Asignada</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="body_facturas@(hash)">
+                                        @if (Model.Facturas.Count() > 0)
+                                        {
+                                            foreach (var f in Model.Facturas)
+                                            {
+                                            <tr>
+                                                <td>
+                                                    @f.Fecha.ToShortDateString()
+                                                </td>
+                                                <td>
+                                                    @f.Proveedors.Nombre
+                                                </td>
+                                                <td>
+                                                    @f.NumeroDeFactura
+                                                </td>
+                                                <td>
+                                                    @f.Importe
+                                                </td>
+                                                <td>
+                                                    @(f.EstaAsignada ? "Si" : "No")
+                                                </td>
+                                                <td>
+                                                @if (!Model.Archivado)
+                                                {
+                                                    <button class="btn green info btn-xs" data-id="@f.Id" data-tipo="asignar">Asignar</button>
+                                                }
+                                                    @if (f.EstaAsignada)
+                                                    {
+                                                        <a class="btn info btn-xs" href="#" data-id="@f.Id" data-tipo="ver_asignacion_factura">Ver</a>                                                        
+                                                    }
+                                                </td>
+                                            </tr>
+                                            <tr id="asignacion_factura_@f.Id" style="display:none">
+                                                <td colspan="6">
+                                                    <table class="table table-bordered table-advance">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>
+                                                                    Partida
+                                                                </th>
+                                                                <th>
+                                                                    Division
+                                                                </th>
+                                                                <th>
+                                                                    Importe
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @if (f.FacturasImputadas.Count() >0)
+                                                            {
+                                                                foreach (var fid in f.FacturasImputadas.First().FacturasImputadasDetalle)
+                                                                {
+                                                                <tr>
+                                                                    <td>
+                                                                        @fid.Partidas.NumeroDePartida
+                                                                    </td>
+                                                                    <td>
+                                                                        @fid.Divisions.Nombre
+                                                                    </td>
+                                                                    <td>
+                                                                        @fid.Importe
+                                                                    </td>
+                                                                </tr>
+                                                                }
+                                                            }
+                                                        </tbody>
+                                                    </table>
+                                                </td>
+                                            </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+                                           <tr><td colspan="6">Este expediente no tiene facturas asociadas</td></tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade in" id="tab-4@(hash)">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="button" value="Nuevo Archivo Adjunto" id="NuevoAdjunto@(hash)" class="btn green" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table-striped table-borderer table-advance" id="Adjuntos@(hash)">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Titulo</th>
+                                            <th>Creador</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{ 
+                                            var adjuntos = new SSO.SGP.AccesoADatos.ExpedientesDocumentoadmAD().ObtenerPorExpediente(Model.Id).ToList();
+                                        }
+                                        @if (adjuntos.Count() > 0)
+                                        {
+                                            foreach (var ad in adjuntos)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        @ad.FechaAlta.ToShortDateString()
+                                                    </td>
+                                                    <td>
+                                                        @ad.Descripcion
+                                                    </td>
+                                                    <td>                                                       
+                                                        @(new SSO.SGP.AccesoADatos.UsuariosAD().ObtenerPorId(ad.Usuario).ApellidoYNombre)
+                                                    </td>
+                                                    <td>
+                                                        <a hred="#">Ver</a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        else {
+                                            <tr><td colspan="4">Este expediente no tiene documentos adjuntos</td></tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="form-actions">
+            <input id="Id@(hash)" value="@Model.Id" type="hidden"/>
+            <input id="Numero@(hash)" value="@Model.Numero" type="hidden" />
+            <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+        </div>
+        <!--fin form-actions>-->
+    </div> <!--fin de container-fluid-->
+    <div id="parsered_detalle" style="display:none"></div>
+
+}
+
+<div class="modal fade" id="ModalFacturas" role="basic" aria-hidden="true">
+    <div class="modal-dialog modal-wide">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                <h4 class="modal-title">Seleccione las facturas del movimiento</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <table id="table_facturas_pendientes@(hash)" class="table table-bordered table-advance">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Numero
+                                </th>
+                                <th>
+                                    Proveedor
+                                </th>
+                                <th>
+                                    Importe
+                                </th>
+                                <th>
+                                    <input type="checkbox" id="todas@(hash)"/>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="body_facturas_pendientes@(hash)"></tbody>
+                    </table>
+                </div>
+                <div class="form-actions">                    
+                    <input type="button" value="Confirmar" id="ConfirmarAfectacion@(hash)" class="btn" />
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oExpedientesADM == null)
+        var oExpedientesADM = new ExpedientesADM.ts.ExpedientesADMManager();
+
+    var viewDetalle = new ExpedientesADM.ts.Detalle("@(hash)");
+    oExpedientesADM.setDetalle(viewDetalle);
+</script>

@@ -1,0 +1,854 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Personas
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<script src="@Url.Content("/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js ")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-switch/static/stylesheets/bootstrap-switch.min.css")" />
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css")" />
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/Personas/Crear.js"></script>
+<script src="ts/Personas/PersonasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Crear", "Personas", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Apellidos, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Apellidos, new { @class = "form-control col-md-12", @id = "Apellidos" + hash, @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.Apellidos)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-6">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Nombres, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Nombres, new { @class = "form-control col-md-12", @id = "Nombres" + hash, @tabindex = "2" })
+                        @Html.ValidationMessageFor(model => model.Nombres)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.TipoDocumento, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("TipoDocumento", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.TiposDocumentoRef, new { @class = "form-control col-md-12", @id = "TipoDocumento" + hash, @tabindex = "3" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#TipoDocumento@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.TipoDocumento)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.NroDocumento, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.NroDocumento, new { @class = "form-control col-md-12", @id = "NroDocumento" + hash, @tabindex = "4" })
+                        @Html.ValidationMessageFor(model => model.NroDocumento)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.FechaNacimiento, new { @class = "control-label" })
+                    <div class="controls">
+                        <div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                            @Html.TextBoxFor(model => model.FechaNacimiento, "{0:dd/MM/yyyy}", new { @class = "m-wrap form-control m-ctrl-medium date-picker", @id = "FechaNacimiento" + hash, @tabindex = "5" })
+                            <span class="add-on"><i class="icon-calendar"></i></span>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#FechaNacimiento@(hash)').datepicker(pickerOpts);
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.FechaNacimiento)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.LugarNacimiento, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.LugarNacimiento, new { @class = "form-control col-md-12", @id = "LugarNacimiento" + hash, @tabindex = "6" })
+                        @Html.ValidationMessageFor(model => model.LugarNacimiento)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Sexo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Sexo", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.SexosRef, new { @class = "form-control col-md-12", @id = "Sexo" + hash, @tabindex = "7" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Sexo@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Sexo)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-2">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.EsMenor, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.CheckBoxFor(
+                m => m.EsMenor,
+                new { @id = "EsMenor" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#EsMenor@(hash)').bootstrapSwitch();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.EsMenor)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Alias, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Alias, new { @class = "form-control col-md-12", @id = "Alias" + hash, @tabindex = "9" })
+                        @Html.ValidationMessageFor(model => model.Alias)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-2">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PersonaFisica, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.CheckBoxFor(
+                m => m.PersonaFisica,
+                new { @id = "PersonaFisica" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#PersonaFisica@(hash)').bootstrapSwitch();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.PersonaFisica)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-5">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Barrio, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Barrio", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.BarriosRef, new { @class = "form-control col-md-12", @id = "Barrio" + hash, @tabindex = "11" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Barrio@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Barrio)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-5">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Calle, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Calle", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.CallesRef, new { @class = "form-control col-md-12", @id = "Calle" + hash, @tabindex = "12" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Calle@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Calle)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Domicilio, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Domicilio, new { @class = "form-control col-md-12", @id = "Domicilio" + hash, @tabindex = "13" })
+                        @Html.ValidationMessageFor(model => model.Domicilio)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-6">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Localidad, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Localidad", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.LocalidadesRef, new { @class = "form-control col-md-12", @id = "Localidad" + hash, @tabindex = "14" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Localidad@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Localidad)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Ocupacion, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Ocupacion, new { @class = "form-control col-md-12", @id = "Ocupacion" + hash, @tabindex = "15" })
+                        @Html.ValidationMessageFor(model => model.Ocupacion)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-6">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Nacionalidad, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Nacionalidad, new { @class = "form-control col-md-12", @id = "Nacionalidad" + hash, @tabindex = "16" })
+                        @Html.ValidationMessageFor(model => model.Nacionalidad)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Telefono, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Telefono, new { @class = "form-control col-md-12", @id = "Telefono" + hash, @tabindex = "17" })
+                        @Html.ValidationMessageFor(model => model.Telefono)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-2">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Fallecido, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.CheckBoxFor(
+                m => m.Fallecido,
+                new { @id = "Fallecido" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Fallecido@(hash)').bootstrapSwitch();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Fallecido)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.FechaDefuncion, new { @class = "control-label" })
+                    <div class="controls">
+                        <div class="input-append date date-picker" data-date="12-02-2012" data-date-format="dd-mm-yyyy" data-date-viewmode="years">
+                            @Html.TextBoxFor(model => model.FechaDefuncion, "{0:dd/MM/yyyy}", new { @class = "m-wrap form-control m-ctrl-medium date-picker", @id = "FechaDefuncion" + hash, @tabindex = "19" })
+                            <span class="add-on"><i class="icon-calendar"></i></span>
+                        </div>
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#FechaDefuncion@(hash)').datepicker(pickerOpts);
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.FechaDefuncion)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.TipoEscolaridad, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("TipoEscolaridad", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.TiposEscolaridadRef, new { @class = "form-control col-md-12", @id = "TipoEscolaridad" + hash, @tabindex = "20" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#TipoEscolaridad@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.TipoEscolaridad)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.EstadoEscolaridad, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("EstadoEscolaridad", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.EstadosEscolaridadRef, new { @class = "form-control col-md-12", @id = "EstadoEscolaridad" + hash, @tabindex = "21" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#EstadoEscolaridad@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.EstadoEscolaridad)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.TipoOcupacion, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("TipoOcupacion", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.TiposOcupacionRef, new { @class = "form-control col-md-12", @id = "TipoOcupacion" + hash, @tabindex = "22" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#TipoOcupacion@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.TipoOcupacion)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.EstadoCivil, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("EstadoCivil", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.EstadosCivilRef, new { @class = "form-control col-md-12", @id = "EstadoCivil" + hash, @tabindex = "23" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#EstadoCivil@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.EstadoCivil)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Ocupado, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.CheckBoxFor(
+                m => m.Ocupado,
+                new { @id = "Ocupado" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Ocupado@(hash)').bootstrapSwitch();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Ocupado)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ObraSocial, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.CheckBoxFor(
+                m => m.ObraSocial,
+                new { @id = "ObraSocial" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#ObraSocial@(hash)').bootstrapSwitch();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.ObraSocial)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-2">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Detenido, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.CheckBoxFor(
+                m => m.Detenido,
+                new { @id = "Detenido" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Detenido@(hash)').bootstrapSwitch();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Detenido)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ColorOjos, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("ColorOjos", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "ColorOjos" + hash, @tabindex = "27" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#ColorOjos@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.ColorOjos)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ColorPelo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("ColorPelo", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "ColorPelo" + hash, @tabindex = "28" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#ColorPelo@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.ColorPelo)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.LongitudPelo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("LongitudPelo", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "LongitudPelo" + hash, @tabindex = "29" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#LongitudPelo@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.LongitudPelo)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Altura, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Altura", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "Altura" + hash, @tabindex = "30" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Altura@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Altura)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Peso, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Peso", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "Peso" + hash, @tabindex = "31" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Peso@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Peso)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Piel, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Piel", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "Piel" + hash, @tabindex = "32" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Piel@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Piel)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.BarbaBigote, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("BarbaBigote", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "BarbaBigote" + hash, @tabindex = "33" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#BarbaBigote@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.BarbaBigote)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.LongitudBarbaBigote, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("LongitudBarbaBigote", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "LongitudBarbaBigote" + hash, @tabindex = "34" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#LongitudBarbaBigote@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.LongitudBarbaBigote)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.ColorBarbaBigote, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("ColorBarbaBigote", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "ColorBarbaBigote" + hash, @tabindex = "35" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#ColorBarbaBigote@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.ColorBarbaBigote)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.PielVarios, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("PielVarios", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "PielVarios" + hash, @tabindex = "36" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#PielVarios@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.PielVarios)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Varios, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Varios", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "Varios" + hash, @tabindex = "37" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Varios@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Varios)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Tonada, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.DropDownList("Tonada", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.PersonasCaracteristicasRef, new { @class = "form-control col-md-12", @id = "Tonada" + hash, @tabindex = "38" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Tonada@(hash)').chosen();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.Tonada)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-3">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.CriterioOportunidadArt15, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.CheckBoxFor(
+                m => m.CriterioOportunidadArt15,
+                new { @id = "CriterioOportunidadArt15" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#CriterioOportunidadArt15@(hash)').bootstrapSwitch();
+                            });
+                        </script>
+                        @Html.ValidationMessageFor(model => model.CriterioOportunidadArt15)
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Celular, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Celular, new { @class = "form-control col-md-12", @id = "Celular" + hash, @tabindex = "40" })
+                        @Html.ValidationMessageFor(model => model.Celular)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.TelefonoTrabajo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.TelefonoTrabajo, new { @class = "form-control col-md-12", @id = "TelefonoTrabajo" + hash, @tabindex = "41" })
+                        @Html.ValidationMessageFor(model => model.TelefonoTrabajo)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.DomicilioTrabajo, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.DomicilioTrabajo, new { @class = "form-control col-md-12", @id = "DomicilioTrabajo" + hash, @tabindex = "42" })
+                        @Html.ValidationMessageFor(model => model.DomicilioTrabajo)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                <div class="control-group">
+
+                    @Html.LabelFor(model => model.Observaciones, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Observaciones, new { @class = "form-control wysihtml5 col-md-12", @id = "Observaciones" + hash })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#Observaciones@(hash)').wysihtml5();
+                            });
+                        </script>
+                    </div>
+                </div>
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="row">
+
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.NombrePadre, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.NombrePadre, new { @class = "form-control col-md-12", @id = "NombrePadre" + hash, @tabindex = "44" })
+                        @Html.ValidationMessageFor(model => model.NombrePadre)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.NombreMadre, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.NombreMadre, new { @class = "form-control col-md-12", @id = "NombreMadre" + hash, @tabindex = "45" })
+                        @Html.ValidationMessageFor(model => model.NombreMadre)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+            <div class="col-md-4">
+
+                <div class="control-group">
+                    @Html.LabelFor(model => model.DomicilioProcesal, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.DomicilioProcesal, new { @class = "form-control col-md-12", @id = "DomicilioProcesal" + hash, @tabindex = "46" })
+                        @Html.ValidationMessageFor(model => model.DomicilioProcesal)
+                    </div>
+                </div>
+
+
+
+            </div><!--fin de div md-12-->
+        </div> <!--fin del row-->
+
+        <div class="form-actions">
+
+            <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+
+            <input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+
+            <input type="button" value="Guardar & Nuevo" id="GuardarYNuevo@(hash)" class="btn blue" />
+
+        </div><!--fin form-actions>-->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+    $(function () {
+        app.Desbloquear();
+    });
+
+    if (oPersonas == null)
+        var oPersonas = new Personas.ts.PersonasManager();
+
+    var viewCrear = new Personas.ts.Crear("@(hash)");
+    oPersonas.setCrear(viewCrear);
+
+
+</script>

@@ -1,0 +1,74 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Administracion.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.AdministracionPedidos
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Administracion/ts/Solicitudes/Index.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "Solicitudes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                @{ 			
+                    ColumnCommand[] operadoresSolicitudes= new ColumnCommand[2] {
+
+                 new ColumnCommand {
+                    display = "editar",
+                    function = "oSolicitudes.editar_dtSolicitudes()",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    iconclass = "edit",
+                    tooltip = "Editar este pedido"
+                 },
+                 
+                 new ColumnCommand {
+                    display = "Otras opciones...",
+                    function = "oSolicitudes.rechazar_dtSolicitudes()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Otras opciones..."
+                 }
+                };
+
+                    var vmSolicitudes = Html.DataTableVm("dtSolicitudes", (SolicitudesController h) => h.getAdministracionPedidosGrilla(null));
+
+                    vmSolicitudes.operators = operadoresSolicitudes;
+                    vmSolicitudes.OpcionesEnGrilla = false;
+                    //vmAgentes.fnDrawCallBack = "render_dtAgentes(this);";
+                    vmSolicitudes.ColumnFilter = true;
+                    //vmAgentes.FilterOn("activo").Select("Si", "No");
+                    //Cantidad de registros a mostrar
+                    vmSolicitudes.CantidadRegistrosDefault = 25;
+
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmSolicitudes)
+
+                <input type="hidden" id="SelectedSolicitudes@(hash)" value="" />
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+
+    if (oSolicitudes == null)
+        var oSolicitudes = new Solicitudes.ts.SolicitudesManager();
+
+    var viewIndex = new Solicitudes.ts.Index("@(hash)");
+    oSolicitudes.setIndex(viewIndex);
+
+    viewIndex.setSolicitudes(dtSolicitudes);
+
+</script>

@@ -1,0 +1,104 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.PartidasPresupuestarias
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/PartidasPresupuestarias/Index.js"></script>
+<script src="Areas/Expedientes/ts/PartidasPresupuestarias/PartidasPresupuestariasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "PartidasPresupuestarias", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+    <div class="form-actions">
+
+        <input type="button" value="Nueva Partida Presupuestaria" id="Nuevo@(hash)" class="btn green" />
+
+    </div>
+    <br />
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresPartidasPresupuestarias = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "PartidasPresupuestariasController_editar(this)",
+                    function = "oPartidasPresupuestarias.editar_dtPartidasPresupuestarias();",
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "PartidasPresupuestariasController_eliminar(this)",
+                    function = "oPartidasPresupuestarias.eliminar_dtPartidasPresupuestarias();",
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmPartidasPresupuestarias = Html.DataTableVm("dtPartidasPresupuestarias", (PartidasPresupuestariasController h) => h.getPartidasPresupuestariasGrilla(null));
+                
+				vmPartidasPresupuestarias.operators = operadoresPartidasPresupuestarias;
+                //vmPartidasPresupuestarias.fnDrawCallBack = "render_dtPartidasPresupuestarias(this);";
+                vmPartidasPresupuestarias.ColumnFilter = true;
+                //vmPartidasPresupuestarias.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmPartidasPresupuestarias.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("~/Views/Shared/DataTable.cshtml", vmPartidasPresupuestarias)
+			
+			
+			<script type="text/javascript">
+					function PartidasPresupuestariasController_editar(el) {
+					var id = getData(el, 1);
+					oPartidasPresupuestarias.editar_dtPartidasPresupuestarias(id);
+					}
+					
+					function PartidasPresupuestariasController_eliminar(el) {
+					var id = getData(el, 1);
+					oPartidasPresupuestarias.eliminar_dtPartidasPresupuestarias(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedPartidasPresupuestarias@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oPartidasPresupuestarias == null)
+			var oPartidasPresupuestarias = new PartidasPresupuestarias.ts.PartidasPresupuestariasManager();
+		
+		var viewIndex = new PartidasPresupuestarias.ts.Index("@(hash)");
+		oPartidasPresupuestarias.setIndex(viewIndex); 
+		
+		viewIndex.setPartidasPresupuestarias(dtPartidasPresupuestarias);
+		
+	</script>	

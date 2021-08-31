@@ -1,0 +1,248 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Certificados - Poder Judicial de La Pampa</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="/assets/certificados/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/certificados/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/certificados/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/certificados/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/certificados/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/certificados/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/certificados/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="/assets/certificados/css/util.css">
+    <link rel="stylesheet" type="text/css" href="/assets/certificados/css/main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+
+    <div>
+        <div style="margin: auto">
+                <span class="contact100-form-title">
+                    Solicitud de Certificado - Poder Judicial de La Pampa
+                </span>
+
+                <div id="paso1">
+                    <div class="wrap-input100 validate-input" data-validate="DNI es requerido">
+                        <label class="label-input100" for="name">Número de DNI</label>
+                        <input id="dni" class="input100" type="text" name="dni" placeholder="Ingrese DNI">
+                        <span class="focus-input100"></span>
+                    </div>
+
+
+                    <div class="wrap-input100 validate-input" data-validate="Trámite es requerido">
+                        <label class="label-input100" for="name">Número de Trámite</label>
+                        <input id="codigo" class="input100" type="text" name="codigo" placeholder="Ingrese Nùmero de Trámite">
+                        <span class="focus-input100"></span>
+                    </div>
+
+                    <div align="center" id="espere" style="display:none">
+                        <span style="font-size:19px">Aguarde...</span><br />
+                        <img src="~/assets/img/espere.gif" />
+                    </div>
+
+                    <div align="center" id="error" style="display:none">
+                        <span style="font-size:19px">Error en combinación DNI y Trámite</span><br />
+                        <img src="~/assets/img/error.png" />
+                    </div>
+
+                    <div class="container-contact100-form-btn">
+                        <button class="contact100-form-btn" id="validar">
+                            Validar mi identidad
+                        </button>
+                    </div>
+
+                </div>
+
+
+                @*<div id="paso2">
+                    <form method="post" enctype="multipart/form-data">
+
+                        <p>Bienvenido/a {nombre}. Para generar su certificado necesitaremos que se tome una fotograf�a de su rostro y nos indique su email</p>
+
+                        <div class="wrap-input100 validate-input" data-validate="DNI es requerido">
+                            <label class="label-input100" for="name">Presione equi para tomar foto</label>
+                            <input type="file" accept="image/*" capture="camera" id="file" name="file" />
+                        </div>
+
+
+                        <div class="wrap-input100 validate-input" data-validate="Formato de email incorrecto">
+                            <label class="label-input100" for="email">Email</label>
+                            <input id="email" class="input100" type="text" name="email" placeholder="Ingrese su email...">
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="container-contact100-form-btn">
+                            <input type="hidden" id="agente" name="agente"/>
+                            <button class="contact100-form-btn" id="generar">
+                                Generar Certificado
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>*@
+
+
+                @*<div class="wrap-input100">
+            <div class="label-input100">What do you need?</div>
+            <div>
+                <select class="js-select2" name="service">
+                    <option>Please chooses</option>
+                    <option>UI/UX Design</option>
+                    <option>eCommerce Bussiness</option>
+                    <option>Online Services</option>
+                </select>
+                <div class="dropDownSelect2"></div>
+            </div>
+            <span class="focus-input100"></span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Message is required">
+            <label class="label-input100" for="message">Message</label>
+            <textarea id="message" class="input100" name="message" placeholder="Type your message here..."></textarea>
+            <span class="focus-input100"></span>
+        </div>*@
+
+
+
+                @*<div class="contact100-form-social flex-c-m">
+            <a href="#" class="contact100-form-social-item flex-c-m bg1 m-r-5">
+                <i class="fa fa-facebook-f" aria-hidden="true"></i>
+            </a>
+
+            <a href="#" class="contact100-form-social-item flex-c-m bg2 m-r-5">
+                <i class="fa fa-twitter" aria-hidden="true"></i>
+            </a>
+
+            <a href="#" class="contact100-form-social-item flex-c-m bg3">
+                <i class="fa fa-youtube-play" aria-hidden="true"></i>
+            </a>
+        </div>*@
+
+            @*<div class="contact100-more flex-col-c-m" style="background-image: url('images/bg-01.jpg');">
+            </div>*@
+        </div>
+    </div>
+
+
+
+
+
+    <!--===============================================================================================-->
+    <script src="/assets/certificados/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/assets/certificados/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/assets/certificados/vendor/bootstrap/js/popper.js"></script>
+    <script src="/assets/certificados/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="/assets/certificados/vendor/select2/select2.min.js"></script>
+    <script>
+        $(".js-select2").each(function () {
+            $(this).select2({
+                minimumResultsForSearch: 20,
+                dropdownParent: $(this).next('.dropDownSelect2')
+            });
+        })
+        $(".js-select2").each(function () {
+            $(this).on('select2:open', function (e) {
+                $(this).parent().next().addClass('eff-focus-selection');
+            });
+        });
+        $(".js-select2").each(function () {
+            $(this).on('select2:close', function (e) {
+                $(this).parent().next().removeClass('eff-focus-selection');
+            });
+        });
+
+        var paso2 = `<form method="post" action="/home/subirfoto" enctype="multipart/form-data">
+                    <div align="center">
+
+                        <p style="font-size:22px">Bienvenido/a <strong>{nombre}</strong>. Para generar su certificado necesitaremos que se tome una fotografía de su rostro</p>
+                        <br>
+                        <div class="wrap-input100 validate-input" data-validate="DNI es requerido">
+                            <label class="label-input100" for="name">Presione equi para tomar foto</label>
+                            <input type="file" accept="image/*" capture="camera" id="file" name="file" />
+                        </div>
+
+                        <div class="wrap-input100 validate-input" data-validate="Formato de email incorrecto">
+                            <label class="label-input100" for="email">Email</label>
+                            <input id="email" class="input100" type="text" name="email" placeholder="Ingrese su email...">
+                            <span class="focus-input100"></span>
+                        </div>
+
+                        <div class="container-contact100-form-btn">
+                            <input type="hidden" id="agente" name="agente" value="{agente}"/>
+                            <button class="contact100-form-btn" id="generar">
+                                Generar Certificado
+                            </button>
+                        </div>
+
+                    </div>
+
+                    </form>`;
+
+
+    </script>
+    <!--===============================================================================================-->
+    <script src="/assets/certificados/vendor/daterangepicker/moment.min.js"></script>
+    <script src="/assets/certificados/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="/assets/certificados/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="/assets/certificados/js/main.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-23581568-13"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-23581568-13');
+
+
+        $(function () {
+            var cat = localStorage.getItem('dni');
+            console.log(cat);
+            if (cat) {
+                location.href = "/home/micertificado/?dni=" + cat;
+            }
+
+            $("#validar").click(function (e) {
+                e.preventDefault();
+                $("#espere").show();
+                $("#validar").hide();
+                $.get("/rrhh/agentes/validaragente/?dni=" + $("#dni").val() + "&codigo=" + $("#codigo").val(), null, function (data) {
+                    if (data.Id > 0) {
+                        $("#paso1").empty();
+                        paso2 = paso2.replace("{nombre}", data.Nombre);
+                        paso2 = paso2.replace("{agente}", data.Id);
+                        $("#paso1").append(paso2);
+                    } else {
+                        $("#espere").hide();
+                        $("#validar").show();
+                        $("#error").show();
+                    }
+                });
+            });
+
+        });
+
+    </script>
+</body>
+</html>

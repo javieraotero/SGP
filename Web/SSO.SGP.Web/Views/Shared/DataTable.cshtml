@@ -1,0 +1,328 @@
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables
+@model DataTableVm
+@{
+
+}
+<style>
+    tr.even.row_selected {
+        background-color: dodgerblue;
+        color: white;
+    }
+
+    tr.odd.row_selected {
+        background-color: dodgerblue;
+        color: white;
+    }
+
+    .seleccion {
+        font-size: x-large;
+        font-weight: bold;
+    }
+
+    .search_init {
+        width: 80%;
+    }
+
+    .search_init_date {
+        width: 40%;
+    }
+
+    .ui-datepicker {
+        width: 17em;
+    }
+
+    th {
+        vertical-align: middle;
+    }
+</style>
+
+<table id="@Model.Id" class="table table-bordered  @(Model.TableClass ?? DataTableVm.DefaultTableClass ?? "")">
+    <thead>
+        @**@<tr>
+            @foreach (var column in Model.ColumnsDisplay)
+            {
+                if (column.Item1.ToUpper() != "ID" && !column.Item1.ToUpper().Contains("HIDE"))
+                {
+                     //<th style="width:@column.Item2%">@column.Item1</th>
+                     <th style="display:none"></th>
+                }
+                else
+                {
+                    <th style="display:none"></th>
+                }
+            }
+           @* @if ((Model.operators != null) && (Model.OpcionesEnGrilla))
+            {
+                <th>
+                    <a onclick="limpiarBusqueda(@Model.Id);"><img src="../../assets/img/icons/16x16/refresh.fw.png" title="Limpiar Búsqueda" /></a>
+                </th>
+            } *@
+        </tr>
+        <tr>
+            @foreach (var column in Model.ColumnsDisplay)
+            {
+                if (column.Item1.ToUpper() != "ID" && !column.Item1.ToUpper().Contains("HIDE"))
+                {
+                    <th style="width:@column.Item2%">@column.Item1</th>
+                }
+                else
+                {
+                    <th style="display:none"></th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td colspan="5" class="dataTables_empty">
+                Recopilando datos...
+            </td>
+        </tr>
+    </tbody>
+    @*    <tfoot>
+            <tr>
+            @foreach (var column in Model.Columns)
+            {
+            <th><input type="text" name="@column.Item1" value="@column.Item1" class="search_init" /></th>
+            }
+            @{
+                if (Model.OpcionesEnGrilla) {
+                    @: <th>&nbsp;<a onclick="limpiarBusqueda(@Model.Id);"><img src="../../assets/img/icons/16x16/refresh.fw.png" /></a></th>
+                }
+
+            }
+            </tr>
+        </tfoot>*@
+</table>
+<script type="text/javascript">
+    @{string name = Model.Id;}
+    var @Model.Id;
+    $(document).ready(function() {
+        var $table = $('#@Model.Id');
+        @Model.Id = $table.dataTable({
+            "bProcessing": true,
+            "oLanguage": { "sUrl": "@Url.Content("~/Scripts/DataTables-1.9.2/media/js/es.datatables.txt")" },
+            "bJQueryUI": true,
+            "sPaginationType": "full_numbers",
+            "bStateSave": false,
+            "bServerSide": true,
+            @if (Model.CantidadRegistrosDefault != 0)
+            {
+                <text>"iDisplayLength": @Model.CantidadRegistrosDefault,</text>
+            }
+            @if (Model.OrdenarPor != null)
+                        {
+                            int i = 0;
+                <text>"aaSorting": [
+                    @foreach (var col in Model.OrdenarPor.Keys)
+                    {
+                        if (i == 0)
+                        {
+                            <text>[@col, '@Model.OrdenarPor[col]']</text>
+                        }
+                        if (i > 0)
+                        {
+                            <text>,[@col, '@Model.OrdenarPor[col]']</text>
+                        }
+                        i++;
+                    }
+            ],</text>
+            }
+            "aoColumns": [
+              @{
+                  var lastItem = Model.Columns.Last().Item1;
+                  foreach (var column in Model.Columns)
+                  {
+                      /* Las columnas Id se ocultan */
+                      if (column.Item1.ToUpper() == "ID" || column.Item1.ToUpper().Contains("HIDE"))
+                      {
+                      @: { sDefaultContent: "", sWidth: "0px", "bVisible":false, "bSortable":true },
+                    }
+                      else
+                      {
+                          if (column.Item1 != lastItem)
+                          {
+                              if (column.Item1.ToUpper().Contains("FECHA"))
+                              {
+                            @:  { sDefaultContent: "-", sWidth: "180px", sName:"@column.Item1" },
+                          }
+                              else
+                              {
+                            @:  { sDefaultContent: "-", sName:"@column.Item1" },
+                          }
+                          }
+                          else
+                          {
+                              if ((column.Item1 == lastItem) && (!Model.OpcionesEnGrilla))
+                              {
+                                @: { sDefaultContent: "-", sName:"@column.Item1" }
+                            }
+                              else
+                              {
+                                 @: { sDefaultContent: "-", sName:"@column.Item1"},
+                            }
+                          }
+                      }
+                  }
+                  if (Model.OpcionesEnGrilla)
+                  {
+                    @: { "sDefaultContent": "-", "sWidth":"@(Model.operators.Length * 28)", "bSearchable": false, "sType": "html", "bSortable":false }
+                }
+              }],
+
+    @{
+                if ((Model.operators != null) && (Model.OpcionesEnGrilla))
+                {
+            <text>
+            "aoColumnDefs": [ {
+                "aTargets": [@Model.Columns.Count()],
+                "bSearchable": false,
+                "fnRender": function (oObj) {
+                    return '@{
+                    for (int i = 0; i < Model.operators.Length; i++)
+                    {
+                            <text><a href="#" onclick="@Model.operators[i].function" title="@Model.operators[i].tooltip"><img height="16px" src="@Model.operators[i].icon" /></a></text>;
+                    }
+                    }'
+                }
+            }],
+            </text>
+                }
+            }
+            "bFilter": '@Model.ShowSearch.ToString().ToLower()',
+            "bAutoWidth": false,
+            "bInfo":false,
+            "sDom": '@Html.Raw(Model.Dom)',
+            "aLengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Todos"]],
+            "sAjaxSource": "@Html.Raw(Model.AjaxUrl)",
+            "fnInitComplete": function() {
+                //focus en el campo buscar del datatables
+                // $("div.dataTables_filter input").focus();
+            },
+            "fnDrawCallback": fnRowMenu,
+            "fnServerData": function(sSource, aoData, fnCallback) {
+                $.ajax({
+                    "dataType": 'json',
+                    "type": "POST",
+                    "url": sSource,
+                    "data": aoData,
+                    "success": fnCallback
+                });
+            }
+
+    });
+
+    //        var keys = new KeyTable( {
+    //        "table": document.getElementById('table-id2'),
+    //        "datatable": dt,
+    //        "focus": [1,0],
+    //        "focusClass":"seleccion"
+    //    } );
+
+
+    @if (Model.ColumnFilter)
+            {
+<text>
+    (@name).columnFilter({
+        sPlaceHolder: "head:before",
+        aoColumns: [@Html.Raw(Model.ColumnFiltersString), null]
+    });
+
+    //new FixedHeader( ((@Model.Id)), { "bottom": true } );
+    </text>
+            }
+
+    });
+
+    function fnRowMenu ()
+    {
+        var horizontalPadding = 30;
+        var verticalPadding = 30;
+        var PARM1, PARM2;
+
+        @{
+        if (Model.fnDrawCallBack != null)
+        {
+        @Model.fnDrawCallBack
+        }
+    }
+
+        //    $("#dtClientes tbody tr td:nth-child(6)").each(function() {
+        //        if ($(this).text() == "No") {
+        //            $(this).css("background", "red");
+        //            alert("Si");
+        //        }
+        //    });
+        @{if (Model.OpcionesConextuales)
+                  {
+                <text>
+
+        $.contextMenu({
+            selector: '#@Model.Id tbody tr',
+            trigger: 'right',
+            items: {
+                @{
+                      if (Model.operators != null)
+                      {
+                          for (int i = 0; i < Model.operators.Length; i++)
+                          {
+                              if (i != Model.operators.Length - 1)
+                              {
+               <text>
+                "@Model.operators[i].display": {name: "@Model.operators[i].display", icon: "@Model.operators[i].iconclass", callback: function(key, opt) {
+                    @Model.operators[i].function
+                } },
+                </text>
+                              }
+                              else
+                              {
+               <text>
+                "@Model.operators[i].display": {name: "@Model.operators[i].display", icon: "@Model.operators[i].iconclass", callback: function(key, opt) {
+                    @Model.operators[i].function
+                } }
+                </text>
+                              }
+                          }
+                      }
+        }
+            },
+        });
+        </text>
+    }
+    }
+
+
+        return false;
+
+    }
+
+    var asInitVals = new Array();
+
+    $(document).ready(function() {
+        /*
+         * Support functions to provide a little bit of 'user friendlyness' to the textboxes in
+         * the footer
+         */
+        $("tfoot input").each( function (i) {
+            asInitVals[i] = this.value;
+        } );
+
+        //				$("tfoot input").focus( function () {
+        //					if ( this.className == "search_init" )
+        //					{
+        //						this.className = "";
+        //						this.value = "";
+        //					}
+        //				} );
+
+        //				$("tfoot input").blur( function (i) {
+        //					if ( this.value == "" )
+        //					{
+        //						this.className = "search_init";
+        //						this.value = asInitVals[$("tfoot input").index(this)];
+        //					}
+        //				} );
+
+    } );
+
+</script>

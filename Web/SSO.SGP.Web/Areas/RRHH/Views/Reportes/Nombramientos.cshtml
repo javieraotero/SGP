@@ -1,0 +1,44 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.Agentes
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@Scripts.Render("~/bundles/jqueryval")
+@using (Html.BeginForm("ExportToExcel", "Reportes", FormMethod.Post, new { area = "RRHH", id = "FormGenerarNombramientos" }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="control-group">
+                    <div class="controls">
+                        <input type="button" class="btn blue" id="GenerarNombramientos" value="Generar Excel y Descargar" name="Ver" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#GenerarNombramientos").click(function (e) {
+            e.preventDefault();
+            var sql = "select * from nombramientosexcel where situacionrevista not in ('Z')";
+            window.open("/rrhh/reportes/excelsintitulo/?query=" + sql + "&filename=nombramientos");
+
+        });
+    });
+
+</script>
+
+

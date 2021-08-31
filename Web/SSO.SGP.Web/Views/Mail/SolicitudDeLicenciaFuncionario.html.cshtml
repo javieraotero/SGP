@@ -1,0 +1,44 @@
+@using ActionMailer.Net
+@model SSO.SGP.EntidadesDeNegocio.Results.LicenciasResult
+
+@{
+    Layout = null;
+}
+
+Estimada/o: @ViewBag.OrganismoDestino
+<br />
+<br />
+<strong>@ViewBag.Nombre</strong> (@Model.cargo - @Model.organismo) ha solicitado una licencia (@Model.Licencia a partir de d&iacute;a @Model.Desde.ToShortDateString() al @Model.Hasta.ToShortDateString()).
+<br />
+<br />
+@if (!string.IsNullOrEmpty(ViewBag.Subrogante))
+{
+    <span>
+        <strong>@ViewBag.Subrogante</strong> (@ViewBag.SubroganteCargo - @ViewBag.SubroganteOrganismo) ha aprobado la solicitud de @(ViewBag.Subrogante == "1" ? "Subrogancia" : "Suplencia") el día de la fecha.
+    </span>
+} else
+{
+<span>
+    <strong>@ViewBag.Agente no se ha especificado ningún @(ViewBag.Subrogante == "1" ? "subrogante" : "suplente") para esta solicitud</strong>
+</span>
+}
+<br />
+<br />
+Para aprobar o rechazar esta solicitud de licencia puede utilizar el app, o bien haciendo click en el siguientes enlaces:
+<br />
+<br />
+@if ((bool)ViewBag.aprueba)
+{
+    <a href="@(System.Configuration.ConfigurationManager.AppSettings["Url.Base"])/rrhh/restservices/pre_aprobar/?token=@ViewBag.Token">Aprobar Licencia</a>
+    <br />
+}
+    <a href="@(System.Configuration.ConfigurationManager.AppSettings["Url.Base"])/home/confirmarlicencia/?token=@ViewBag.Token">CONFIRMAR y pasar a superior</a>
+    <br />
+    <a href="@(System.Configuration.ConfigurationManager.AppSettings["Url.Base"])/rrhh/restservices/pre_desaprobar/?token=@ViewBag.Token">Desaprobar Licencia</a>
+    <br />
+    <br />
+    El código de esta solicitud es: @ViewBag.Token y fue generado el: @DateTime.Now.ToString("dd/MM/yyyy HH:mm")
+<br />
+<br />
+<img src="http://sgp.justicialapampa.gob.ar/assets/img/sistemasfirma.png" />
+

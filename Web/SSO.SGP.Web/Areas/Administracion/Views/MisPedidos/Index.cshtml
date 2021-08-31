@@ -1,0 +1,80 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Administracion.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.AdministracionPedidos
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Administracion/ts/MisPedidos/Index.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "MisPedidos", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                @{ 			
+                    ColumnCommand[] operadoresMisPedidos= new ColumnCommand[3] {
+
+                 new ColumnCommand {
+                    display = "editar",
+                    function = "oMisPedidos.editar_dtMisPedidos()",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    iconclass = "edit",
+                    tooltip = "Editar este registro"
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    function = "oMisPedidos.eliminar_dtMisPedidos()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    iconclass = "delete",
+                    tooltip = "Eliminar este registro"
+                 },                 
+                 new ColumnCommand {
+                    display = "Imprimir Carátula",
+                    function = "oMisPedidos.imprimircaratula_dtMisPedidos()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Imprimir carátula"
+                 }
+                };
+
+                    var vmMisPedidos = Html.DataTableVm("dtMisPedidos", (MisPedidosController h) => h.getAdministracionPedidosGrilla(null));
+
+                    vmMisPedidos.operators = operadoresMisPedidos;
+                    vmMisPedidos.OpcionesEnGrilla = false;
+                    //vmAgentes.fnDrawCallBack = "render_dtAgentes(this);";
+                    vmMisPedidos.ColumnFilter = true;
+                    //vmAgentes.FilterOn("activo").Select("Si", "No");
+                    //Cantidad de registros a mostrar
+                    vmMisPedidos.CantidadRegistrosDefault = 25;
+
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmMisPedidos)
+
+                <input type="hidden" id="SelectedMisPedidos@(hash)" value="" />
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+
+    if (oMisPedidos == null)
+        var oMisPedidos = new MisPedidos.ts.MisPedidosManager();
+
+    var viewIndex = new MisPedidos.ts.Index("@(hash)");
+    oMisPedidos.setIndex(viewIndex);
+
+    viewIndex.setMisPedidos(dtMisPedidos);
+
+</script>

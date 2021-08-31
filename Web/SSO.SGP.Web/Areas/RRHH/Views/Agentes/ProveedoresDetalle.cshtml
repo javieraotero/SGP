@@ -1,0 +1,391 @@
+﻿@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.ECO_Proveedores
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<style>
+    table {
+        width: 100%;
+    }
+
+    .medium textarea {
+        min-width: 100%;
+        height: 150px;
+        resize: none;
+    }
+</style>
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/Agentes/Index.js"></script>
+<script src="Areas/RRHH/ts/Agentes/AgentesManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<link href="~/assets/css/xeus_forms.css" rel="stylesheet" />
+<script src="~/Scripts/moment-with-locales.min.js"></script>
+<link href="~/assets/plugins/datetimerangepicker/build/css/calentim.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/datetimerangepicker/build/js/calentim.min.js"></script>
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+<div class="container-fluid">
+
+    <div>
+        <table width="98%">
+            <tr>
+                <td width="50%">
+                    <p><label class="etiqueta_negrita">Razón Social: </label><label class="etiqueta_normal">@Model.RazonSocial</label></p>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <p><label class="etiqueta_negrita">Estado actual: </label>
+                            
+                            @if (Model.Estado == eEstadosProveedores.Confirmado)
+                            {
+                                <span class='badge badge-success'>Confirmado</span>
+                            }
+                            @if (Model.Estado == eEstadosProveedores.Pendiente)
+                            {
+                                <span class='badge badge-warning'>Pendiente</span>
+                            }
+                            @if (Model.Estado == eEstadosProveedores.Rechazado)
+                            {
+                                <span class='badge badge-danger'>Rechazado</span>
+                            }
+                            @if (Model.Estado == eEstadosProveedores.Revisar)
+                            {
+                                <span class='badge badge-info'>Revisar</span>
+                            }
+                    </p>
+            </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <p>
+                        <label class="etiqueta_negrita">Tipo: </label>
+                        @if (Model.TipoProveedor == eTiposProveedores.Fisica)
+                        {
+                            <span class='badge badge-info'>Fisica</span>
+                        }
+                        @if (Model.TipoProveedor == eTiposProveedores.Juridica)
+                        {
+                            <span class='badge badge-warning'>Juridica</span>
+                        }
+                    </p>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <p><label class="etiqueta_negrita">CUIT: </label><label class="etiqueta_normal">@Model.CUIT</label></p>
+                </td>
+            </tr>
+            <tr>
+                <td width="60%">
+                    <p><label class="etiqueta_negrita">Provincia y Localidad: </label><label class="etiqueta_normal">@Model.Provincia_.Descripcion - @Model.Localidad_.Descripcion</label></p>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <p><label class="etiqueta_negrita">Domiclio Electrónico: </label><label class="etiqueta_normal">@Model.DomicilioElectronico</label></p>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <p><label class="etiqueta_negrita"> Domicilio Postal: </label><label class="etiqueta_normal">@Model.DomicilioPostal</label></p>
+                </td>
+            </tr>
+            <tr>
+                <td width="50%">
+                    <p>
+                        <label class="etiqueta_negrita">Observaciones Economía: </label><label class="etiqueta_normal">@Model.ObservacionesEconomia</label>
+                    </p>
+                </td>
+            </tr>
+            <tr style="background-color: white !important;">
+                <td colspan="2">
+                    <div class="container-fluid">
+                        <table class="table">
+                            <tr>
+                                <td class="tab_seleccionado" width="25%" data-tipo="main_tab" data-ref="tab_socios">&nbsp;Socios</td>
+                                <td class="tab_no_seleccionado" width="25%" data-tipo="main_tab" data-ref="tab_adjuntos">&nbsp;Adjuntos</td>
+                                <td class="tab_no_seleccionado" width="25%" data-tipo="main_tab" data-ref="tab_rubros">&nbsp;Rubros-Subrubros</td>
+                            </tr>
+                        </table>
+                        <div id="tab_socios" style="display: block;" data-tipo="tab">
+                            <table cellpadding="10" class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="color: #329075">Nombre</th>
+                                        <th style="color: #329075">Tipo</th>
+                                        <th style="color: #329075">DNI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var socios = new SSO.SGP.AccesoADatos.ECO_ProveedoresSociosAD().ObtenerSociosPorProveedor(Model.Id);
+                                        foreach (var s in socios)
+                                        {
+                                            <tr>
+                                                <td style="color: #858282">@s.Socio</td>
+                                                <td>
+                                                    @if (s.Tipo == eTipoSocioProveedores.Socio)
+                                                    {
+                                                        <span class='badge badge-success'>Socio</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class='badge badge-info'>Sucesor</span>
+                                                    }
+                                                </td>
+                                                <td style="color: #858282">@s.DniSocio</td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tab_adjuntos" style="display: none;" data-tipo="tab">
+                            <table cellpadding="10" class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="color: #329075">Tipo</th>
+                                        <th style="color: #329075">Fecha Carga</th>
+                                        <th style="color: #329075">Acción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ var adjuntos = new SSO.SGP.AccesoADatos.ECO_ProveedoresAdjuntosAD().ObtenerPorProveedor(Model.Id);
+                                        foreach (var s in adjuntos)
+                                        {
+                                            <tr>
+                                                <td style="color: #858282">
+                                                    @{
+                                                        switch ((eDocumentosProveedores)s.TipoAdjunto)
+                                                        {
+                                                            case eDocumentosProveedores.Certificado_de_inscripción_vigente_extendido_por_la_Dirección_General_de_Superintendencia_de_Personas_Jurídicas_y_Registro_Público_de_Comercio_u_organismo_oficial_correspondiente_según_la_jurisdicción_a_la_que_pertenezca:
+                                                                @: <span>Certificado de inscripción vigente extendido por Dirección General de Superintendencia de Personas Jurídicas</span>
+                                                                break;
+                                                            case eDocumentosProveedores.Constancia_de_inscripcion_proveedores_de_la_pampa:
+                                                                @: <span>Constancia de inscripción de Proveedores de La Pampa</span>
+                                                                break;
+                                                            case eDocumentosProveedores.PH_DNI_Dorso:
+                                                                @: <span>Dorso DNI</span>
+                                                                break;
+                                                            case eDocumentosProveedores.PH_DNI_Frente:
+                                                                @: <span>Frente DNI</span>
+                                                                break;
+                                                            case eDocumentosProveedores.PH_Poder_Vigente_Apoderado_Y_DNI_Apoderado:
+                                                                @: <span>Poder Vigente Apoderado</span>
+                                                                break;
+                                                            case eDocumentosProveedores.PJ_Coop_Acta_de_asamblea_constitutiva_estatutos_u_otros_y_sus_actualizaciones:
+                                                                @: <span>Acta de asamblea constitutiva - Estatuto y otros y sus actualizaciones</span>
+                                                                break;
+                                                            case eDocumentosProveedores.PJ_Coop_En_caso_de_acreditar_apoderados_poder_suficiente_vigente_y_Documento_Nacional_de_Identidad:
+                                                                @: <span>Cooperativa - Apoderados DNI</span>
+                                                                break;
+                                                            case eDocumentosProveedores.PJ_Sociedades_Documento_donde_conste_el_último_domicilio_real_inscripto_en_la_Dirección_General_de_Superintendencia_de_Personas_Jurídicas_y_Registro_Público_de_Comercio_o_Registro_Público_correspondiente:
+                                                                @: <span>Sociedades - Último domicilio real isncripto en Dirección General de Superintendencia de Personas Jurídicas</span>
+                                                                break;
+                                                            case eDocumentosProveedores.PJ_Sociedades_Ultima_acta_de_designación_de_autoridades_y_distribución_de_cargos_y_o_designación_de_gerente_de_SRL_inscripta_en_la_Dirección_General_de_Superintendencia_de_Personas_Jurídicas_y_Registro_Público_de_Comercio_o_Registro_Público_correspondiente:
+                                                                @: <span>Sociedades - Última acta de designación de autoridades</span>
+                                                                break;
+                                                            case eDocumentosProveedores.PJ_Constancia_Sucesiones_Indivisas:
+                                                                @: <span>Constancia Sucesiones Indivisas</span>
+                                                                break;
+                                                            default:
+                                                                @: <span>Otros</span>
+                                                                break;
+                                                        }
+                                                    }
+                                                </td>
+                                                <td style="color: #858282">
+                                                    @s.FechaAlta.ToShortDateString()
+                                                </td>
+                                                <td>
+                                                    <a href="/Documentos@(s.URL)" target="_blank" id="link_down"><i class="fas fa-eye"></i> Visualizar</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="tab_rubros" style="display:none;" data-tipo="tab">
+                            <table cellpadding="10" class="table">
+                                <thead>
+                                    <tr>
+                                        <th style="color: #329075">Rubro</th>
+                                        <th style="color: #329075">Subrubro</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var rubros = new SSO.SGP.AccesoADatos.ECO_ProveedoresSubRubrosAD().ObtenerXProveedor(Model.Id);
+                                        foreach (var r in rubros)
+                                        {
+                                            <tr>
+                                                <td style="color: #858282">
+                                                    @r.SubRubro_.Rubro_.Descripcion
+                                                </td>
+                                                <td style="color: #858282">
+                                                    @r.SubRubro_.Descripcion
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                            @(Model.IdRubro.HasValue ? Model.IdRubro_.Descripcion : "")  
+                            @(Model.IdSubRubro.HasValue ? Model.IdSubRubro_.Descripcion : "")
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="div_acciones" id="actions" style="height:60px;margin:0px;margin-top:20px;">
+
+        @if (Roles.GetRolesForUser(SSO.SGP.Web.SessionHelper.NombrePersona).Contains("Economia_Confirmacion") && (Model.Estado == eEstadosProveedores.Revisar || Model.Estado == eEstadosProveedores.Pendiente))
+        {
+            <a href="#" class="btn btn-success btn-sm" id="Confirmar@(hash)" style="margin-right:20px;"><i class="fas fa-check"></i> Confirmar </a>
+            <a href="#" class="btn btn-danger btn-sm" id="Rechazar@(hash)"><i class="fas fa-ban"></i> Rechazar </a>
+        }
+    </div><!--fin form-actions>-->
+</div>
+                                                                    }
+
+<script type="text/javascript">
+    $(function () {
+        $("td[data-ref=tab_general]").click();
+    });
+
+    $("td[data-tipo=main_tab]").click(function (e) {
+        $("td[data-tipo=main_tab]").removeClass("tab_seleccionado").addClass("tab_no_seleccionado");
+        $(this).removeClass("tab_no_seleccionado").addClass("tab_seleccionado");
+
+        var tab = $(this).data("ref");
+        $("div[data-tipo=tab]").hide();
+        $("#" + tab).show();
+
+        $(".ocultar").hide('slow');
+
+    });
+
+    $("#Rechazar@(hash)").click(function (e) {
+        var df = $.Deferred();
+        bootbox.prompt({
+            title: "<label style='color:#F03006'>¿Está seguro que va a rechazar esta solicitud?</label><br><label  style='color:#838383'>Por favor ingrese comentarios a continuación, el cual será informado al Proveedor a su cuenta de email</label>",
+            className: 'medium',
+            inputType: 'textarea',
+            required: true,
+            callback: function (result) {
+                if (result) {
+                    app.Bloquear();
+                    $.when($.ajax({
+                        type: "POST",
+                        url: "Agentes/RechazarProveedor",
+                        data: { id: @Model.Id, observaciones: result },
+                        success: function (data) {
+                            if (data[0]) {
+                                app.crearNotificacionSuccess("Operación satisfactoria", data[1]);
+                                app.modal.cerrar();
+                                dtProveedores.fnDraw();
+                            }
+                            else {
+                                app.crearNotificacionError("Error", data[1]);
+                            }
+                        },
+                        error: function (jqXhr, textStatus, errorThrown) {
+                            alert("Error al procesar formulario");
+                        },
+                        complete: function () {
+                            app.Desbloquear();
+                        }
+                    })).done(function () { df.resolve(); })
+                        .fail(function () { df.reject(); });
+                } else {
+                    app.crearNotificacionWarning("Atención", "No ingresó las observaciones de rechazo");
+                }
+            }
+        });
+        @*bootbox.confirm("Está seguro que va a rechazar esta solicitud?", function (result) {
+            if (result) {
+                app.Bloquear();
+                $.when($.ajax({
+                    type: "POST",
+                    url: "Agentes/RechazarSolicitudProveedor",
+                    data: { id: @Model.Id },
+                    success: function (data) {
+                        if (data[0]) {
+                            app.crearNotificacionSuccess("Operación satisfactoria", data[1]);
+                            app.modal.cerrar();
+                        }
+                        else {
+                            app.crearNotificacionError("Error", "Método no implementado");
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorThrown) {
+                        alert("Error al procesar formulario");
+                    },
+                    complete: function () {
+                        app.Desbloquear();
+                    }
+                })).done(function () { df.resolve(); })
+                    .fail(function () { df.reject(); });
+            }
+        });*@
+
+    });
+
+    $("#Confirmar@(hash)").click(function (e)
+    {
+        var df = $.Deferred();
+        bootbox.confirm("<label style='color:#1DAF33'>¿Está seguro que va a confirmar esta solicitud?</label>", function (result) {
+            if (result)
+            {
+                app.Bloquear();
+                $.when($.ajax({
+                    type: "POST",
+                    url: "Agentes/ConfirmarProveedor",
+                    data: { id: @Model.Id },
+                    success: function (data)
+                    {
+                        if (data[0])
+                        {
+                            app.crearNotificacionSuccess("Operación satisfactoria", data[1]);
+                            app.modal.cerrar();
+                            dtProveedores.fnDraw();
+                        }
+                        else
+                        {
+                            app.crearNotificacionError("Error", "Método no implementado");
+                        }
+                    },
+                    error: function (jqXhr, textStatus, errorThrown)
+                    {
+                        alert("Error al procesar formulario");
+                    },
+                    complete: function () {
+                        app.Desbloquear();
+                    }
+                })).done(function () { df.resolve(); })
+                    .fail(function () { df.reject(); });
+            }
+        });
+
+    });
+
+    if (oAgentes == null)
+        var oAgentes = new Agentes.ts.AgentesManager();
+
+    @*var viewIndex = new Agentes.ts.Index("@(hash)");
+    oAgentes.setIndex(viewIndex);
+
+    viewIndex.setAgentes(dtAgentes);*@
+
+</script>

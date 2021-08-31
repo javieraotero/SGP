@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RptDataSource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Name="CPP_DesaDataSource">
+  <ConnectionProperties>
+    <Extension>SQL</Extension>
+    <ConnectString>Data Source=10.22.231.102\sql_desa2014;Initial Catalog=CPP_Desa;User Id=sql_desa2014;Password=Merlin1814</ConnectString>
+  </ConnectionProperties>
+  <DataSourceID>f51a2f93-2cda-464b-a66e-8fd2f07dcaee</DataSourceID>
+</RptDataSource>

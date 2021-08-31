@@ -1,0 +1,104 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.LicenciasRef
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/LicenciasRef/Index.js"></script>
+<script src="Areas/RRHH/ts/LicenciasRef/LicenciasRefManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "LicenciasRef", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+        <div class="form-actions">
+            <input type="button" value="Nuevo" id="Nuevo@(hash)" class="btn green" />
+        </div>
+        <br />
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresLicenciasRef = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    function = "oLicenciasRef.editar_dtLicenciasRef();",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    function = "oLicenciasRef.eliminar_dtLicenciasRef()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmLicenciasRef = Html.DataTableVm("dtLicenciasRef", (LicenciasRefController h) => h.getLicenciasRefGrilla(null));
+                
+				vmLicenciasRef.operators = operadoresLicenciasRef;
+                //vmLicenciasRef.fnDrawCallBack = "render_dtLicenciasRef(this);";
+                vmLicenciasRef.ColumnFilter = true;
+                //vmLicenciasRef.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmLicenciasRef.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("DataTable", vmLicenciasRef)
+			
+					
+			
+			<input type="hidden" id="SelectedLicenciasRef@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+<!-- /.modal -->
+<div class="modal fade" id="ModalIndexLicenciasRef@(hash)" tabindex="-1" role="basic" aria-hidden="true">
+	<div class="modal-dialog modal-wide">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+				<h4 class="modal-title">Título</h4>
+			</div>
+			<div class="modal-body">
+			</div>
+		</div>
+	<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oLicenciasRef == null)
+			var oLicenciasRef = new LicenciasRef.ts.LicenciasRefManager();
+		
+		var viewIndex = new LicenciasRef.ts.Index("@(hash)");
+		oLicenciasRef.setIndex(viewIndex); 
+		
+		viewIndex.setLicenciasRef(dtLicenciasRef);
+		
+	</script>	

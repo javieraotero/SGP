@@ -1,0 +1,116 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model List<Manatee.Trello.Card>
+
+    @{
+        Layout = null;
+        var hash = "form" + Session.GetHashCode();
+    }
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="ts/Usuarios/Index.js"></script>
+    <script src="ts/Usuarios/UsuariosManager.js"></script>
+    <script src="ts/Syncro/SyncroModal.js"></script>
+    @using (Html.BeginForm("Index", "Usuarios", FormMethod.Post, new { id = hash }))
+    {
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <table class="table table-advance table-hover">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Incidencia
+                                </th>
+                                <th>
+                                    Fechade de informe
+                                </th>
+                                <th>
+                                    Responsable
+                                </th>
+                                <th>
+                                    Etapa actual
+                                </th>
+                                <th>
+                                    Tipo
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var c in Model)
+                            {
+                                var color = "#fffff";
+                                if (c.Labels.Where(x => x.Name == "Superficial" || x.Name == "Mayor" || x.Name == "Critica").Count() > 0)
+                                {
+                                    color = c.Labels.Where(x => x.Name == "Superficial" || x.Name == "Mayor" || x.Name == "Critica").First().Color.Value.ToString();
+                                }
+                                <tr id="tr@(c.Id)" data-id="@c.Id" data-tipo="incidencia">
+                                    <td>
+                                        @c.Name
+                                    </td>
+                                    <td>
+                                        @c.CreationDate.ToShortDateString()
+                                    </td>
+                                    <td>
+                                        @foreach (var m in c.Members)
+                                        {
+                                            <span>@m.FullName</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @c.List.Name
+                                    </td>
+                                    <td style="background-color:@color"></td>
+                                </tr>
+                                <tr style="display:none" id="@c.Id" data-tipo="descripcion">
+                                    <td colspan="4">
+                                        @c.Description
+                                    </td>
+                                </tr>
+                                @*if (c.Comments != null)
+                                {
+                                    foreach (var com in c.Comments)
+                                    {
+                                        <tr style="display:none" id="c-@c.Id" data-tipo="descripcion">
+                                            <td colspan="1">
+                                                @com.Creator.FullName
+                                            </td>
+                                            <td colspan="1">
+                                                @com.Date.ToShortDateString()
+                                            </td>
+                                            <td colspan="2">
+                                                @com.Data.Text()
+                                            </td>
+                                        </tr>
+                                    }
+                                }*@
+                                @*@if (c.Comments.Count() > 0) {
+                                        foreach (var co in c.Comments) {
+                                            <tr>
+                                                @if (co.Data.)
+                                                <td>
+
+                                                </td>
+                                            </tr>
+                                        }
+                                    }*@
+                            }
+                        </tbody>
+                    </table>
+                </div><!--fin de div md-12-->
+            </div> <!--fin de row -->
+        </div> <!--fin de container-fluid-->
+    }
+
+    <script>
+        $(function () {
+            $("tr[data-tipo=incidencia]").click(function (e) {
+                var el = $("#" + $(this).data("id"));
+                $("tr[data-tipo=descripcion]").hide();
+                $(el).show();
+            });
+        });
+    </script>

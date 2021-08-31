@@ -1,0 +1,137 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.ExpedientesDocumentoADM
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+<script src="@Url.Content("/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js ")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/jquery-file-upload-master/js/jquery.fileupload.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/jquery-file-upload-master/js/jquery.iframe-transport.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/jquery-file-upload-master/js/vendor/jquery.ui.widget.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/ts/Syncro/SyncroUpload.js")" type="text/javascript"></script>
+
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-switch/static/stylesheets/bootstrap-switch.min.css")" />
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css")" />
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/jquery-file-upload-master/css/jquery.fileupload.css")" />	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="ts/ExpedientesDocumentoADM/Crear.js"></script>
+<script src="ts/ExpedientesDocumentoADM/ExpedientesDocumentoADMManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Crear", "ExpedientesDocumentoADM", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-6">
+		
+        <div class="control-group">
+		<label class="control-label" for="Escudo" style="font-weight: bold">Subir Archivo</label>
+			<div class="controls">
+				<span class="btn btn-success fileinput-button">
+					<i class="glyphicon glyphicon-plus"></i>
+					<span>Seleccionar Archivo...</span>
+						<input id="fileuploadArchivo@(hash)" type="file" name="files[]" data-url="/UploadFiles" multiple />
+						<input type="hidden" id="Archivo@(hash)" name="Archivo" />
+					</span>
+					<br /><br />
+				<div id="progress" class="progress">
+				<div class="progress-bar progress-bar-success"></div>
+				</div>                     
+			</div>
+		</div>
+
+
+	</div><!--fin de div md-12-->
+		<div class="col-md-6">
+		
+	<div class="control-group">
+		@Html.LabelFor(model => model.Confirmado, new { @class= "control-label" })
+		<div class="controls">
+			@Html.CheckBoxFor(
+				m => m.Confirmado, 
+				new {@id="Confirmado"+hash})
+			<script type="text/javascript">
+				$(function () {
+					$('#Confirmado@(hash)').bootstrapSwitch();
+				});
+			</script>
+		@Html.ValidationMessageFor(model => model.Confirmado)
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+		</div> <!--fin del row-->
+		
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+	<div class="control-group">
+		
+				@Html.LabelFor(model => model.Descripcion, new { @class= "control-label" })
+			<div class="controls">
+			@Html.TextAreaFor(m=>m.Descripcion, new{@class="form-control wysihtml5 col-md-12", @id="Descripcion"+hash })
+			<script type="text/javascript">
+			$(function () {
+				$('#Descripcion@(hash)').wysihtml5();
+			});
+			</script>
+		</div>
+	</div>
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+		
+			  @Html.HiddenFor(model => model.Actuacion, new {@id="Actuacion" + hash})
+		
+
+		
+			  @Html.HiddenFor(model => model.NombreOriginal, new {@id="NombreOriginal" + hash})
+		
+
+		
+			  @Html.HiddenFor(model => model.Extension, new {@id="Extension" + hash})
+		
+
+		
+			  @Html.HiddenFor(model => model.Usuario, new {@id="Usuario" + hash})
+		
+
+
+
+	<div class="form-actions">
+	
+		<input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+
+		<input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+
+		<input type="button" value="Guardar & Nuevo" id="GuardarYNuevo@(hash)" class="btn blue" />
+
+	</div><!--fin form-actions>-->
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oExpedientesDocumentoADM == null)
+			var oExpedientesDocumentoADM = new ExpedientesDocumentoADM.ts.ExpedientesDocumentoADMManager();
+		
+		var viewCrear = new ExpedientesDocumentoADM.ts.Crear("@(hash)");
+		oExpedientesDocumentoADM.setCrear(viewCrear); 
+		
+		
+	</script>	

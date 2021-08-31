@@ -1,0 +1,194 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.RRHH.Controllers;
+@using SSO.SGP.Web.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.TurnosWeb
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/RRHH/ts/Agentes/Index.js"></script>
+<script src="Areas/RRHH/ts/Agentes/AgentesManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+<link href="~/assets/css/xeus_forms.css" rel="stylesheet" />
+<script src="~/Scripts/moment-with-locales.min.js"></script>
+<link href="~/assets/plugins/datetimerangepicker/build/css/calentim.min.css" rel="stylesheet" />
+<script src="~/assets/plugins/datetimerangepicker/build/js/calentim.min.js"></script>
+@using (Html.BeginForm("Index", "Agentes", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-bordered">
+                    <tr>
+                        <td class="form-inline" style="background-color: ghostwhite;">
+                            <div class="form-group">
+                                <select id="select_organismo" class="form-control">
+                                    <option data-display="Seleccione un organismo" value="-1">Seleccione Organismo</option>
+                                    @foreach (var o in new SSO.SGP.AccesoADatos.OrganismosRefAD().ObtenerParaTurnos().ToList())
+                                    {
+                                        <option value="@o.value">@o.text</option>
+                                    }
+                                </select>
+                                <script>
+                                    $(function () {
+                                        //$('#organismo').niceSelect();
+
+                                        $("#select_organismo").change(function (e) {
+                                            filterTurnos();
+                                        });
+
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <select id="select_estado" class="form-control">
+                                    <option data-display="Seleccione un estado" value="-1">Pendientes</option>
+                                    <option data-display="Procesados" value="0">Procesados</option>
+                                    </select>
+                                <script>
+                                    $(function () {
+                                        //$('#organismo').niceSelect();
+
+                                        $("#select_estado").change(function (e) {
+                                            filterTurnos();
+                                        });
+
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" placeholder="Fechas" class="form-control input-sm" style="width:300px!important" id="fecha_search">
+                                <script>
+                                    var desde = "";
+                                    var hasta = "";
+                                    moment.locale('es');
+                                    var fecha = $("#fecha_search").calentim({
+                                        locale: "es", startEmpty: true, onafterselect:
+                                            function (calentim, startDate, endDate) {
+                                                //console.log("callback calentim creacion");
+                                                desde = startDate.toDate().toISOString();
+                                                hasta = endDate.toDate().toISOString();
+                                                filterTurnos();
+                                                //filterEvents();
+                                                //dtTickets.fnDraw();
+                                            }
+                                    });
+                                </script>
+                            </div>
+                            <div class="form-group">
+                                <button id="imprimir" class="btn btn-info">Imprimir</button>
+                                <button id="contactar" class="btn btn-info">Imprimir para Contactar</button>
+                                <script>
+                                    $(function () {
+                                        $("#imprimir").click(function (e) {
+                                            e.preventDefault();
+                                            window.open("rrhh/reportes/turnospdf/?organismo=" + $("#select_organismo").val() + "&desde=" + desde + "&hasta=" + hasta);
+                                        });
+
+                                        $("#contactar").click(function (e) {
+                                            e.preventDefault();
+                                            window.open("rrhh/reportes/turnoscontactarpdf/?organismo=" + $("#select_organismo").val());
+                                        });
+                                    });
+                                </script>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-12">
+
+                @{
+                    ColumnCommand[] operadoresAgentes = new ColumnCommand[2] {
+                 new ColumnCommand {
+                    display = "ver",
+                    function = "oAgentes.ver_turno()",
+                    icon = "../assets/img/icons/16x16/edit.png",
+                    iconclass = "edit",
+                    tooltip = "Editar este registro"
+                 },
+                  new ColumnCommand {
+                    display = "ver",
+                    function = "oAgentes.quitar_turno()",
+                    icon = "../assets/img/icons/16x16/delete.png",
+                    iconclass = "edit",
+                    tooltip = "Quitar este registro"
+                 }
+                };
+
+                    var vmAgentes = Html.DataTableVm("dtTurnos", (AgentesController h) => h.getTurnosWeb(null, null, null, null,-1));
+
+                    vmAgentes.operators = operadoresAgentes;
+                    vmAgentes.OpcionesEnGrilla = false;
+                    //vmAgentes.fnDrawCallBack = "render_dtTurnos(this);";
+                    vmAgentes.ColumnFilter = true;
+                    //vmAgentes.FilterOn("activo").Select("Si", "No");
+                    //Cantidad de registros a mostrar
+                    vmAgentes.CantidadRegistrosDefault = 25;
+
+                }
+                @Html.Partial("~/Views/Shared/DataTable.cshtml", vmAgentes)
+
+                <input type="hidden" id="SelectedAgentes@(hash)" value="" />
+            </div>
+            <!--fin de div md-12-->
+        </div>
+        <!--fin de row -->
+    </div> <!--fin de container-fluid-->
+}
+
+<script type="text/javascript">
+
+    function ver(el) {
+        var index = $(el).closest("tr").index();
+        var id = dtTurnos.fnGetData(index)[0];
+
+        app.modal.cargar("Detalle", "RRHH/agentes/turnoswebdetalle/" + id);
+
+    }
+
+     function quitar(el) {
+        var index = $(el).closest("tr").index();
+        var id = dtTurnos.fnGetData(index)[0];
+         bootbox.confirm("Está seguro que desea ELIMINAR este turno?", function (result) {
+             if (result) {
+                 app.Bloquear();
+                 $.post("rrhh/agentes/quitarturno", { id: id }, function (data) {
+                     app.Desbloquear();
+                     if (data[0]) {
+                         app.crearNotificacionSuccess("Se ha eliminado el turno");
+                         filterTurnos();
+                     } else {
+                         app.crearNotificacionError("No se ha podido eliminar el turno");
+                     }
+                 });
+             }
+             });
+    }
+
+    function filterTurnos() {
+        var organismo = $("#select_organismo").val();
+        var estado = $("#select_estado").val();
+        dtTurnos.fnNewAjax("RRHH/Agentes/getTurnosWeb/?organismo="+organismo+"&desde="+desde+"&hasta="+hasta+"&estado="+estado);
+    }
+
+    if (oAgentes == null)
+        var oAgentes = new Agentes.ts.AgentesManager();
+
+
+    @*var viewIndex = new Agentes.ts.Index("@(hash)");
+    oAgentes.setIndex(viewIndex);
+
+    viewIndex.setAgentes(dtAgentes);*@
+
+</script>

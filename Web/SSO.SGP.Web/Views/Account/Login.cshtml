@@ -1,0 +1,164 @@
+﻿<!DOCTYPE html>
+@model SSO.SGP.Web.Models.LoginModel
+
+@{
+    ViewBag.Title = "Iniciar sesión";
+    Layout = null;
+}
+<!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en" class="no-js">
+<!--<![endif]-->
+<!-- BEGIN HEAD -->
+<head>
+<meta charset="utf-8"/>
+<title>Sistema de Gesti&oacute;n Presupuestario 2014</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="" name="description"/>
+<meta content="" name="author"/>
+<meta name="MobileOptimized" content="320">
+<link href="/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/plugins/uniform/css/uniform.default.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" type="text/css" href="/assets/plugins/select2/select2_metro.css"/>
+<link href="/assets/css/style-metronic.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/style.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/style-responsive.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/plugins.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/themes/default.css" rel="stylesheet" type="text/css" id="style_color"/>
+<link href="/assets/css/pages/login-soft.css" rel="stylesheet" type="text/css"/>
+<link href="/assets/css/custom.css" rel="stylesheet" type="text/css"/>
+<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+<body class="login">
+<div class="logo">
+	<img src="/assets/img/logo-big.png" alt=""/>
+</div>
+<div class="content">
+	 @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "myform", @class = "form-vertical login-form" }))
+            {
+                @Html.AntiForgeryToken()
+		<h3 class="form-title">Iniciar Sesi&oacute;n</h3>
+		<div class="alert alert-danger display-hide">
+			<button class="close" data-close="alert"></button>
+			<span>
+				 Ingrese nombre de usuario y clave
+			</span>
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Username</label>
+			<div class="input-icon">
+				<i class="fa fa-user"></i>
+                 @Html.TextBoxFor(m => m.UserName, new { autocomplete = "off", @class = "form-control placeholder-no-fix", placeholder = "Nombre de usuario" })
+			</div>
+             @Html.ValidationMessageFor(m => m.UserName)
+		</div>
+		<div class="form-group">
+			<label class="control-label visible-ie8 visible-ie9">Password</label>
+			<div class="input-icon">
+				<i class="fa fa-lock"></i>
+			     @Html.PasswordFor(m => m.Password, new { autocomplete = "off", @class = "form-control placeholder-no-fix", placeholder = "Contrasena" })
+            </div>
+		</div>
+		<div class="form-actions">
+			<label class="checkbox">
+			 @Html.CheckBoxFor(m => m.RememberMe)
+                        No cerrar sesi&oacute;n</label>
+            <a href="#" id="login-btn" class="btn green pull-right">Entrar <i class="m-icon-swapright m-icon-white"></i></a>
+		    <input type="hidden" id="external" name="Externo" value="@Request.QueryString["externo"]" />
+        </div>
+         @Html.ValidationSummary(true)
+		<div class="forget-password">
+			<h4>No puedes acceder a tu cuenta?</h4>
+			<p>
+				 no te preocupes, hac&eacute; click <a href="javascript:;" id="forget-password">aqu&iacute;</a>
+				para resetear tu password.
+			</p>
+		</div>
+  }
+
+	@*<form class="forget-form" action="index.html" method="post">*@
+       @using (Html.BeginForm("PasswordRecovery", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "myformPassRecovery", @class = "form-vertical forget-form" }))
+       {
+        @Html.AntiForgeryToken()
+            <h3 class="">¿Olvidaste tu contraseña?</h3>
+            <p>Ingresa tu e-mail para recuperarla.</p>
+		<div class="form-group">
+			<div class="input-icon">
+				<i class="fa fa-envelope"></i>
+				@*<input class="form-control placeholder-no-fix" type="text" autocomplete="off" placeholder="Email" name="email"/>*@
+			     @Html.EditorFor(m => m.Email)
+            </div>
+             @Html.ValidationMessageFor(m => m.Email)
+		</div>
+		<div class="form-actions">
+			<button type="button" id="back-btn" class="btn">
+			<i class="m-icon-swapleft"></i> Atrás </button>
+			<button type="submit" class="btn blue pull-right">
+			Enviar <i class="m-icon-swapright m-icon-white"></i>
+			</button>
+		</div>
+       }
+	
+</div>
+<div class="copyright">
+	 2014 - Secretar&iacute;a de Sistemas y Organizaci&oacute;n.
+    </div>
+<!--[if lt IE 9]>
+	<script src="/assets/plugins/respond.min.js"></script>
+	<script src="/assets/plugins/excanvas.min.js"></script> 
+	<![endif]-->
+<script src="/assets/plugins/jquery-1.10.2.min.js" type="text/javascript"></script>
+<script src="/assets/plugins/jquery-migrate-1.2.1.min.js" type="text/javascript"></script>
+<script src="/assets/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="/assets/plugins/bootstrap-hover-dropdown/twitter-bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="/assets/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="/assets/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="/assets/plugins/jquery.cokie.min.js" type="text/javascript"></script>
+<script src="/assets/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="/assets/plugins/jquery-validation/dist/jquery.validate.min.js" type="text/javascript"></script>
+<script src="/assets/plugins/backstretch/jquery.backstretch.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/assets/plugins/select2/select2.min.js"></script>
+<script src="/assets/scripts/app.js" type="text/javascript"></script>
+<script src="/assets/scripts/login-soft.js" type="text/javascript"></script>
+<script>
+    jQuery(document).ready(function () {
+        App.init();
+    });
+	</script>
+    <script>
+        jQuery(document).ready(function () {
+            Login.init();
+
+            $("#login-btn").click(function () {
+                $("#myform").submit();
+            });
+
+            $("input[type='text'], textarea, input[type='password']").change(function () {
+                this.value = this.value.replace(/<(.|\n)*?>/g, "");
+            });
+
+            $("#Email").attr("placeholder", "Email");
+            $("#Email").addClass("m-wrap");
+
+            $("#forget-btn").click(function () {
+                $("#myformPassRecovery").submit();
+            });
+
+            $("#Password").keydown(function (event) {
+                if (event.which == 13) {
+                    $("#myform").submit();
+                }
+            });
+        });
+
+        function Inicializar() {
+            document.getElementById("UserName").focus();
+        }
+
+    </script>
+    @Scripts.Render("~/bundles/jqueryval")
+</body>
+</html>

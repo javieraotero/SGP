@@ -1,0 +1,98 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Controllers;	
+@using Syncrosoft.Framework.Controles.MVC;
+@using SSO.SGP.Web.Areas.Suministros.Controllers;
+@model SSO.SGP.EntidadesDeNegocio.PedidosDeSuministros
+
+@{
+	Layout = null;
+	var hash = "form"+Session.GetHashCode();
+}
+
+	
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Suministros/ts/PedidosDeSuministros/Index.js"></script>
+<script src="Areas/Suministros/ts/PedidosDeSuministros/PedidosDeSuministrosManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Index", "PedidosDeSuministros", FormMethod.Post, new { id = hash })) {
+<div class="container-fluid">
+
+		<div class="row">
+		
+		<div class="col-md-12">
+		
+		@{ 			
+                ColumnCommand[] operadoresPedidosDeSuministros = new ColumnCommand[2] {
+				
+                 new ColumnCommand {
+                    display = "editar",
+                    //function = "PedidosDeSuministrosController_editar(this)",
+                    function = "oPedidosDeSuministros.editar_dtPedidosDeSuministros(this)",
+					icon = "../assets/img/icons/16x16/edit.png",
+                    tooltip = "Editar este registro"   
+                 },
+                 new ColumnCommand {
+                    display = "eliminar",
+                    //function = "PedidosDeSuministrosController_eliminar(this)",
+                    function = "oPedidosDeSuministros.eliminar_dtPedidosDeSuministros(this)",
+					icon = "../assets/img/icons/16x16/delete.png",
+                    tooltip = "Eliminar este registro"   
+                 },
+                };
+				
+                var vmPedidosDeSuministros = Html.DataTableVm("dtPedidosDeSuministros", (PedidosDeSuministrosController h) => h.getPedidosDeSuministrosGrilla(null));
+                
+				vmPedidosDeSuministros.operators = operadoresPedidosDeSuministros;
+                //vmPedidosDeSuministros.fnDrawCallBack = "render_dtPedidosDeSuministros(this);";
+                vmPedidosDeSuministros.ColumnFilter = true;
+                //vmPedidosDeSuministros.FilterOn("activo").Select("Si", "No");
+                //Cantidad de registros a mostrar
+                vmPedidosDeSuministros.CantidadRegistrosDefault = 25;
+                  
+            }
+            @Html.Partial("~/Views/Shared/DataTable.cshtml", vmPedidosDeSuministros)
+			
+			
+			<script type="text/javascript">
+					function PedidosDeSuministrosController_editar(el) {
+					var id = getData(el, 1);
+					oPedidosDeSuministros.editar_dtPedidosDeSuministros(id);
+					}
+					
+					function PedidosDeSuministrosController_eliminar(el) {
+					var id = getData(el, 1);
+					oPedidosDeSuministros.eliminar_dtPedidosDeSuministros(id);
+					}
+					
+			</script>
+			
+			
+			<input type="hidden" id="SelectedPedidosDeSuministros@(hash)" value="" />
+					
+
+
+
+	</div><!--fin de div md-12-->
+</div> <!--fin de row -->
+
+
+
+
+</div> <!--fin de container-fluid-->
+}
+
+	<script type="text/javascript">       
+		$(function () {
+			app.Desbloquear();
+		});
+		
+		if (oPedidosDeSuministros == null)
+			var oPedidosDeSuministros = new PedidosDeSuministros.ts.PedidosDeSuministrosManager();
+		
+		var viewIndex = new PedidosDeSuministros.ts.Index("@(hash)");
+		oPedidosDeSuministros.setIndex(viewIndex); 
+		
+		viewIndex.setPedidosDeSuministros(dtPedidosDeSuministros);
+		
+	</script>	

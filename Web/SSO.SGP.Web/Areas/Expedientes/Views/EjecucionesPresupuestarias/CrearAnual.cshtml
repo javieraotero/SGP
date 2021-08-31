@@ -1,0 +1,93 @@
+@using Syncrosoft.Framework.Controles.MVC.Script;
+@using Syncrosoft.Framework.Controles.Mvc.JQuery.Datatables;
+@using SSO.SGP.Web.Areas.Expedientes.Controllers;
+@using Syncrosoft.Framework.Controles.MVC;
+@model SSO.SGP.EntidadesDeNegocio.EjecucionesPresupuestarias
+
+@{
+    Layout = null;
+    var hash = "form" + Session.GetHashCode();
+}
+
+<script src="@Url.Content("~/assets/plugins/bootstrap-switch/static/js/bootstrap-switch.min.js")" type="text/javascript"></script>
+<script src="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.jquery.min.js")" type="text/javascript"></script>
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/bootstrap-switch/static/stylesheets/bootstrap-switch.min.css")" />
+<link rel="stylesheet" href="@Url.Content("~/assets/plugins/chosen-bootstrap/chosen/chosen.css")" />
+@Scripts.Render("~/bundles/jqueryval")
+<script src="Areas/Expedientes/ts/EjecucionesPresupuestarias/CrearAnual.js"></script>
+<script src="Areas/Expedientes/ts/EjecucionesPresupuestarias/EjecucionesPresupuestariasManager.js"></script>
+<script src="ts/Syncro/SyncroModal.js"></script>
+@using (Html.BeginForm("Crear", "EjecucionesPresupuestarias", FormMethod.Post, new { id = hash }))
+{
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="control-group">
+                    @Html.LabelFor(model => model.Anio, new { @class = "control-label" })
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Anio, new { @class = "form-control col-md-12", @id = "Anio" + hash, @tabindex = "1" })
+                        @Html.ValidationMessageFor(model => model.Anio)
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="control-group">
+                    <label for="UnidadDeOrganizoacio" class="control-label">Unidad de Organización</label>
+                    <div class="controls">
+                        @Html.DropDownList("UnidadDeOrganizacion", (IEnumerable<System.Web.Mvc.SelectListItem>)ViewBag.UnidadesDeOrganizacionRef, new { @class = "form-control col-md-12", @id = "UnidadesDeOrganizacionRef" + hash, @tabindex = "5" })
+                        <script type="text/javascript">
+                            $(function () {
+                                $('#UnidadesDeOrganizacionRef@(hash)').chosen();
+                            });
+                        </script>
+                    </div>
+                </div>
+                </div>
+            </div>
+        <div class="row">
+                <div class="col-md-12">
+                    <div class="control-group">
+                        <label for="UnidadDeOrganizoacio" class="control-label">Errores</label>
+                        <div class="controls">
+                            <table class="table table-bordered table-advance">
+                                <thead>
+                                    <tr>
+                                        <th>
+                                            Resultado
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="errores">
+
+                                </tbody>
+                            </table>
+                        </div>                       
+                    </div>
+                </div>
+            </div>
+            <!--fin del row-->
+
+            <div class="form-actions">
+
+                <input type="button" value="Cancelar" id="Cancelar@(hash)" class="btn" />
+
+                <input type="button" value="Guardar" id="Guardar@(hash)" class="btn green" />
+
+            </div>
+            <!--fin form-actions>-->
+        </div> <!--fin de container-fluid-->
+        }
+
+        <script type="text/javascript">
+            $(function () {
+                app.Desbloquear();
+            });
+
+            if (oEjecucionesPresupuestarias == null)
+                var oEjecucionesPresupuestarias = new EjecucionesPresupuestarias.ts.EjecucionesPresupuestariasManager();
+
+            var viewCrearAnual = new EjecucionesPresupuestarias.ts.CrearAnual("@(hash)");
+            oEjecucionesPresupuestarias.setCrearAnual(viewCrearAnual);
+
+
+        </script>
